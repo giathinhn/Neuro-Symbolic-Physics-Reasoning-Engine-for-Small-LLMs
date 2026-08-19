@@ -1,0 +1,24 @@
+# Ablation study experiment definitions
+ablations:
+  - id: "no_verification"
+    name: "Full System without Verification Pipeline"
+    enable_dimensional_check: false
+    enable_unit_check: false
+    enable_arithmetic_check: false
+    enable_bounds_check: false
+    enable_substitution_check: false
+    enable_consistency_check: false
+    enable_equation_validity_check: false
+    max_retries: 1
+
+  - id: "no_dimensional_check"
+    name: "Full System without Dimensional Check"
+    enable_dimensional_check: false
+
+  - id: "no_unit_check"
+    name: "Full System without Unit Check"
+    enable_unit_check: false
+
+  - id: "no_repair_loop"
+    name: "Full System without Repair Loop (Single Attempt)"
+    max_retries: 1

@@ -1,0 +1,16 @@
+experiment_name: "full_system"
+model_name: "ollama/phi3:mini"
+dataset_split: "test"
+dataset_path: "data/problems/splits/test.jsonl"
+random_seed: 42
+max_retries: 3
+temperature: 0.1
+
+# All verification checks enabled
+enable_dimensional_check: true
+enable_unit_check: true
+enable_arithmetic_check: true
+enable_bounds_check: true
+enable_substitution_check: true
+enable_consistency_check: true
+enable_equation_validity_check: true

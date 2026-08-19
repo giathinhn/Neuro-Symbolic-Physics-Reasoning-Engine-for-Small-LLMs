@@ -1,0 +1,7 @@
+experiment_name: "baseline_calculator"
+model_name: "ollama/phi3:mini"
+dataset_split: "test"
+dataset_path: "data/problems/splits/test.jsonl"
+random_seed: 42
+max_retries: 1
+temperature: 0.1
