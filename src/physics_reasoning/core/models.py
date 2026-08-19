@@ -121,8 +121,9 @@ class Dimension(BaseModel):
             return cls()
 
         kwargs: dict[str, int] = {}
-        # Match tokens like 'M', 'L', 'T^-2', 'T^{-2}', 'Theta^2'
-        pattern = r"(M|L|T|I|Theta|N|J)(?:\^[\{]?(-?\d+)[\}]?)?"
+        # Match tokens like 'Theta', 'M', 'L', 'T^-2', 'T^{-2}', 'Theta^2'
+        # Theta must precede T so T doesn't greedily match the first letter of Theta
+        pattern = r"(Theta|M|L|T|I|N|J)(?:\^[\{]?(-?\d+)[\}]?)?"
         for match in re.finditer(pattern, s):
             dim_name = match.group(1)
             exp = int(match.group(2)) if match.group(2) else 1
