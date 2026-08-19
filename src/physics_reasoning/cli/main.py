@@ -93,10 +93,49 @@ def evaluate(dataset: str, config: str, output: str):
 @click.option("--path", default="data/knowledge", help="Path to knowledge base directory")
 def validate_kb_command(path: str):
     """Validate physics knowledge base for syntactic and dimensional consistency."""
-    from scripts.validate_knowledge_base import validate_kb
+    from physics_reasoning.physics.knowledge_base import KnowledgeBase
+    from physics_reasoning.solver.expression_parser import parse_equation_string
+    from physics_reasoning.units.dimension_checker import DimensionChecker
+    from physics_reasoning.units.unit_engine import UnitEngine
 
-    success = validate_kb(path)
-    sys.exit(0 if success else 1)
+    click.echo(f"Validating knowledge base from '{path}'...")
+    kb = KnowledgeBase(path)
+    try:
+        kb.load()
+    except Exception as e:
+        click.echo(f"Failed to load knowledge base: {e}", err=True)
+        sys.exit(1)
+
+    click.echo(f"Loaded {len(kb.quantities)} quantities and {len(kb.equations)} equations.")
+    dim_checker = DimensionChecker(UnitEngine())
+
+    has_errors = False
+    for eq_id, eq in kb.equations.items():
+        try:
+            parse_equation_string(eq.expression)
+        except Exception as e:
+            click.echo(f"  [ERROR] Equation '{eq_id}' failed to parse: {e}", err=True)
+            has_errors = True
+            continue
+
+        var_units = {}
+        for var_sym, q_name in eq.variable_quantities.items():
+            qty = kb.get_quantity_by_name(q_name)
+            if qty and qty.si_unit:
+                var_units[var_sym] = qty.si_unit
+
+        res = dim_checker.check_equation(eq.expression, var_units)
+        if not res.is_consistent:
+            click.echo(f"  [ERROR] {eq_id}: {res.message}", err=True)
+            has_errors = True
+        else:
+            click.echo(f"  [OK] {eq_id:20s}: {eq.expression:35s} [{res.lhs_dimension}]")
+
+    if has_errors:
+        click.echo("\nKnowledge base validation FAILED with errors.", err=True)
+        sys.exit(1)
+    else:
+        click.echo("\nKnowledge base validation PASSED successfully!")
 
 
 @cli.command()
