@@ -80,13 +80,12 @@ class SymbolicSolver:
 
         target_sym = Symbol(target_variable)
 
-        # Build substitution dictionary with exact rationals/numbers to avoid float precision issues in SymPy
+        # Build substitution dictionary
         subs_dict: dict[Symbol, Any] = {}
         for k, v in known_values.items():
             sym = Symbol(k)
             if isinstance(v, (int, float)):
-                # Use rational to facilitate exact symbolic elimination
-                subs_dict[sym] = nsimplify(v)
+                subs_dict[sym] = sympy.Float(v)
             else:
                 subs_dict[sym] = v
 

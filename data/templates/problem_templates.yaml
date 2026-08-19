@@ -215,7 +215,7 @@ templates:
   - id: "power_basic"
     topic: "work_energy"
     difficulty: "medium"
-    template: "An electric motor does {W_val} {W_unit} of work in a time duration of {t_val} {t_unit}. What is its power output in watts?"
+    template: "An electric motor does {W_work_val} {W_work_unit} of work in a time duration of {t_val} {t_unit}. What is its power output in watts?"
     required_equations: ["power_def"]
     target: "power"
     target_symbol: "P"

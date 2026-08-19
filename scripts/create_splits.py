@@ -15,6 +15,7 @@ from generate_synthetic_problems import generate_problems
 from physics_reasoning.core.enums import Difficulty, ProblemSource
 from physics_reasoning.core.models import PhysicsQuantity, Problem
 from physics_reasoning.physics.constants import PHYSICAL_CONSTANTS
+from physics_reasoning.solver.numerical import round_to_significant_figures
 from physics_reasoning.solver.symbolic_solver import SymbolicSolver
 from physics_reasoning.units.unit_engine import UnitEngine
 
