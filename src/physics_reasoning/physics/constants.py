@@ -30,3 +30,14 @@ PHYSICAL_CONSTANTS: dict[str, float] = {
     "rho_water": WATER_DENSITY_KG_M3,
     "P_atm": STANDARD_ATMOSPHERE_PA,
 }
+
+# Map of constant symbol to standard SI unit string
+PHYSICAL_CONSTANT_UNITS: dict[str, str] = {
+    "g": "m/s**2",
+    "gravity": "m/s**2",
+    "c": "m/s",
+    "speed_of_light": "m/s",
+    "G": "N * m**2 / kg**2",
+    "rho_water": "kg / m**3",
+    "P_atm": "Pa",
+}

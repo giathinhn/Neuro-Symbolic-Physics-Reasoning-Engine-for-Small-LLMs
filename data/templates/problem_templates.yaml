@@ -1,0 +1,305 @@
+templates:
+  # Kinematics Templates
+  - id: "kin_vel_basic"
+    topic: "kinematics"
+    difficulty: "easy"
+    template: "A runner covers a displacement of {d_val} {d_unit} in {t_val} {t_unit}. What is the runner's average speed?"
+    required_equations: ["kin_vel_def"]
+    target: "velocity"
+    target_symbol: "v"
+    target_unit: "m/s"
+    given_variables:
+      - symbol: "d"
+        name: "displacement"
+        value_range: [50.0, 5000.0]
+        unit_choices: ["m", "km"]
+      - symbol: "t"
+        name: "time"
+        value_range: [10.0, 600.0]
+        unit_choices: ["s", "min"]
+
+  - id: "kin_acc_from_rest"
+    topic: "kinematics"
+    difficulty: "easy"
+    template: "A car starts from rest (initial speed 0 m/s) and accelerates to {v_f_val} {v_f_unit} in {t_val} {t_unit}. What is its acceleration?"
+    required_equations: ["kin_acc_def"]
+    target: "acceleration"
+    target_symbol: "a"
+    target_unit: "m/s**2"
+    given_variables:
+      - symbol: "v_i"
+        name: "initial_velocity"
+        value_range: [0.0, 0.0]
+        unit_choices: ["m/s"]
+      - symbol: "v_f"
+        name: "final_velocity"
+        value_range: [10.0, 50.0]
+        unit_choices: ["m/s", "km/h"]
+      - symbol: "t"
+        name: "time"
+        value_range: [2.0, 20.0]
+        unit_choices: ["s"]
+
+  - id: "kin_dist_acc"
+    topic: "kinematics"
+    difficulty: "medium"
+    template: "An object with initial speed {v_i_val} {v_i_unit} accelerates at {a_val} {a_unit} for {t_val} {t_unit}. What total distance does it travel?"
+    required_equations: ["kin_eq2"]
+    target: "displacement"
+    target_symbol: "d"
+    target_unit: "m"
+    given_variables:
+      - symbol: "v_i"
+        name: "initial_velocity"
+        value_range: [0.0, 25.0]
+        unit_choices: ["m/s"]
+      - symbol: "a"
+        name: "acceleration"
+        value_range: [1.0, 8.0]
+        unit_choices: ["m/s**2"]
+      - symbol: "t"
+        name: "time"
+        value_range: [3.0, 30.0]
+        unit_choices: ["s"]
+
+  - id: "kin_free_fall_height"
+    topic: "kinematics"
+    difficulty: "medium"
+    template: "A stone is dropped from the top of a cliff and hits the ground after {t_val} {t_unit}. Assuming g = 9.8 m/s^2, what is the height of the cliff?"
+    required_equations: ["kin_free_fall"]
+    target: "height"
+    target_symbol: "h"
+    target_unit: "m"
+    given_variables:
+      - symbol: "g"
+        name: "gravity"
+        value_range: [9.8, 9.8]
+        unit_choices: ["m/s**2"]
+      - symbol: "t"
+        name: "time"
+        value_range: [1.0, 10.0]
+        unit_choices: ["s"]
+
+  # Newton's Laws Templates
+  - id: "newton2_find_force"
+    topic: "newton_laws"
+    difficulty: "easy"
+    template: "A mass of {m_val} {m_unit} is accelerated at {a_val} {a_unit}. What net force acts on the mass?"
+    required_equations: ["newton2"]
+    target: "force"
+    target_symbol: "F"
+    target_unit: "N"
+    given_variables:
+      - symbol: "m"
+        name: "mass"
+        value_range: [0.5, 500.0]
+        unit_choices: ["kg", "g"]
+      - symbol: "a"
+        name: "acceleration"
+        value_range: [0.5, 20.0]
+        unit_choices: ["m/s**2"]
+
+  - id: "newton2_find_accel"
+    topic: "newton_laws"
+    difficulty: "easy"
+    template: "A force of {F_val} {F_unit} is applied to an object with mass {m_val} {m_unit}. Calculate its resulting acceleration."
+    required_equations: ["newton2"]
+    target: "acceleration"
+    target_symbol: "a"
+    target_unit: "m/s**2"
+    given_variables:
+      - symbol: "F"
+        name: "force"
+        value_range: [5.0, 2000.0]
+        unit_choices: ["N", "kN"]
+      - symbol: "m"
+        name: "mass"
+        value_range: [1.0, 100.0]
+        unit_choices: ["kg"]
+
+  - id: "newton_weight"
+    topic: "newton_laws"
+    difficulty: "easy"
+    template: "An astronaut on Earth (g = 9.8 m/s^2) has a mass of {m_val} {m_unit}. What is the astronaut's weight in newtons?"
+    required_equations: ["weight_def"]
+    target: "weight"
+    target_symbol: "W"
+    target_unit: "N"
+    given_variables:
+      - symbol: "m"
+        name: "mass"
+        value_range: [10.0, 150.0]
+        unit_choices: ["kg"]
+      - symbol: "g"
+        name: "gravity"
+        value_range: [9.8, 9.8]
+        unit_choices: ["m/s**2"]
+
+  - id: "newton_friction"
+    topic: "newton_laws"
+    difficulty: "medium"
+    template: "A crate with normal force {N_val} {N_unit} rests on a floor with coefficient of friction {mu_val}. What is the frictional force resisting motion?"
+    required_equations: ["friction_def"]
+    target: "friction_force"
+    target_symbol: "f"
+    target_unit: "N"
+    given_variables:
+      - symbol: "N"
+        name: "normal_force"
+        value_range: [50.0, 1000.0]
+        unit_choices: ["N"]
+      - symbol: "mu"
+        name: "friction_coefficient"
+        value_range: [0.1, 0.8]
+        unit_choices: [""]
+
+  # Work & Energy Templates
+  - id: "work_find_work"
+    topic: "work_energy"
+    difficulty: "easy"
+    template: "A worker pushes a cart with a constant force of {F_val} {F_unit} over a distance of {d_val} {d_unit}. How much work is performed?"
+    required_equations: ["work_def"]
+    target: "work"
+    target_symbol: "W_work"
+    target_unit: "J"
+    given_variables:
+      - symbol: "F"
+        name: "force"
+        value_range: [10.0, 500.0]
+        unit_choices: ["N"]
+      - symbol: "d"
+        name: "displacement"
+        value_range: [2.0, 100.0]
+        unit_choices: ["m"]
+
+  - id: "energy_ke"
+    topic: "work_energy"
+    difficulty: "medium"
+    template: "A vehicle of mass {m_val} {m_unit} travels at a speed of {v_val} {v_unit}. Find its kinetic energy in joules."
+    required_equations: ["ke_def"]
+    target: "kinetic_energy"
+    target_symbol: "KE"
+    target_unit: "J"
+    given_variables:
+      - symbol: "m"
+        name: "mass"
+        value_range: [500.0, 3000.0]
+        unit_choices: ["kg"]
+      - symbol: "v"
+        name: "velocity"
+        value_range: [10.0, 40.0]
+        unit_choices: ["m/s", "km/h"]
+
+  - id: "energy_pe"
+    topic: "work_energy"
+    difficulty: "easy"
+    template: "A box of mass {m_val} {m_unit} is lifted to a shelf at height {h_val} {h_unit}. Given g = 9.8 m/s^2, what is its gravitational potential energy?"
+    required_equations: ["pe_def"]
+    target: "potential_energy"
+    target_symbol: "PE"
+    target_unit: "J"
+    given_variables:
+      - symbol: "m"
+        name: "mass"
+        value_range: [1.0, 50.0]
+        unit_choices: ["kg"]
+      - symbol: "g"
+        name: "gravity"
+        value_range: [9.8, 9.8]
+        unit_choices: ["m/s**2"]
+      - symbol: "h"
+        name: "height"
+        value_range: [1.0, 25.0]
+        unit_choices: ["m"]
+
+  - id: "power_basic"
+    topic: "work_energy"
+    difficulty: "medium"
+    template: "An electric motor does {W_val} {W_unit} of work in a time duration of {t_val} {t_unit}. What is its power output in watts?"
+    required_equations: ["power_def"]
+    target: "power"
+    target_symbol: "P"
+    target_unit: "W"
+    given_variables:
+      - symbol: "W_work"
+        name: "work"
+        value_range: [500.0, 50000.0]
+        unit_choices: ["J", "kJ"]
+      - symbol: "t"
+        name: "time"
+        value_range: [5.0, 120.0]
+        unit_choices: ["s", "min"]
+
+  # Momentum Templates
+  - id: "momentum_find_p"
+    topic: "momentum"
+    difficulty: "easy"
+    template: "A bowling ball of mass {m_val} {m_unit} rolls down an alley with a velocity of {v_val} {v_unit}. What is its linear momentum?"
+    required_equations: ["momentum_def"]
+    target: "momentum"
+    target_symbol: "p"
+    target_unit: "kg * m / s"
+    given_variables:
+      - symbol: "m"
+        name: "mass"
+        value_range: [2.0, 8.0]
+        unit_choices: ["kg"]
+      - symbol: "v"
+        name: "velocity"
+        value_range: [1.0, 15.0]
+        unit_choices: ["m/s"]
+
+  - id: "impulse_find_J"
+    topic: "momentum"
+    difficulty: "medium"
+    template: "A baseball bat strikes a ball with an average force of {F_val} {F_unit} over a contact duration of {t_val} {t_unit}. What impulse is imparted to the ball?"
+    required_equations: ["impulse_def"]
+    target: "impulse"
+    target_symbol: "J"
+    target_unit: "N * s"
+    given_variables:
+      - symbol: "F"
+        name: "force"
+        value_range: [100.0, 5000.0]
+        unit_choices: ["N", "kN"]
+      - symbol: "t"
+        name: "time"
+        value_range: [0.01, 0.5]
+        unit_choices: ["s"]
+
+  # Density & Pressure Templates
+  - id: "density_find_rho"
+    topic: "density_pressure"
+    difficulty: "easy"
+    template: "A solid metal block has a mass of {m_val} {m_unit} and occupies a volume of {V_val} {V_unit}. What is the density of the metal in kg/m^3?"
+    required_equations: ["density_def"]
+    target: "density"
+    target_symbol: "rho"
+    target_unit: "kg / m**3"
+    given_variables:
+      - symbol: "m"
+        name: "mass"
+        value_range: [2.0, 50.0]
+        unit_choices: ["kg"]
+      - symbol: "V"
+        name: "volume"
+        value_range: [0.001, 0.05]
+        unit_choices: ["m**3"]
+
+  - id: "pressure_find_P"
+    topic: "density_pressure"
+    difficulty: "easy"
+    template: "A force of {F_val} {F_unit} is exerted perpendicular to a surface of area {A_val} {A_unit}. Calculate the pressure applied to the surface."
+    required_equations: ["pressure_def"]
+    target: "pressure"
+    target_symbol: "P_press"
+    target_unit: "Pa"
+    given_variables:
+      - symbol: "F"
+        name: "force"
+        value_range: [50.0, 2000.0]
+        unit_choices: ["N"]
+      - symbol: "A"
+        name: "area"
+        value_range: [0.01, 2.0]
+        unit_choices: ["m**2"]

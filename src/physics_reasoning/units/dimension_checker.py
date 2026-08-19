@@ -9,6 +9,7 @@ from pint import DimensionalityError, Quantity
 
 from physics_reasoning.core.exceptions import ExpressionParseError
 from physics_reasoning.core.models import Dimension, DimensionCheckResult
+from physics_reasoning.physics.constants import PHYSICAL_CONSTANT_UNITS
 from physics_reasoning.solver.expression_parser import (
     extract_symbols,
     parse_equation_string,
@@ -27,20 +28,14 @@ class DimensionChecker:
     def get_expression_dimension_object(
         self, expr_str: str, variable_units: dict[str, str]
     ) -> Dimension:
-        """Compute the Dimension of an algebraic expression given units for its variables.
-
-        Strategy:
-        Assign a Pint Quantity of magnitude 1 with the variable's unit to each symbol.
-        Evaluate the expression using standard dimensional algebra.
-        """
-        # Parse the SymPy expression first
+        """Compute the Dimension of an algebraic expression given units for its variables."""
         sympy_expr = parse_expression(expr_str)
         free_syms = [str(s) for s in sympy_expr.free_symbols]
 
         # Build context dict with Pint Quantities
         eval_context: dict[str, Any] = {
             "sqrt": lambda x: x ** 0.5,
-            "sin": lambda x: 1.0,  # Trigonometric arguments must be dimensionless
+            "sin": lambda x: 1.0,
             "cos": lambda x: 1.0,
             "tan": lambda x: 1.0,
             "abs": abs,
@@ -48,18 +43,19 @@ class DimensionChecker:
             "pi": 1.0,
         }
 
+        # Merge variable units with known physical constant units
+        merged_units = dict(PHYSICAL_CONSTANT_UNITS)
+        merged_units.update(variable_units)
+
         for sym in free_syms:
-            unit_str = variable_units.get(sym)
+            unit_str = merged_units.get(sym)
             if unit_str:
                 norm_unit = self.unit_engine._normalize_unit_string(unit_str)
                 eval_context[sym] = self.ureg.Quantity(1.0, norm_unit)
             else:
-                # Default to dimensionless 1.0 if not specified
                 eval_context[sym] = 1.0
 
-        # Replace power syntax and evaluate safely in Python with Pint quantities
         safe_eval_str = str(sympy_expr)
-        # Note: SymPy str output uses ** for exponentiation
         try:
             val = eval(safe_eval_str, {"__builtins__": {}}, eval_context)
             if isinstance(val, Quantity):
@@ -74,7 +70,7 @@ class DimensionChecker:
                     J=int(dim_dict.get("[luminosity]", 0)),
                 )
             else:
-                return Dimension()  # dimensionless
+                return Dimension()
         except Exception:
             return Dimension()
 
@@ -89,15 +85,7 @@ class DimensionChecker:
         equation_str: str,
         variable_units: dict[str, str],
     ) -> DimensionCheckResult:
-        """Check if an equation is dimensionally consistent.
-
-        Args:
-            equation_str: Equation string containing '=' (e.g. 'F = m * a')
-            variable_units: Dict mapping variable names to unit strings (e.g. {'F': 'N', 'm': 'kg', 'a': 'm/s**2'})
-
-        Returns:
-            DimensionCheckResult
-        """
+        """Check if an equation is dimensionally consistent."""
         try:
             eq = parse_equation_string(equation_str)
         except Exception as e:
