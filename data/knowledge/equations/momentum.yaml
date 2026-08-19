@@ -1,0 +1,93 @@
+equations:
+  - id: "momentum_def"
+    name: "Linear momentum definition"
+    expression: "p = m * v"
+    variables: ["p", "m", "v"]
+    variable_quantities:
+      p: "momentum"
+      m: "mass"
+      v: "velocity"
+    domain: "mechanics"
+    topic: "momentum"
+    description: "Linear momentum equals mass times velocity"
+    conditions: ["classical mechanics"]
+    dimension_lhs: "M L T^-1"
+    dimension_rhs: "M L T^-1"
+
+  - id: "impulse_def"
+    name: "Impulse definition"
+    expression: "J = F * t"
+    variables: ["J", "F", "t"]
+    variable_quantities:
+      J: "impulse"
+      F: "force"
+      t: "time"
+    domain: "mechanics"
+    topic: "momentum"
+    description: "Impulse delivered by constant force over time"
+    conditions: ["constant force"]
+    dimension_lhs: "M L T^-1"
+    dimension_rhs: "M L T^-1"
+
+  - id: "impulse_momentum"
+    name: "Impulse-momentum theorem"
+    expression: "J = p_f - p_i"
+    variables: ["J", "p_f", "p_i"]
+    variable_quantities:
+      J: "impulse"
+      p_f: "momentum"
+      p_i: "momentum"
+    domain: "mechanics"
+    topic: "momentum"
+    description: "Impulse equals change in momentum"
+    conditions: []
+    dimension_lhs: "M L T^-1"
+    dimension_rhs: "M L T^-1"
+
+  - id: "momentum_cons"
+    name: "Conservation of momentum 1D"
+    expression: "m1 * v1_i + m2 * v2_i = m1 * v1_f + m2 * v2_f"
+    variables: ["m1", "v1_i", "m2", "v2_i", "v1_f", "v2_f"]
+    variable_quantities:
+      m1: "mass"
+      v1_i: "velocity"
+      m2: "mass"
+      v2_i: "velocity"
+      v1_f: "velocity"
+      v2_f: "velocity"
+    domain: "mechanics"
+    topic: "momentum"
+    description: "Total momentum conserved in isolated collision"
+    conditions: ["isolated system", "1D"]
+    dimension_lhs: "M L T^-1"
+    dimension_rhs: "M L T^-1"
+
+  - id: "density_def"
+    name: "Density definition"
+    expression: "rho = m / V"
+    variables: ["rho", "m", "V"]
+    variable_quantities:
+      rho: "density"
+      m: "mass"
+      V: "volume"
+    domain: "mechanics"
+    topic: "density_pressure"
+    description: "Density equals mass divided by volume"
+    conditions: ["uniform density"]
+    dimension_lhs: "M L^-3"
+    dimension_rhs: "M L^-3"
+
+  - id: "pressure_def"
+    name: "Pressure definition"
+    expression: "P_press = F / A"
+    variables: ["P_press", "F", "A"]
+    variable_quantities:
+      P_press: "pressure"
+      F: "force"
+      A: "area"
+    domain: "mechanics"
+    topic: "density_pressure"
+    description: "Pressure equals normal force divided by area"
+    conditions: ["uniform force distribution"]
+    dimension_lhs: "M L^-1 T^-2"
+    dimension_rhs: "M L^-1 T^-2"

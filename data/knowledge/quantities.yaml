@@ -1,0 +1,150 @@
+quantities:
+  - name: "force"
+    symbol: "F"
+    dimension: "M L T^-2"
+    si_unit: "newton"
+    aliases: ["net force", "applied force", "resultant force", "thrust", "tension"]
+
+  - name: "mass"
+    symbol: "m"
+    dimension: "M"
+    si_unit: "kilogram"
+    aliases: ["object mass", "body mass"]
+
+  - name: "acceleration"
+    symbol: "a"
+    dimension: "L T^-2"
+    si_unit: "meter / second ** 2"
+    aliases: ["deceleration", "retardation", "rate of acceleration"]
+
+  - name: "velocity"
+    symbol: "v"
+    dimension: "L T^-1"
+    si_unit: "meter / second"
+    aliases: ["speed", "rate of motion"]
+
+  - name: "initial_velocity"
+    symbol: "v_i"
+    dimension: "L T^-1"
+    si_unit: "meter / second"
+    aliases: ["initial speed", "starting velocity", "starting speed"]
+
+  - name: "final_velocity"
+    symbol: "v_f"
+    dimension: "L T^-1"
+    si_unit: "meter / second"
+    aliases: ["final speed", "terminal velocity"]
+
+  - name: "average_velocity"
+    symbol: "v_avg"
+    dimension: "L T^-1"
+    si_unit: "meter / second"
+    aliases: ["average speed", "mean velocity"]
+
+  - name: "displacement"
+    symbol: "d"
+    dimension: "L"
+    si_unit: "meter"
+    aliases: ["distance", "height", "length", "position change", "depth"]
+
+  - name: "height"
+    symbol: "h"
+    dimension: "L"
+    si_unit: "meter"
+    aliases: ["altitude", "elevation"]
+
+  - name: "time"
+    symbol: "t"
+    dimension: "T"
+    si_unit: "second"
+    aliases: ["duration", "time interval", "elapsed time"]
+
+  - name: "weight"
+    symbol: "W"
+    dimension: "M L T^-2"
+    si_unit: "newton"
+    aliases: ["gravitational force"]
+
+  - name: "gravity"
+    symbol: "g"
+    dimension: "L T^-2"
+    si_unit: "meter / second ** 2"
+    aliases: ["gravitational acceleration", "acceleration due to gravity"]
+
+  - name: "work"
+    symbol: "W_work"
+    dimension: "M L^2 T^-2"
+    si_unit: "joule"
+    aliases: ["work done"]
+
+  - name: "kinetic_energy"
+    symbol: "KE"
+    dimension: "M L^2 T^-2"
+    si_unit: "joule"
+    aliases: ["kinetic energy"]
+
+  - name: "potential_energy"
+    symbol: "PE"
+    dimension: "M L^2 T^-2"
+    si_unit: "joule"
+    aliases: ["gravitational potential energy"]
+
+  - name: "power"
+    symbol: "P"
+    dimension: "M L^2 T^-3"
+    si_unit: "watt"
+    aliases: ["power output", "rate of work"]
+
+  - name: "momentum"
+    symbol: "p"
+    dimension: "M L T^-1"
+    si_unit: "kilogram * meter / second"
+    aliases: ["linear momentum"]
+
+  - name: "impulse"
+    symbol: "J"
+    dimension: "M L T^-1"
+    si_unit: "newton * second"
+    aliases: ["impulse force"]
+
+  - name: "friction_force"
+    symbol: "f"
+    dimension: "M L T^-2"
+    si_unit: "newton"
+    aliases: ["frictional force", "friction"]
+
+  - name: "normal_force"
+    symbol: "N"
+    dimension: "M L T^-2"
+    si_unit: "newton"
+    aliases: ["normal reaction"]
+
+  - name: "friction_coefficient"
+    symbol: "mu"
+    dimension: "dimensionless"
+    si_unit: "dimensionless"
+    aliases: ["coefficient of friction"]
+
+  - name: "density"
+    symbol: "rho"
+    dimension: "M L^-3"
+    si_unit: "kilogram / meter ** 3"
+    aliases: ["mass density"]
+
+  - name: "volume"
+    symbol: "V"
+    dimension: "L^3"
+    si_unit: "meter ** 3"
+    aliases: ["capacity"]
+
+  - name: "pressure"
+    symbol: "P_press"
+    dimension: "M L^-1 T^-2"
+    si_unit: "pascal"
+    aliases: ["fluid pressure", "surface pressure"]
+
+  - name: "area"
+    symbol: "A"
+    dimension: "L^2"
+    si_unit: "meter ** 2"
+    aliases: ["surface area", "cross-sectional area"]

@@ -1,0 +1,107 @@
+equations:
+  - id: "work_def"
+    name: "Work definition"
+    expression: "W_work = F * d"
+    variables: ["W_work", "F", "d"]
+    variable_quantities:
+      W_work: "work"
+      F: "force"
+      d: "displacement"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Work done by a constant force in direction of motion"
+    conditions: ["force parallel to displacement"]
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
+  - id: "ke_def"
+    name: "Kinetic energy"
+    expression: "KE = (1/2) * m * v^2"
+    variables: ["KE", "m", "v"]
+    variable_quantities:
+      KE: "kinetic_energy"
+      m: "mass"
+      v: "velocity"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Kinetic energy of a moving mass"
+    conditions: ["classical mechanics", "v << c"]
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
+  - id: "pe_def"
+    name: "Gravitational potential energy"
+    expression: "PE = m * g * h"
+    variables: ["PE", "m", "g", "h"]
+    variable_quantities:
+      PE: "potential_energy"
+      m: "mass"
+      g: "gravity"
+      h: "height"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Gravitational potential energy near Earth's surface"
+    conditions: ["uniform gravity"]
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
+  - id: "work_energy_thm"
+    name: "Work-energy theorem"
+    expression: "W_work = KE_f - KE_i"
+    variables: ["W_work", "KE_f", "KE_i"]
+    variable_quantities:
+      W_work: "work"
+      KE_f: "kinetic_energy"
+      KE_i: "kinetic_energy"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Net work done equals change in kinetic energy"
+    conditions: []
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
+  - id: "power_def"
+    name: "Power definition"
+    expression: "P = W_work / t"
+    variables: ["P", "W_work", "t"]
+    variable_quantities:
+      P: "power"
+      W_work: "work"
+      t: "time"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Power is the rate at which work is done"
+    conditions: ["constant power"]
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
+  - id: "power_force_vel"
+    name: "Power from force and velocity"
+    expression: "P = F * v"
+    variables: ["P", "F", "v"]
+    variable_quantities:
+      P: "power"
+      F: "force"
+      v: "velocity"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Power delivered by force at constant velocity"
+    conditions: ["force parallel to velocity"]
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
+  - id: "energy_cons"
+    name: "Conservation of mechanical energy"
+    expression: "KE_i + PE_i = KE_f + PE_f"
+    variables: ["KE_i", "PE_i", "KE_f", "PE_f"]
+    variable_quantities:
+      KE_i: "kinetic_energy"
+      PE_i: "potential_energy"
+      KE_f: "kinetic_energy"
+      PE_f: "potential_energy"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Total mechanical energy is conserved in isolated conservative system"
+    conditions: ["no non-conservative forces"]
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"

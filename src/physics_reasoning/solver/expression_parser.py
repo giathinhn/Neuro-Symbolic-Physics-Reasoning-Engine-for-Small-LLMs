@@ -9,7 +9,6 @@ import sympy
 from sympy import Eq, Expr, Symbol
 from sympy.parsing.sympy_parser import (
     convert_xor,
-    implicit_multiplication_application,
     parse_expr,
     standard_transformations,
 )
@@ -17,15 +16,12 @@ from sympy.parsing.sympy_parser import (
 from physics_reasoning.core.exceptions import ExpressionParseError
 
 # Standard safe transformations for physics expressions
-SAFE_TRANSFORMATIONS = standard_transformations + (
-    implicit_multiplication_application,
-    convert_xor,
-)
+SAFE_TRANSFORMATIONS = standard_transformations + (convert_xor,)
 
 # Whitelist of allowed SymPy mathematical functions and constants
-ALLOWED_NAMES: dict[str, Any] = {
+# Note: 'E' is omitted because in physics E denotes energy, not Euler's number
+ALLOWED_FUNCTIONS: dict[str, Any] = {
     "pi": sympy.pi,
-    "E": sympy.E,
     "sqrt": sympy.sqrt,
     "sin": sympy.sin,
     "cos": sympy.cos,
@@ -64,15 +60,28 @@ def _validate_safety(expr_str: str) -> None:
             )
 
 
+def _preprocess_math_string(s: str) -> str:
+    """Normalize physics math strings before parsing.
+
+    - Convert implicit numeric multiplications: '2 a' -> '2 * a', '2(x)' -> '2 * (x)'
+    - Preserve variable names with digits: 'F1', 'm2', 'v_i'
+    - Handle '^' as power (handled by convert_xor)
+    """
+    # Replace number followed by space and identifier: '2 a' -> '2 * a'
+    s = re.sub(r"(\d+(?:\.\d+)?)\s+([a-zA-Z_][a-zA-Z0-9_]*)", r"\1 * \2", s)
+    # Replace number immediately followed by parenthesis: '2(a + b)' -> '2 * (a + b)'
+    s = re.sub(r"(\d+(?:\.\d+)?)\s*\(", r"\1 * (", s)
+    return s
+
+
 def parse_expression(
     expr_str: str, local_symbols: dict[str, Symbol] | None = None
 ) -> Expr:
     """Parse a string into a SymPy expression safely.
 
     Features:
-    - Whitelisted names and symbols
-    - Implicit multiplication (e.g., '2a' -> 2*a, 'm a' -> m*a)
-    - Power syntax conversion ('^' -> '**')
+    - Whitelisted math functions (sqrt, sin, cos, etc.)
+    - Multi-letter and indexed physics variables (KE, PE, F1, F2, v_i, F_net)
     - Subscript variables ('v_f', 'F_net')
     - Anti-code-injection validation
 
@@ -92,14 +101,23 @@ def parse_expression(
     clean_str = expr_str.strip()
     _validate_safety(clean_str)
 
-    # Prepare local dict combining allowed names with provided symbols
-    local_dict: dict[str, Any] = dict(ALLOWED_NAMES)
+    preprocessed = _preprocess_math_string(clean_str)
+
+    # Extract all identifier tokens
+    tokens = re.findall(r"[a-zA-Z_][a-zA-Z0-9_]*", preprocessed)
+    local_dict: dict[str, Any] = dict(ALLOWED_FUNCTIONS)
+
+    # Any identifier that is not an allowed math function is treated as a Symbol
+    for token in tokens:
+        if token not in ALLOWED_FUNCTIONS:
+            local_dict[token] = Symbol(token)
+
     if local_symbols:
         local_dict.update(local_symbols)
 
     try:
         parsed = parse_expr(
-            clean_str,
+            preprocessed,
             local_dict=local_dict,
             transformations=SAFE_TRANSFORMATIONS,
             evaluate=True,
@@ -118,16 +136,6 @@ def parse_equation_string(
 
     Example:
         'F = m * a' -> Eq(F, m*a)
-
-    Args:
-        eq_str: The equation string with '='.
-        local_symbols: Optional mapping of custom variable names to Symbols.
-
-    Returns:
-        SymPy Eq object.
-
-    Raises:
-        ExpressionParseError: If '=' is missing or either side fails to parse.
     """
     if not eq_str or not eq_str.strip():
         raise ExpressionParseError("Cannot parse empty equation", expression=eq_str)

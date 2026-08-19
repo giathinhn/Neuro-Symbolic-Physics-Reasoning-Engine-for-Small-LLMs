@@ -1,0 +1,124 @@
+equations:
+  - id: "kin_vel_def"
+    name: "Velocity definition"
+    expression: "v = d / t"
+    variables: ["v", "d", "t"]
+    variable_quantities:
+      v: "velocity"
+      d: "displacement"
+      t: "time"
+    domain: "mechanics"
+    topic: "kinematics"
+    description: "Velocity equals displacement divided by time (constant velocity)"
+    conditions: ["constant velocity"]
+    dimension_lhs: "L T^-1"
+    dimension_rhs: "L T^-1"
+
+  - id: "kin_acc_def"
+    name: "Acceleration definition"
+    expression: "a = (v_f - v_i) / t"
+    variables: ["a", "v_f", "v_i", "t"]
+    variable_quantities:
+      a: "acceleration"
+      v_f: "final_velocity"
+      v_i: "initial_velocity"
+      t: "time"
+    domain: "mechanics"
+    topic: "kinematics"
+    description: "Acceleration equals change in velocity divided by time"
+    conditions: ["constant acceleration"]
+    dimension_lhs: "L T^-2"
+    dimension_rhs: "L T^-2"
+
+  - id: "kin_eq1"
+    name: "First kinematic equation"
+    expression: "v_f = v_i + a * t"
+    variables: ["v_f", "v_i", "a", "t"]
+    variable_quantities:
+      v_f: "final_velocity"
+      v_i: "initial_velocity"
+      a: "acceleration"
+      t: "time"
+    domain: "mechanics"
+    topic: "kinematics"
+    description: "Final velocity under constant acceleration"
+    conditions: ["constant acceleration"]
+    dimension_lhs: "L T^-1"
+    dimension_rhs: "L T^-1"
+
+  - id: "kin_eq2"
+    name: "Second kinematic equation"
+    expression: "d = v_i * t + (1/2) * a * t^2"
+    variables: ["d", "v_i", "t", "a"]
+    variable_quantities:
+      d: "displacement"
+      v_i: "initial_velocity"
+      t: "time"
+      a: "acceleration"
+    domain: "mechanics"
+    topic: "kinematics"
+    description: "Displacement under constant acceleration"
+    conditions: ["constant acceleration"]
+    dimension_lhs: "L"
+    dimension_rhs: "L"
+
+  - id: "kin_eq3"
+    name: "Third kinematic equation"
+    expression: "v_f^2 = v_i^2 + 2 * a * d"
+    variables: ["v_f", "v_i", "a", "d"]
+    variable_quantities:
+      v_f: "final_velocity"
+      v_i: "initial_velocity"
+      a: "acceleration"
+      d: "displacement"
+    domain: "mechanics"
+    topic: "kinematics"
+    description: "Velocity-displacement relation"
+    conditions: ["constant acceleration"]
+    dimension_lhs: "L^2 T^-2"
+    dimension_rhs: "L^2 T^-2"
+
+  - id: "kin_avg_vel"
+    name: "Average velocity"
+    expression: "v_avg = (v_i + v_f) / 2"
+    variables: ["v_avg", "v_i", "v_f"]
+    variable_quantities:
+      v_avg: "average_velocity"
+      v_i: "initial_velocity"
+      v_f: "final_velocity"
+    domain: "mechanics"
+    topic: "kinematics"
+    description: "Average velocity for uniformly accelerated motion"
+    conditions: ["constant acceleration"]
+    dimension_lhs: "L T^-1"
+    dimension_rhs: "L T^-1"
+
+  - id: "kin_disp_avg"
+    name: "Displacement from average velocity"
+    expression: "d = v_avg * t"
+    variables: ["d", "v_avg", "t"]
+    variable_quantities:
+      d: "displacement"
+      v_avg: "average_velocity"
+      t: "time"
+    domain: "mechanics"
+    topic: "kinematics"
+    description: "Displacement using average velocity"
+    conditions: ["constant acceleration"]
+    dimension_lhs: "L"
+    dimension_rhs: "L"
+
+  - id: "kin_free_fall"
+    name: "Free fall height"
+    expression: "h = (1/2) * g * t^2"
+    variables: ["h", "g", "t"]
+    variable_quantities:
+      h: "height"
+      g: "gravity"
+      t: "time"
+    domain: "mechanics"
+    topic: "kinematics"
+    description: "Distance fallen from rest under gravity"
+    conditions: ["free fall from rest", "no air resistance"]
+    dimension_lhs: "L"
+    dimension_rhs: "L"

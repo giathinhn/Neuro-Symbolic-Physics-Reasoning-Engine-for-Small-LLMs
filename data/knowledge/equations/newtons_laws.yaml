@@ -1,0 +1,60 @@
+equations:
+  - id: "newton2"
+    name: "Newton's Second Law"
+    expression: "F = m * a"
+    variables: ["F", "m", "a"]
+    variable_quantities:
+      F: "force"
+      m: "mass"
+      a: "acceleration"
+    domain: "mechanics"
+    topic: "newton_laws"
+    description: "Net force equals mass times acceleration"
+    conditions: ["constant mass", "inertial frame"]
+    dimension_lhs: "M L T^-2"
+    dimension_rhs: "M L T^-2"
+
+  - id: "weight_def"
+    name: "Weight equation"
+    expression: "W = m * g"
+    variables: ["W", "m", "g"]
+    variable_quantities:
+      W: "weight"
+      m: "mass"
+      g: "gravity"
+    domain: "mechanics"
+    topic: "newton_laws"
+    description: "Weight is the force of gravity on a mass"
+    conditions: ["near Earth surface"]
+    dimension_lhs: "M L T^-2"
+    dimension_rhs: "M L T^-2"
+
+  - id: "friction_def"
+    name: "Friction force"
+    expression: "f = mu * N"
+    variables: ["f", "mu", "N"]
+    variable_quantities:
+      f: "friction_force"
+      mu: "friction_coefficient"
+      N: "normal_force"
+    domain: "mechanics"
+    topic: "newton_laws"
+    description: "Maximum static or kinetic friction force"
+    conditions: ["dry friction"]
+    dimension_lhs: "M L T^-2"
+    dimension_rhs: "M L T^-2"
+
+  - id: "net_force_1d"
+    name: "Net force 1D opposition"
+    expression: "F_net = F1 - F2"
+    variables: ["F_net", "F1", "F2"]
+    variable_quantities:
+      F_net: "force"
+      F1: "force"
+      F2: "force"
+    domain: "mechanics"
+    topic: "newton_laws"
+    description: "Net force from opposing collinear forces"
+    conditions: ["1D motion"]
+    dimension_lhs: "M L T^-2"
+    dimension_rhs: "M L T^-2"

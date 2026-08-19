@@ -6,7 +6,7 @@ import math
 from typing import Any
 
 import sympy
-from sympy import Eq, Symbol, solve, symbols
+from sympy import Eq, Symbol, nsimplify, solve, symbols
 
 from physics_reasoning.core.exceptions import (
     ExpressionParseError,
@@ -35,20 +35,7 @@ class SymbolicSolver:
         known_values: dict[str, float],
         target_variable: str,
     ) -> SolveResult:
-        """Solve a single equation for the target variable with given known values.
-
-        Example:
-            solve_single("F = m * a", {"F": 10.0, "m": 2.0}, "a")
-            -> SolveResult(target_variable="a", solutions=[5.0], is_numeric=True)
-
-        Args:
-            equation_str: String equation containing '=' (e.g. 'F = m * a').
-            known_values: Mapping of variable names to known numerical values.
-            target_variable: Name of variable to solve for (e.g. 'a').
-
-        Returns:
-            SolveResult containing solutions list and metadata.
-        """
+        """Solve a single equation for the target variable with given known values."""
         return self.solve_system(
             equations=[equation_str],
             known_values=known_values,
@@ -65,19 +52,10 @@ class SymbolicSolver:
 
         Algorithm:
         1. Parse all equation strings into SymPy Eq objects.
-        2. Create substitutions for known variables.
-        3. Substitute known values into equations.
-        4. Solve the system for the target variable (and intermediate variables).
-        5. Extract real, numeric solutions for target_variable.
-        6. Return formatted SolveResult.
-
-        Args:
-            equations: List of equation strings.
-            known_values: Dict mapping variable symbols to numeric values.
-            target_variable: Target variable name.
-
-        Returns:
-            SolveResult
+        2. Substitute known values into equations.
+        3. Solve the system for all unknown symbols (eliminating intermediate variables).
+        4. Extract real, numeric solutions for target_variable.
+        5. Return formatted SolveResult.
         """
         if not equations:
             return SolveResult(
@@ -88,13 +66,10 @@ class SymbolicSolver:
             )
 
         parsed_eqs: list[Eq] = []
-        all_symbols: set[Symbol] = set()
-
         for eq_str in equations:
             try:
                 eq = parse_equation_string(eq_str)
                 parsed_eqs.append(eq)
-                all_symbols.update(extract_symbols(eq))
             except Exception as e:
                 return SolveResult(
                     target_variable=target_variable,
@@ -105,11 +80,15 @@ class SymbolicSolver:
 
         target_sym = Symbol(target_variable)
 
-        # Substitute known values
+        # Build substitution dictionary with exact rationals/numbers to avoid float precision issues in SymPy
         subs_dict: dict[Symbol, Any] = {}
         for k, v in known_values.items():
             sym = Symbol(k)
-            subs_dict[sym] = v
+            if isinstance(v, (int, float)):
+                # Use rational to facilitate exact symbolic elimination
+                subs_dict[sym] = nsimplify(v)
+            else:
+                subs_dict[sym] = v
 
         subbed_eqs: list[Eq] = []
         for eq in parsed_eqs:
@@ -117,40 +96,60 @@ class SymbolicSolver:
             subbed_rhs = eq.rhs.subs(subs_dict)
             subbed_eqs.append(Eq(subbed_lhs, subbed_rhs))
 
-        # Solve system
-        try:
-            # We want to solve for target_sym, plus any other remaining unknown symbols
-            remaining_symbols = set()
-            for eq in subbed_eqs:
-                remaining_symbols.update(eq.free_symbols)
+        # Check if target was already directly known
+        if str(target_sym) in known_values:
+            val = float(known_values[str(target_sym)])
+            return SolveResult(
+                target_variable=target_variable,
+                solutions=[val],
+                is_numeric=True,
+            )
 
-            if target_sym not in remaining_symbols and target_sym in subs_dict:
-                # Target was already in known values
-                val = float(subs_dict[target_sym])
-                return SolveResult(
-                    target_variable=target_variable,
-                    solutions=[val],
-                    is_numeric=True,
-                )
+        # Collect all remaining free symbols
+        remaining_symbols: set[Symbol] = set()
+        for eq in subbed_eqs:
+            remaining_symbols.update(eq.free_symbols)
 
-            raw_solutions = solve(subbed_eqs, list(remaining_symbols), dict=True)
-        except Exception as e:
+        if not remaining_symbols:
             return SolveResult(
                 target_variable=target_variable,
                 solutions=[],
                 is_numeric=False,
-                warnings=[f"SymPy solve failed: {e}"],
+                warnings=["No unknown variables remain to solve"],
             )
 
+        # Solve system for all remaining unknowns simultaneously
+        raw_solutions: list[Any] = []
+        try:
+            sol = solve(subbed_eqs, list(remaining_symbols), dict=True)
+            if isinstance(sol, list):
+                raw_solutions.extend(sol)
+            elif isinstance(sol, dict):
+                raw_solutions.append(sol)
+        except Exception:
+            pass
+
+        # Fallback if simultaneous solve with full symbol list didn't yield dict solutions
         if not raw_solutions:
-            # Fallback: try solving single equations directly if multiple equations failed together
-            if len(subbed_eqs) == 1:
-                try:
-                    direct_solutions = solve(subbed_eqs[0], target_sym)
-                    if direct_solutions:
-                        raw_solutions = [{target_sym: sol} for sol in direct_solutions]
-                except Exception:
-                    pass
+            try:
+                # Try solve without restricting symbols
+                sol = solve(subbed_eqs, dict=True)
+                if isinstance(sol, list):
+                    raw_solutions.extend(sol)
+            except Exception:
+                pass
+
+        # Second fallback: solve single equation for target_sym directly
+        if not raw_solutions and len(subbed_eqs) == 1:
+            try:
+                sol = solve(subbed_eqs[0], target_sym)
+                if isinstance(sol, list):
+                    for s in sol:
+                        raw_solutions.append({target_sym: s})
+                elif sol is not None:
+                    raw_solutions.append({target_sym: sol})
+            except Exception:
+                pass
 
         if not raw_solutions:
             return SolveResult(
@@ -165,12 +164,15 @@ class SymbolicSolver:
         symbolic_solutions: list[str] = []
         warnings: list[str] = []
 
-        for sol_dict in raw_solutions:
-            if not isinstance(sol_dict, dict):
-                # single var return format
-                sol_val = sol_dict
+        for sol_item in raw_solutions:
+            sol_val = None
+            if isinstance(sol_item, dict):
+                for k, v in sol_item.items():
+                    if str(k) == target_variable or k == target_sym:
+                        sol_val = v
+                        break
             else:
-                sol_val = sol_dict.get(target_sym)
+                sol_val = sol_item
 
             if sol_val is None:
                 continue
@@ -178,7 +180,6 @@ class SymbolicSolver:
             try:
                 num_val = evaluate_numeric(sol_val)
                 if math.isfinite(num_val):
-                    # Dedup close solutions
                     if not any(
                         math.isclose(num_val, existing, abs_tol=self.numerical_tolerance)
                         for existing in numeric_solutions
@@ -214,21 +215,13 @@ class SymbolicSolver:
         equation_str: str,
         values: dict[str, float],
     ) -> tuple[bool, float]:
-        """Verify if given variable values satisfy an equation by computing residual.
-
-        Args:
-            equation_str: Equation like 'F = m * a'
-            values: Mapping of all variables to values, e.g. {'F': 10, 'm': 2, 'a': 5}
-
-        Returns:
-            (is_satisfied, residual)
-        """
+        """Verify if given variable values satisfy an equation by computing residual."""
         try:
             eq = parse_equation_string(equation_str)
         except Exception:
             return False, float("inf")
 
-        subs_dict = {Symbol(k): v for k, v in values.items()}
+        subs_dict = {Symbol(k): nsimplify(v) for k, v in values.items()}
         lhs_val = eq.lhs.subs(subs_dict)
         rhs_val = eq.rhs.subs(subs_dict)
 
