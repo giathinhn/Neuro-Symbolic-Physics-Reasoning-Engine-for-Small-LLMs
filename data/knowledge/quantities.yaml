@@ -47,6 +47,24 @@ quantities:
     si_unit: "meter"
     aliases: ["distance", "height", "length", "position change", "depth"]
 
+  - name: "length"
+    symbol: "l"
+    dimension: "L"
+    si_unit: "meter"
+    aliases: ["length", "long", "chieu dai"]
+
+  - name: "width"
+    symbol: "w"
+    dimension: "L"
+    si_unit: "meter"
+    aliases: ["width", "wide", "chieu rong"]
+
+  - name: "radius"
+    symbol: "r"
+    dimension: "L"
+    si_unit: "meter"
+    aliases: ["radius", "ban kinh"]
+
   - name: "height"
     symbol: "h"
     dimension: "L"

@@ -380,7 +380,9 @@ class PipelineOrchestrator:
             last_solve_result = solve_res
 
             # Determine answer unit
-            target_q = next((q for q in quantities if q.is_target or q.symbol == target_var), None)
+            target_q = next((q for q in quantities if q.symbol == target_var), None)
+            if not target_q:
+                target_q = next((q for q in quantities if q.is_target), None)
             target_unit = target_q.unit if target_q and target_q.unit else parsed_output.proposed_unit
             if not target_unit and target_q and target_q.si_unit:
                 target_unit = target_q.si_unit
@@ -403,13 +405,41 @@ class PipelineOrchestrator:
                     answer_value = selected_val
                 answer_unit = target_unit
 
+            # Fill in missing variable units from KnowledgeBase
+            from physics_reasoning.solver.expression_parser import extract_symbol_names
+            for eq_expr in eq_expressions:
+                for sym in extract_symbol_names(eq_expr):
+                    if sym not in var_units:
+                        kb_q = self.kb.get_quantity_by_symbol(sym)
+                        if kb_q and kb_q.si_unit:
+                            var_units[sym] = kb_q.si_unit
+
             # Verification Check
+            all_values_for_verification = dict(known_values_si)
+            if answer_value is not None and target_var:
+                all_values_for_verification[target_var] = selected_val
+
+            # If intermediate variables were solved, also evaluate them
+            if solve_res.is_numeric:
+                for eq_expr in eq_expressions:
+                    if "=" in eq_expr:
+                        lhs_part, rhs_part = eq_expr.split("=", 1)
+                        lhs_part, rhs_part = lhs_part.strip(), rhs_part.strip()
+                        if lhs_part not in all_values_for_verification:
+                            try:
+                                from physics_reasoning.solver.expression_parser import parse_expression
+                                sym_expr = parse_expression(rhs_part)
+                                res_val = float(sym_expr.evalf(subs={k: v for k, v in all_values_for_verification.items() if k in [str(s) for s in sym_expr.free_symbols]}))
+                                all_values_for_verification[lhs_part] = res_val
+                            except Exception:
+                                pass
+
             v_res = self.verifier.verify(
                 parsed_output=parsed_output,
                 solve_result=solve_res,
                 equations_used=equations_used,
                 var_units=var_units,
-                all_values=known_values_si,
+                all_values=all_values_for_verification,
             )
             last_verification_result = v_res
 

@@ -168,11 +168,23 @@ def parse_equation_string(
     return Eq(lhs_expr, rhs_expr)
 
 
-def extract_symbols(expr: Expr | Eq) -> set[Symbol]:
-    """Extract all free symbols from a SymPy Expr or Eq."""
+def extract_symbols(expr: Expr | Eq | str) -> set[Symbol]:
+    """Extract all free symbols from a SymPy Expr, Eq, or equation string."""
+    if isinstance(expr, str):
+        if "=" in expr:
+            parsed = parse_equation_string(expr)
+        else:
+            parsed = parse_expression(expr)
+        return set(parsed.free_symbols)
     return set(expr.free_symbols)
 
 
-def extract_symbol_names(expr: Expr | Eq) -> list[str]:
+def extract_symbol_names(expr: Expr | Eq | str) -> list[str]:
     """Extract all free symbol names as sorted strings."""
+    if isinstance(expr, str):
+        if "=" in expr:
+            parsed = parse_equation_string(expr)
+        else:
+            parsed = parse_expression(expr)
+        return sorted([str(s) for s in parsed.free_symbols])
     return sorted([str(s) for s in expr.free_symbols])

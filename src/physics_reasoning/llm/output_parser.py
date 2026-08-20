@@ -35,6 +35,35 @@ def _extract_outermost_braces(text: str) -> str | None:
     return None
 
 
+def _normalize_parsed_dict(data: Any) -> Any:
+    """Normalize fields in raw parsed dict to be resilient against LLM quirks."""
+    if not isinstance(data, dict):
+        return data
+
+    if "quantities" in data and isinstance(data["quantities"], list):
+        target_var = data.get("target_variable")
+        for q in data["quantities"]:
+            if isinstance(q, dict):
+                role = str(q.get("role", "")).lower().strip()
+                if role in ("given", "known"):
+                    q["role"] = "given"
+                elif role in ("target", "to_find", "find", "solve_for"):
+                    q["role"] = "target"
+                elif role in ("unknown", "intermediate", "calculated"):
+                    if target_var and q.get("symbol") == target_var:
+                        q["role"] = "target"
+                    else:
+                        q["role"] = "intermediate"
+                elif not role:
+                    if target_var and q.get("symbol") == target_var:
+                        q["role"] = "target"
+                    elif q.get("value") is not None:
+                        q["role"] = "given"
+                    else:
+                        q["role"] = "intermediate"
+    return data
+
+
 def parse_llm_output(raw_output: str) -> LLMParsedOutput:
     """Parse raw LLM string into validated LLMParsedOutput model.
 
@@ -60,7 +89,7 @@ def parse_llm_output(raw_output: str) -> LLMParsedOutput:
     # Strategy 1: Direct parse
     try:
         data = json.loads(clean_text)
-        return LLMParsedOutput.model_validate(data)
+        return LLMParsedOutput.model_validate(_normalize_parsed_dict(data))
     except Exception:
         pass
 
@@ -69,7 +98,7 @@ def parse_llm_output(raw_output: str) -> LLMParsedOutput:
     if code_block:
         try:
             data = json.loads(code_block)
-            return LLMParsedOutput.model_validate(data)
+            return LLMParsedOutput.model_validate(_normalize_parsed_dict(data))
         except Exception:
             pass
 
@@ -78,7 +107,7 @@ def parse_llm_output(raw_output: str) -> LLMParsedOutput:
     if outer_braces:
         try:
             data = json.loads(outer_braces)
-            return LLMParsedOutput.model_validate(data)
+            return LLMParsedOutput.model_validate(_normalize_parsed_dict(data))
         except Exception:
             pass
 

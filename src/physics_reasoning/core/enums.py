@@ -50,6 +50,7 @@ class QuantityRole(StrEnum):
     GIVEN = "given"
     TARGET = "target"
     INTERMEDIATE = "intermediate"
+    UNKNOWN = "unknown"
 
 
 class PhysicsDomain(StrEnum):

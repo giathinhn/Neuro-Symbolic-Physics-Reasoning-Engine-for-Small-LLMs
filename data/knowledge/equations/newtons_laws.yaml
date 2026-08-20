@@ -58,3 +58,19 @@ equations:
     conditions: ["1D motion"]
     dimension_lhs: "M L T^-2"
     dimension_rhs: "M L T^-2"
+
+  - id: "volume_box_def"
+    name: "Volume of a rectangular box"
+    expression: "V = l * w * h"
+    variables: ["V", "l", "w", "h"]
+    variable_quantities:
+      V: "volume"
+      l: "length"
+      w: "width"
+      h: "height"
+    domain: "mechanics"
+    topic: "newton_laws"
+    description: "Volume of a rectangular prism equals length times width times height"
+    conditions: []
+    dimension_lhs: "L^3"
+    dimension_rhs: "L^3"
