@@ -1,0 +1,103 @@
+equations:
+  - id: "ohm_law"
+    name: "Ohm's Law"
+    expression: "I = U / R"
+    variables: ["I", "U", "R"]
+    variable_quantities:
+      I: "current"
+      U: "voltage"
+      R: "resistance"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Electric current equals voltage divided by resistance"
+    conditions: ["constant temperature"]
+    dimension_lhs: "I"
+    dimension_rhs: "I"
+
+  - id: "ohm_law_resistor_1"
+    name: "Ohm's Law for Resistor 1"
+    expression: "I_1 = U_1 / R_1"
+    variables: ["I_1", "U_1", "R_1"]
+    variable_quantities:
+      I_1: "current_1"
+      U_1: "voltage_1"
+      R_1: "resistance_1"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Current through resistor 1 equals voltage across resistor 1 divided by R1"
+    conditions: []
+    dimension_lhs: "I"
+    dimension_rhs: "I"
+
+  - id: "ohm_law_resistor_2"
+    name: "Ohm's Law for Resistor 2"
+    expression: "I_2 = U_2 / R_2"
+    variables: ["I_2", "U_2", "R_2"]
+    variable_quantities:
+      I_2: "current_2"
+      U_2: "voltage_2"
+      R_2: "resistance_2"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Current through resistor 2 equals voltage across resistor 2 divided by R2"
+    conditions: []
+    dimension_lhs: "I"
+    dimension_rhs: "I"
+
+  - id: "parallel_voltage_1"
+    name: "Parallel Voltage 1"
+    expression: "U_1 = U"
+    variables: ["U_1", "U"]
+    variable_quantities:
+      U_1: "voltage_1"
+      U: "voltage"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Voltage across parallel branch 1 equals total voltage"
+    conditions: ["parallel circuit"]
+    dimension_lhs: "M L^2 T^-3 I^-1"
+    dimension_rhs: "M L^2 T^-3 I^-1"
+
+  - id: "parallel_voltage_2"
+    name: "Parallel Voltage 2"
+    expression: "U_2 = U"
+    variables: ["U_2", "U"]
+    variable_quantities:
+      U_2: "voltage_2"
+      U: "voltage"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Voltage across parallel branch 2 equals total voltage"
+    conditions: ["parallel circuit"]
+    dimension_lhs: "M L^2 T^-3 I^-1"
+    dimension_rhs: "M L^2 T^-3 I^-1"
+
+  - id: "parallel_resistors_two"
+    name: "Equivalent Resistance for Two Parallel Resistors"
+    expression: "R_eq = (R_1 * R_2) / (R_1 + R_2)"
+    variables: ["R_eq", "R_1", "R_2"]
+    variable_quantities:
+      R_eq: "equivalent_resistance"
+      R_1: "resistance_1"
+      R_2: "resistance_2"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Equivalent resistance for two resistors connected in parallel"
+    conditions: ["two resistors in parallel"]
+    dimension_lhs: "M L^2 T^-3 I^-2"
+    dimension_rhs: "M L^2 T^-3 I^-2"
+
+  - id: "series_resistors_two"
+    name: "Equivalent Resistance for Two Series Resistors"
+    expression: "R_eq = R_1 + R_2"
+    variables: ["R_eq", "R_1", "R_2"]
+    variable_quantities:
+      R_eq: "equivalent_resistance"
+      R_1: "resistance_1"
+      R_2: "resistance_2"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Equivalent resistance for two resistors connected in series"
+    conditions: ["two resistors in series"]
+    dimension_lhs: "M L^2 T^-3 I^-2"
+    dimension_rhs: "M L^2 T^-3 I^-2"

@@ -148,3 +148,63 @@ quantities:
     dimension: "L^2"
     si_unit: "meter ** 2"
     aliases: ["surface area", "cross-sectional area"]
+
+  - name: "voltage"
+    symbol: "U"
+    dimension: "M L^2 T^-3 I^-1"
+    si_unit: "volt"
+    aliases: ["electric potential", "potential difference", "voltage", "V"]
+
+  - name: "voltage_1"
+    symbol: "U_1"
+    dimension: "M L^2 T^-3 I^-1"
+    si_unit: "volt"
+    aliases: ["voltage 1", "potential difference 1"]
+
+  - name: "voltage_2"
+    symbol: "U_2"
+    dimension: "M L^2 T^-3 I^-1"
+    si_unit: "volt"
+    aliases: ["voltage 2", "potential difference 2"]
+
+  - name: "current"
+    symbol: "I"
+    dimension: "I"
+    si_unit: "ampere"
+    aliases: ["electric current", "current intensity"]
+
+  - name: "current_1"
+    symbol: "I_1"
+    dimension: "I"
+    si_unit: "ampere"
+    aliases: ["current 1", "current through R1"]
+
+  - name: "current_2"
+    symbol: "I_2"
+    dimension: "I"
+    si_unit: "ampere"
+    aliases: ["current 2", "current through R2"]
+
+  - name: "resistance"
+    symbol: "R"
+    dimension: "M L^2 T^-3 I^-2"
+    si_unit: "ohm"
+    aliases: ["electric resistance", "resistor"]
+
+  - name: "resistance_1"
+    symbol: "R_1"
+    dimension: "M L^2 T^-3 I^-2"
+    si_unit: "ohm"
+    aliases: ["resistance 1", "resistor 1"]
+
+  - name: "resistance_2"
+    symbol: "R_2"
+    dimension: "M L^2 T^-3 I^-2"
+    si_unit: "ohm"
+    aliases: ["resistance 2", "resistor 2"]
+
+  - name: "equivalent_resistance"
+    symbol: "R_eq"
+    dimension: "M L^2 T^-3 I^-2"
+    si_unit: "ohm"
+    aliases: ["equivalent resistance", "total resistance", "R_td"]

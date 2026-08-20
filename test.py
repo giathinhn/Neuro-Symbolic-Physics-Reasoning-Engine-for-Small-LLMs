@@ -7,7 +7,7 @@ from physics_reasoning.pipeline.orchestrator import PipelineOrchestrator
 orchestrator = PipelineOrchestrator()
 
 # Đổi câu hỏi của bạn tại đây
-question = "Tại sao cánh quạt bị bám bụi sau 1 thời gian sử dụng."
+question = "Một khối kim loại hình hộp chữ nhật có kích thước 5 cm x 10 cm x 20 cm và khối lượng 2,7 kg. Khối lượng riêng của kim loại này là bao nhiêu?"
 print(f"[*] Đang xử lý câu hỏi: {question}\n")
 
 solution = orchestrator.solve(question)

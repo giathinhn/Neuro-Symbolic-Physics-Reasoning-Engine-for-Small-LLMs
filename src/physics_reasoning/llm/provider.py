@@ -51,10 +51,10 @@ class LiteLLMProvider(LLMProvider):
 
     def __init__(
         self,
-        model_name: str = "ollama_chat/qwen3.5:9b",
+        model_name: str = "ollama_chat/qwen2.5:3b",
         api_key: str | None = None,
         api_base: str | None = None,
-        timeout: float = 180.0,
+        timeout: float = 60.0,
     ):
         self.model_name = model_name
         self.api_key = api_key
