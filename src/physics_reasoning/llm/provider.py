@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import os
 import time
 from abc import ABC, abstractmethod
 from typing import Any
@@ -49,14 +51,17 @@ class LiteLLMProvider(LLMProvider):
 
     def __init__(
         self,
-        model_name: str = "ollama/phi3:mini",
+        model_name: str = "ollama_chat/qwen3.5:9b",
         api_key: str | None = None,
         api_base: str | None = None,
-        timeout: float = 60.0,
+        timeout: float = 180.0,
     ):
         self.model_name = model_name
         self.api_key = api_key
-        self.api_base = api_base
+        if not api_base and ("ollama" in model_name.lower()):
+            self.api_base = os.getenv("OLLAMA_API_BASE", "http://localhost:11434")
+        else:
+            self.api_base = api_base or os.getenv("LLM_API_BASE")
         self.timeout = timeout
 
     @retry(

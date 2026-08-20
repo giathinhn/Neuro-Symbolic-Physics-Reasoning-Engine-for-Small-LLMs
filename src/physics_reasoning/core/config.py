@@ -16,10 +16,10 @@ class PipelineConfig(BaseModel):
     """Main pipeline configuration."""
 
     # LLM settings
-    model_name: str = "ollama/phi3:mini"
+    model_name: str = "ollama_chat/qwen3.5:9b"
     temperature: float = 0.1
     max_tokens: int = 2048
-    timeout_seconds: float = 120.0
+    timeout_seconds: float = 180.0
 
     # Pipeline settings
     max_retries: int = 3

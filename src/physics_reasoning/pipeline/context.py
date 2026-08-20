@@ -38,17 +38,20 @@ class SolveContext:
     def add_step(
         self,
         action: str,
-        input_data: dict,
-        output_data: dict,
+        input_data: dict | None = None,
+        output_data: dict | None = None,
         tool_name: str | None = None,
         duration_ms: float = 0.0,
+        output: dict | None = None,
     ) -> None:
         """Record a pipeline execution step."""
+        actual_output = output_data if output_data is not None else (output or {})
+        actual_input = input_data or {}
         step = SolveStep(
             step_number=len(self.solve_steps) + 1,
             action=action,
-            input_data=input_data,
-            output_data=output_data,
+            input_data=actual_input,
+            output_data=actual_output,
             tool_name=tool_name,
             timestamp=datetime.now(),
             duration_ms=duration_ms,

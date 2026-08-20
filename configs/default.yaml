@@ -2,10 +2,10 @@
 # Override via environment variables or by passing a different config file.
 
 # LLM settings
-model_name: "ollama/phi3:mini"
+model_name: "ollama_chat/qwen3.5:9b"
 temperature: 0.1
 max_tokens: 2048
-timeout_seconds: 120.0
+timeout_seconds: 180.0
 
 # Pipeline settings
 max_retries: 3

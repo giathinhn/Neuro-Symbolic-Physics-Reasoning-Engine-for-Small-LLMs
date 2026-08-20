@@ -5,7 +5,7 @@ from __future__ import annotations
 import time
 from typing import Any
 
-from physics_reasoning.core.config import PipelineConfig
+from physics_reasoning.core.config import PipelineConfig, load_config
 from physics_reasoning.core.enums import ProblemType, QuantityRole
 from physics_reasoning.core.exceptions import LLMError, LLMOutputParseError
 from physics_reasoning.core.models import (
@@ -59,8 +59,11 @@ class PipelineOrchestrator:
         verification_pipeline: VerificationPipeline | None = None,
         qualitative_verification_pipeline: QualitativeVerificationPipeline | None = None,
     ):
-        self.config = config or PipelineConfig()
-        self.llm = llm_provider or LiteLLMProvider(model_name=self.config.model_name)
+        self.config = config or load_config()
+        self.llm = llm_provider or LiteLLMProvider(
+            model_name=self.config.model_name,
+            timeout=self.config.timeout_seconds,
+        )
 
         self.kb = knowledge_base or KnowledgeBase(self.config.knowledge_base_path)
         if not self.kb.equations:

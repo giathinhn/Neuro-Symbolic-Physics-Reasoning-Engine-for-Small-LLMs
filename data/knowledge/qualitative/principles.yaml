@@ -138,3 +138,19 @@ principles:
       - "Khi dùi các lỗ ở các độ cao khác nhau trên thành bình chứa nước, tia nước ở lỗ dưới cùng bắn ra xa nhất"
     common_misconceptions:
       - "Áp suất nước chỉ ép xuống đáy chứ không tác dụng lên thành bình"
+
+  # 9. Điện học - Nhiễm điện do cọ xát (Electrostatic Charging by Friction)
+  - id: "electrostatic_charging_friction"
+    name: "Sự nhiễm điện do cọ xát và khả năng hút các vật nhẹ"
+    domain: "electricity_magnetism"
+    description: "Có thể làm nhiễm điện (tích điện) nhiều vật bằng cách cọ xát. Vật bị nhiễm điện có khả năng hút các vật khác (đặc biệt là các vật nhỏ, nhẹ lơ lửng như hạt bụi, mẩu giấy vụn, sợi bông)."
+    formula_or_rule: "Cọ xát với không khí/vật thể => Vật tích điện => Sinh lực tĩnh điện hút các hạt bụi nhẹ"
+    keywords: ["nhiễm điện", "cọ xát", "cánh quạt", "bám bụi", "hút bụi", "thước nhựa", "mảnh giấy", "tĩnh điện", "hút vật nhẹ"]
+    preconditions: ["có sự cọ xát giữa các vật liệu cách điện hoặc môi trường không khí"]
+    typical_phenomena:
+      - "Cánh quạt điện sau một thời gian sử dụng bị bám nhiều bụi, đặc biệt ở mép cánh quạt (khi quay cọ xát mạnh với không khí bị nhiễm điện nên hút các hạt bụi trong không khí)"
+      - "Cọ xát thước nhựa vào vải len/khô rồi đưa lại gần mẩu giấy vụn thì thước hút mẩu giấy"
+      - "Chải đầu bằng lược nhựa vào mùa hanh khô, lược hút các sợi tóc làm tóc dựng đứng"
+    common_misconceptions:
+      - "Cánh quạt quay tạo ra gió đẩy bụi bám vào cánh quạt"
+      - "Cánh quạt dính bụi chỉ vì dầu mỡ từ động cơ chảy ra"
