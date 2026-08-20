@@ -59,6 +59,13 @@ class QualitativeKnowledgeBase:
         Ranks by matching keywords, typical phenomena, and domain tokens.
         """
         q_lower = query_text.lower()
+        stop_words = {
+            "tại", "sao", "khi", "thì", "lại", "bị", "có", "là", "và", "trong",
+            "cho", "của", "được", "ra", "vào", "với", "hơn", "so", "ở", "các",
+            "những", "một", "nào", "hãy", "gì", "như", "thế", "này", "why", "how", "what", "is", "the", "a", "an"
+        }
+        q_words = set(re.findall(r"\w+", q_lower)) - stop_words
+
         scored: list[tuple[float, QualitativePrinciple]] = []
 
         for p in self.principles.values():
@@ -66,17 +73,18 @@ class QualitativeKnowledgeBase:
 
             # Check keywords
             for kw in p.keywords:
-                if kw.lower() in q_lower:
-                    score += 3.0
+                kw_lower = kw.lower()
+                if kw_lower in q_lower:
+                    score += 10.0
 
             # Check typical phenomena similarity
             for tp in p.typical_phenomena:
-                # Count word overlaps
-                tp_words = set(re.findall(r"\w+", tp.lower()))
-                q_words = set(re.findall(r"\w+", q_lower))
+                tp_words = set(re.findall(r"\w+", tp.lower())) - stop_words
                 overlap = len(tp_words.intersection(q_words))
                 if overlap >= 2:
-                    score += overlap * 1.5
+                    score += overlap * 4.0
+                elif overlap == 1:
+                    score += 2.0
 
             if score > 0:
                 scored.append((score, p))
