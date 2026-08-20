@@ -324,6 +324,52 @@ class ToolCallRecord(BaseModel):
 
 
 # ---------------------------------------------------------------------------
+# Qualitative Phenomenon Explanation Models
+# ---------------------------------------------------------------------------
+
+class QualitativePrinciple(BaseModel):
+    """A physical principle or qualitative law in the knowledge base."""
+
+    id: str
+    name: str
+    domain: str
+    description: str
+    formula_or_rule: str = ""
+    keywords: list[str] = Field(default_factory=list)
+    preconditions: list[str] = Field(default_factory=list)
+    typical_phenomena: list[str] = Field(default_factory=list)
+    common_misconceptions: list[str] = Field(default_factory=list)
+
+
+class CausalStep(BaseModel):
+    """A single step in a qualitative causal explanation chain."""
+
+    step_number: int
+    state_or_action: str
+    physical_mechanism: str
+    governing_principle: str = ""
+
+
+class QualitativeParsedOutput(BaseModel):
+    """Structured qualitative explanation output expected from the LLM."""
+
+    problem_understanding: str = ""
+    observed_phenomenon: str = ""
+    core_principles: list[str] = Field(default_factory=list)
+    causal_chain: list[CausalStep] = Field(default_factory=list)
+    conclusion: str = ""
+    scientific_keywords: list[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def check_has_qualitative_content(self) -> QualitativeParsedOutput:
+        if not self.causal_chain and not self.conclusion:
+            raise ValueError(
+                "Qualitative output must contain at least a causal chain or a conclusion"
+            )
+        return self
+
+
+# ---------------------------------------------------------------------------
 # Solution
 # ---------------------------------------------------------------------------
 
@@ -340,13 +386,22 @@ class SolveStep(BaseModel):
 
 
 class Solution(BaseModel):
-    """Complete solution produced by the pipeline."""
+    """Complete solution produced by the pipeline (quantitative or qualitative)."""
 
     problem_id: str = Field(default_factory=lambda: str(uuid4()))
+    is_qualitative: bool = False
+
+    # Quantitative results
     answer_value: float | None = None
     answer_unit: str | None = None
     equations_used: list[str] = Field(default_factory=list)
     quantities_extracted: list[PhysicsQuantity] = Field(default_factory=list)
+
+    # Qualitative explanation results
+    qualitative_output: QualitativeParsedOutput | None = None
+    principles_applied: list[str] = Field(default_factory=list)
+    final_explanation: str | None = None
+
     solve_steps: list[SolveStep] = Field(default_factory=list)
     verification_result: VerificationResult | None = None
     num_attempts: int = 1

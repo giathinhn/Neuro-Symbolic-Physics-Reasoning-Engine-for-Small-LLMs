@@ -1,0 +1,140 @@
+principles:
+  # 1. Cơ học - Quán tính (Inertia & Motion)
+  - id: "inertia_law"
+    name: "Định luật quán tính (Tính quán tính của vật)"
+    domain: "inertia_motion"
+    description: "Quán tính là tính chất giữ nguyên vận tốc (cả về hướng và độ lớn) của mọi vật. Khi không có lực tác dụng hoặc các lực cân bằng, vật đứng yên sẽ tiếp tục đứng yên, vật đang chuyển động sẽ tiếp tục chuyển động thẳng đều. Khi có lực tác dụng, vận tốc của vật không thể thay đổi đột ngột ngay lập tức mà cần có thời gian."
+    formula_or_rule: "F_net = 0 => v = const; m càng lớn => quán tính càng lớn"
+    keywords: ["quán tính", "inertia", "giữ nguyên vận tốc", "thay đổi đột ngột", "không kịp đổi vận tốc", "phanh gấp", "rẽ đột ngột", "giũ bụi", "vẩy mực"]
+    preconditions: ["vật có khối lượng", "có sự thay đổi trạng thái chuyển động của hệ quy chiếu hoặc vật liên kết"]
+    typical_phenomena:
+      - "Xe phanh gấp thì người ngồi trên xe ngã chúi về phía trước"
+      - "Xe tăng tốc đột ngột thì người ngả về phía sau"
+      - "Xe rẽ phải thì người nghiêng sang trái"
+      - "Giũ mạnh áo quần làm bụi bẩn rơi ra"
+      - "Vẩy mạnh bút máy làm mực văng ra ngoài"
+      - "Chạy lấy đà trước khi nhảy xa"
+      - "Đập cán búa xuống đất để tra chặt đầu búa"
+    common_misconceptions:
+      - "Có lực quán tính tác dụng đẩy người về phía trước khi xe phanh"
+      - "Quán tính chỉ xuất hiện khi vật chuyển động nhanh"
+
+  # 2. Cơ học - Áp suất chất rắn (Solid Pressure)
+  - id: "solid_pressure_area"
+    name: "Tác dụng của áp suất và diện tích tiếp xúc trong chất rắn"
+    domain: "pressure_force"
+    description: "Áp suất là độ lớn của áp lực trên một đơn vị diện tích bị ép: p = F / S. Khi áp lực F không đổi, nếu giảm diện tích tiếp xúc S thì áp suất p tăng lên (tác dụng ép mạnh hơn); nếu tăng diện tích tiếp xúc S thì áp suất p giảm đi (tác dụng ép nhẹ hơn, tránh lún)."
+    formula_or_rule: "p = F / S (F const: S giảm => p tăng; S tăng => p giảm)"
+    keywords: ["áp suất", "áp lực", "diện tích tiếp xúc", "nhọn", "bản rộng", "bánh xích", "lưỡi dao", "mũi kim", "đầu đinh", "lún", "bị ép"]
+    preconditions: ["áp lực F tác dụng vuông góc lên mặt bị ép"]
+    typical_phenomena:
+      - "Đầu đinh và mũi kim làm nhọn để dễ cắm/đâm xuyên vào vật"
+      - "Lưỡi dao, kéo mài sắc mỏng để dễ cắt vật"
+      - "Xe tăng, máy xúc dùng bánh xích thay vì bánh lốp để không bị lún vào bùn đất"
+      - "Móng nhà xây to bản và dày để giảm áp suất tác dụng lên nền đất"
+      - "Kê ván gỗ khi đi qua bãi lầy để tránh lún chân"
+      - "Dây quai cặp sách làm to bản để đỡ đau vai"
+    common_misconceptions:
+      - "Đầu đinh nhọn làm lực tác dụng lớn hơn"
+      - "Áp lực và áp suất là cùng một đại lượng"
+
+  # 3. Cơ học - Lực ma sát (Friction)
+  - id: "friction_mechanisms"
+    name: "Tác dụng và sự thay đổi của lực ma sát (Trượt, Lăn, Nghỉ)"
+    domain: "friction"
+    description: "Lực ma sát xuất hiện ở mặt tiếp xúc giữa hai vật và cản trở chuyển động tương đối. Ma sát có thể có ích hoặc có hại. Để tăng ma sát có ích: tăng độ nhám bề mặt, tạo khía rãnh, tăng áp lực. Để giảm ma sát có hại: làm nhẵn bề mặt, tra dầu mỡ bôi trơn, thay ma sát trượt bằng ma sát lăn (ổ bi)."
+    formula_or_rule: "F_ms = mu * N; F_ms_lan << F_ms_truot"
+    keywords: ["lực ma sát", "ma sát trượt", "ma sát lăn", "ma sát nghỉ", "khía rãnh", "đế giày", "lốp xe", "tra dầu", "ổ bi", "trơn trượt", "rải cát"]
+    preconditions: ["tiếp xúc giữa hai bề mặt vật rắn"]
+    typical_phenomena:
+      - "Mặt dưới đế giày và lốp xe có khía rãnh để tăng ma sát, chống trơn trượt"
+      - "Rải cát sỏi lên đường ray hoặc mặt đường đóng băng để tăng ma sát"
+      - "Vận động viên cử tạ, thể dục dụng cụ thoa bột magie vào tay để tăng ma sát"
+      - "Tra dầu mỡ vào xích líp xe đạp để giảm ma sát và chống mòn"
+      - "Sử dụng con lăn hoặc ổ bi để chuyển ma sát trượt thành ma sát lăn"
+    common_misconceptions:
+      - "Ma sát luôn luôn có hại và cản trở cuộc sống"
+      - "Lốp xe có rãnh là để xe chạy êm hơn chứ không phải ma sát"
+
+  # 4. Cơ học - Lực đẩy Ác-si-mét & Điều kiện Chìm / Nổi (Buoyancy)
+  - id: "archimedes_buoyancy_floating"
+    name: "Lực đẩy Ác-si-mét và điều kiện vật chìm, nổi, lơ lửng"
+    domain: "archimedes_buoyancy"
+    description: "Một vật nhúng trong chất lỏng chịu lực đẩy Ác-si-mét hướng thẳng đứng từ dưới lên bằng trọng lượng phần chất lỏng bị chiếm chỗ: F_A = d_l * V. Vật nổi khi trọng lượng riêng trung bình d_v < d_l (hoặc F_A > P khi chìm hoàn toàn); vật lơ lửng khi d_v = d_l; vật chìm khi d_v > d_l."
+    formula_or_rule: "F_A = d_liquid * V_displaced; d_v < d_l => nổi; d_v > d_l => chìm"
+    keywords: ["lực đẩy ác-si-mét", "archimedes", "chìm", "nổi", "lơ lửng", "trọng lượng riêng", "thể tích chiếm chỗ", "tàu thủy", "viên bi sắt", "thuyền sắt"]
+    preconditions: ["vật đặt trong chất lỏng hoặc chất khí có trọng trường"]
+    typical_phenomena:
+      - "Khối sắt đặc bị chìm nhưng tàu thủy bằng thép rất nặng lại nổi trên mặt nước (do thiết kế rỗng làm tăng thể tích chiếm chỗ, giảm trọng lượng riêng trung bình)"
+      - "Lá nhôm vo tròn bị chìm nhưng gập thành thuyền lại nổi"
+      - "Bong bóng khí dưới nước càng nổi lên gần mặt nước càng to ra"
+      - "Bóng bay bơm khí Heli hoặc Hydro bay lên được trong không khí"
+    common_misconceptions:
+      - "Vật nặng thì chìm, vật nhẹ thì nổi bất kể thể tích và hình dạng"
+      - "Tàu nổi vì làm bằng kim loại đặc biệt nhẹ hơn nước"
+
+  # 5. Nhiệt học - Sự dãn nở vì nhiệt không đồng đều (Thermal Expansion)
+  - id: "thermal_expansion_unequal"
+    name: "Sự dãn nở vì nhiệt không đồng đều và ứng suất nhiệt"
+    domain: "thermal_expansion_heat"
+    description: "Các chất nở ra khi nóng lên và co lại khi lạnh đi. Khi các phần của cùng một vật hoặc các vật tiếp xúc dãn nở không đồng đều (do chênh lệch nhiệt độ hoặc chất liệu dẫn nhiệt kém) và bị ngăn cản, sẽ sinh ra lực rất lớn (nội ứng suất) làm cong vênh hoặc vỡ nứt vật."
+    formula_or_rule: "Delta_L = L0 * alpha * Delta_T; Dãn nở bị cản trở => sinh ngoại lực lớn"
+    keywords: ["nở vì nhiệt", "dãn nở", "co lại", "dẫn nhiệt kém", "cốc dày", "cốc mỏng", "nước sôi", "đường ray", "khe hở", "băng kép", "nứt", "vỡ"]
+    preconditions: ["có sự thay đổi nhiệt độ và truyền nhiệt trong vật thể"]
+    typical_phenomena:
+      - "Rót nước sôi vào cốc thủy tinh dày dễ vỡ hơn cốc thủy tinh mỏng (lớp trong tiếp xúc nước nóng nở ra ngay trong khi lớp ngoài chưa kịp nóng và chưa nở, làm nứt vỡ cốc)"
+      - "Đặt khe hở ở các mối nối đường ray xe lửa để tránh bị cong vênh khi trời nắng nóng"
+      - "Băng kép uốn cong khi bị nung nóng do hai kim loại dãn nở vì nhiệt khác nhau (ứng dụng trong rơ-le nhiệt bàn là)"
+      - "Khi bơm căng bánh xe đạp rồi để ngoài trời nắng to bánh dễ bị nổ (không khí trong ruột dãn nở sinh áp suất lớn)"
+    common_misconceptions:
+      - "Cốc dày dễ vỡ hơn cốc mỏng vì cốc dày giữ nhiệt lâu hơn"
+      - "Khi nóng lên các chất chỉ nở theo chiều dài chứ không nở theo thể tích"
+
+  # 6. Nhiệt học - Dẫn nhiệt và Truyền nhiệt (Heat Conduction & Transfer)
+  - id: "heat_conduction_rate"
+    name: "Tính dẫn nhiệt của các chất và cơ chế truyền nhiệt"
+    domain: "heat_transfer"
+    description: "Dẫn nhiệt là sự truyền nhiệt năng từ phần này sang phần khác của một vật hoặc giữa các vật tiếp xúc. Kim loại dẫn nhiệt tốt nhất; chất rắn phi kim, chất lỏng dẫn nhiệt kém; chất khí dẫn nhiệt kém nhất (chân không không dẫn nhiệt). Cảm giác nóng/lạnh khi chạm tay phụ thuộc vào tốc độ dẫn nhiệt ra/vào tay."
+    formula_or_rule: "K_metal >> K_wood, K_water >> K_air"
+    keywords: ["dẫn nhiệt", "truyền nhiệt", "kim loại", "gỗ", "sứ", "chạm vào", "cảm giác lạnh", "áo bông", "nồi kim loại", "quai nhựa"]
+    preconditions: ["tiếp xúc nhiệt giữa các vật có nhiệt độ chênh lệch"]
+    typical_phenomena:
+      - "Vào mùa đông sờ vào kim loại thấy lạnh hơn sờ vào thanh gỗ dù cùng nhiệt độ phòng (kim loại dẫn nhiệt từ tay ra nhanh hơn)"
+      - "Xoong nồi thường làm bằng nhôm/đồng/inox nhưng quai cầm lại làm bằng gỗ hoặc nhựa cách nhiệt"
+      - "Mặc nhiều áo mỏng ấm hơn một áo dày (do giữa các lớp áo mỏng có lớp không khí dẫn nhiệt rất kém)"
+      - "Chim xù lông vào mùa đông để giữ lớp không khí cách nhiệt giữa các sợi lông"
+    common_misconceptions:
+      - "Kim loại vào mùa đông có nhiệt độ thấp hơn gỗ trong cùng một phòng"
+      - "Áo len tự sinh ra nhiệt để làm ấm cơ thể"
+
+  # 7. Nhiệt học - Sự bay hơi và thu nhiệt (Evaporation Cooling)
+  - id: "evaporation_heat_absorption"
+    name: "Sự bay hơi và cơ chế thu nhiệt làm mát"
+    domain: "phase_change_evaporation"
+    description: "Sự bay hơi là quá trình chuyển từ thể lỏng sang thể khí xảy ra ở mặt thoáng của chất lỏng. Quá trình bay hơi luôn thu nhiệt từ môi trường xung quanh hoặc từ vật thể tiếp xúc, làm cho bề mặt đó bị giảm nhiệt độ và mát đi."
+    formula_or_rule: "Lỏng -> Khí (Bay hơi) => Thu nhiệt lượng Q từ bề mặt tiếp xúc => T_surface giảm"
+    keywords: ["bay hơi", "thu nhiệt", "cồn", "mồ hôi", "mát", "hạ nhiệt độ", "quạt gió", "bốc hơi"]
+    preconditions: ["chất lỏng có mặt thoáng tiếp xúc không khí"]
+    typical_phenomena:
+      - "Thoa một ít cồn hoặc ete lên mu bàn tay thấy mát lạnh (cồn bay hơi rất nhanh và thu nhiệt từ da tay)"
+      - "Khi cơ thể toát mồ hôi gặp gió quạt thấy rất mát (mồ hôi bay hơi thu nhiệt lượng từ cơ thể)"
+      - "Chó thè lưỡi thở hổn hển vào mùa hè để tăng tốc độ bay hơi nước bọt làm mát cơ thể"
+      - "Nước đựng trong bình gốm/đất nung luôn mát hơn (nước ngấm qua lỗ li ti ra ngoài và bay hơi thu nhiệt)"
+    common_misconceptions:
+      - "Cồn làm tay mát vì bản thân chất cồn có nhiệt độ âm hoặc lạnh hơn nước"
+      - "Quạt gió thổi ra khí lạnh làm giảm nhiệt độ phòng"
+
+  # 8. Cơ học - Áp suất chất lỏng và bình thông nhau (Fluid Pressure)
+  - id: "fluid_pressure_depth"
+    name: "Áp suất chất lỏng phụ thuộc độ sâu"
+    domain: "pressure_force"
+    description: "Chất lỏng gây áp suất theo mọi phương lên đáy bình, thành bình và các vật nhúng trong lòng nó. Áp suất chất lỏng ở độ sâu h được tính bởi p = d * h. Càng xuống sâu, áp suất chất lỏng càng lớn."
+    formula_or_rule: "p = d_liquid * h"
+    keywords: ["áp suất chất lỏng", "độ sâu", "đập nước", "chân đập", "thợ lặn", "bộ đồ lặn"]
+    preconditions: ["chất lỏng đứng yên trong bình hoặc thủy vực"]
+    typical_phenomena:
+      - "Chân đập nước luôn được xây dày hơn đỉnh đập (vì càng xuống sâu áp suất nước càng lớn)"
+      - "Thợ lặn xuống biển sâu phải mặc bộ đồ lặn chịu áp suất cao"
+      - "Khi dùi các lỗ ở các độ cao khác nhau trên thành bình chứa nước, tia nước ở lỗ dưới cùng bắn ra xa nhất"
+    common_misconceptions:
+      - "Áp suất nước chỉ ép xuống đáy chứ không tác dụng lên thành bình"

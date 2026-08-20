@@ -72,3 +72,37 @@ class PhysicsTopic(StrEnum):
     DENSITY_PRESSURE = "density_pressure"
     OHMS_LAW = "ohms_law"
     ELECTRICAL_POWER = "electrical_power"
+
+
+class ProblemType(StrEnum):
+    """Classification of physics problem type."""
+
+    QUANTITATIVE = "quantitative"
+    QUALITATIVE = "qualitative"
+    HYBRID = "hybrid"
+
+
+class QualitativeDomain(StrEnum):
+    """Qualitative physics concept domains."""
+
+    INERTIA_MOTION = "inertia_motion"
+    PRESSURE_FORCE = "pressure_force"
+    FRICTION = "friction"
+    ARCHIMEDES_BUOYANCY = "archimedes_buoyancy"
+    THERMAL_EXPANSION_HEAT = "thermal_expansion_heat"
+    HEAT_TRANSFER = "heat_transfer"
+    PHASE_CHANGE_EVAPORATION = "phase_change_evaporation"
+    OPTICS_LIGHT = "optics_light"
+    SOUND_WAVES = "sound_waves"
+
+
+class MisconceptionType(StrEnum):
+    """Types of qualitative physics misconceptions."""
+
+    INERTIA_AS_FORCE = "inertia_as_force"
+    PRESSURE_FORCE_CONFUSION = "pressure_force_confusion"
+    HEAT_TEMPERATURE_CONFUSION = "heat_temperature_confusion"
+    BUOYANCY_MASS_CONFUSION = "buoyancy_mass_confusion"
+    EVAPORATION_TEMPERATURE_CONFUSION = "evaporation_temperature_confusion"
+    UNSPECIFIED = "unspecified"
+

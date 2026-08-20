@@ -6,18 +6,25 @@ import time
 from typing import Any
 
 from physics_reasoning.core.config import PipelineConfig
-from physics_reasoning.core.enums import QuantityRole
+from physics_reasoning.core.enums import ProblemType, QuantityRole
 from physics_reasoning.core.exceptions import LLMError, LLMOutputParseError
 from physics_reasoning.core.models import (
     Equation,
     LLMParsedOutput,
     PhysicsQuantity,
+    QualitativeParsedOutput,
     Solution,
     SolveResult,
     VerificationResult,
 )
-from physics_reasoning.llm.output_parser import parse_llm_output
+from physics_reasoning.llm.output_parser import (
+    parse_llm_output,
+    parse_qualitative_llm_output,
+)
 from physics_reasoning.llm.prompts import (
+    build_qualitative_repair_prompt,
+    build_qualitative_solve_prompt,
+    build_qualitative_system_prompt,
     build_repair_prompt,
     build_solve_prompt,
     build_system_prompt,
@@ -26,11 +33,14 @@ from physics_reasoning.llm.provider import LLMProvider, LiteLLMProvider
 from physics_reasoning.physics.constants import PHYSICAL_CONSTANTS, PHYSICAL_CONSTANT_UNITS
 from physics_reasoning.physics.equation_retriever import EquationRetriever
 from physics_reasoning.physics.knowledge_base import KnowledgeBase
+from physics_reasoning.physics.qualitative_kb import QualitativeKnowledgeBase
 from physics_reasoning.physics.quantity_extractor import QuantityExtractor
+from physics_reasoning.pipeline.classifier import ProblemClassifier
 from physics_reasoning.pipeline.context import SolveContext
 from physics_reasoning.solver.symbolic_solver import SymbolicSolver
 from physics_reasoning.units.dimension_checker import DimensionChecker
 from physics_reasoning.units.unit_engine import UnitEngine
+from physics_reasoning.verifier.qualitative_verifier import QualitativeVerificationPipeline
 from physics_reasoning.verifier.verification_pipeline import VerificationPipeline
 
 
@@ -42,19 +52,27 @@ class PipelineOrchestrator:
         config: PipelineConfig | None = None,
         llm_provider: LLMProvider | None = None,
         knowledge_base: KnowledgeBase | None = None,
+        qualitative_knowledge_base: QualitativeKnowledgeBase | None = None,
         solver: SymbolicSolver | None = None,
         unit_engine: UnitEngine | None = None,
         dimension_checker: DimensionChecker | None = None,
         verification_pipeline: VerificationPipeline | None = None,
+        qualitative_verification_pipeline: QualitativeVerificationPipeline | None = None,
     ):
         self.config = config or PipelineConfig()
         self.llm = llm_provider or LiteLLMProvider(model_name=self.config.model_name)
 
         self.kb = knowledge_base or KnowledgeBase(self.config.knowledge_base_path)
-        # Attempt to load KB if not already loaded
         if not self.kb.equations:
             try:
                 self.kb.load()
+            except Exception:
+                pass
+
+        self.qualitative_kb = qualitative_knowledge_base or QualitativeKnowledgeBase()
+        if not self.qualitative_kb.principles:
+            try:
+                self.qualitative_kb.load()
             except Exception:
                 pass
 
@@ -74,9 +92,162 @@ class PipelineOrchestrator:
             dimension_checker=self.dimension_checker,
             knowledge_base=self.kb,
         )
+        self.qualitative_verifier = (
+            qualitative_verification_pipeline
+            or QualitativeVerificationPipeline(self.qualitative_kb)
+        )
 
     def solve(self, problem_text: str, problem_id: str | None = None) -> Solution:
-        """Solve a physics word problem end-to-end with the verify-repair loop."""
+        """Solve a physics word problem end-to-end (quantitative or qualitative)."""
+        # Determine problem classification
+        problem_type = ProblemClassifier.classify(problem_text)
+        if problem_type == ProblemType.QUALITATIVE:
+            return self._solve_qualitative(problem_text, problem_id)
+
+        return self._solve_quantitative(problem_text, problem_id)
+
+    def _solve_qualitative(
+        self, problem_text: str, problem_id: str | None = None
+    ) -> Solution:
+        """Execute the Qualitative Neuro-Symbolic Reasoning pipeline."""
+        start_time = time.perf_counter()
+        ctx = SolveContext(
+            problem_text=problem_text,
+            problem_id=problem_id,
+            max_tool_calls_per_attempt=self.config.max_tool_calls_per_attempt,
+        )
+
+        # Retrieve relevant principles from KB
+        relevant_principles = self.qualitative_kb.find_relevant_principles(problem_text, top_k=5)
+        p_names = [f"{p.name} ({p.id}): {p.description[:80]}..." for p in self.qualitative_kb.principles.values()]
+
+        system_prompt = build_qualitative_system_prompt(p_names)
+        user_prompt = build_qualitative_solve_prompt(problem_text)
+
+        ctx.messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        last_qualitative_output: QualitativeParsedOutput | None = None
+        last_verification_result: VerificationResult | None = None
+
+        while ctx.attempt < self.config.max_retries:
+            ctx.attempt += 1
+            attempt_start = time.perf_counter()
+
+            # Call LLM
+            try:
+                llm_resp = self.llm.complete(
+                    messages=ctx.messages,
+                    temperature=self.config.temperature,
+                    max_tokens=self.config.max_tokens,
+                )
+                ctx.total_llm_calls += 1
+                ctx.total_tokens += llm_resp.usage.get("total_tokens", 0)
+                raw_content = llm_resp.content
+            except Exception as e:
+                ctx.add_step(
+                    action="llm_call_failed",
+                    output={"error": str(e)},
+                    duration_ms=(time.perf_counter() - attempt_start) * 1000,
+                )
+                return Solution(
+                    problem_id=ctx.problem_id,
+                    is_qualitative=True,
+                    is_verified=False,
+                    num_attempts=ctx.attempt,
+                    total_llm_calls=ctx.total_llm_calls,
+                    total_tokens=ctx.total_tokens,
+                    latency_ms=(time.perf_counter() - start_time) * 1000,
+                    error_message=f"LLM API error: {e}",
+                    solve_steps=ctx.solve_steps,
+                )
+
+            # Parse qualitative output
+            try:
+                qual_output = parse_qualitative_llm_output(raw_content)
+                last_qualitative_output = qual_output
+            except Exception as e:
+                # Retry on unparseable format
+                if ctx.attempt < self.config.max_retries:
+                    ctx.messages.append({"role": "assistant", "content": raw_content})
+                    ctx.messages.append(
+                        {
+                            "role": "user",
+                            "content": f"Output failed to parse as JSON: {e}. Please return valid JSON.",
+                        }
+                    )
+                    continue
+                break
+
+            # Verify qualitative explanation
+            ver_result = self.qualitative_verifier.verify(problem_text, qual_output)
+            last_verification_result = ver_result
+
+            ctx.add_step(
+                action=f"attempt_{ctx.attempt}_qualitative_verification",
+                input_data={"principles": qual_output.core_principles},
+                output_data={
+                    "is_valid": ver_result.is_valid,
+                    "errors_count": len(ver_result.errors),
+                    "confidence": ver_result.confidence,
+                },
+                duration_ms=(time.perf_counter() - attempt_start) * 1000,
+            )
+
+            # If verified successfully, return immediately
+            if ver_result.is_valid:
+                return Solution(
+                    problem_id=ctx.problem_id,
+                    is_qualitative=True,
+                    qualitative_output=qual_output,
+                    principles_applied=qual_output.core_principles,
+                    final_explanation=qual_output.conclusion,
+                    solve_steps=ctx.solve_steps,
+                    verification_result=ver_result,
+                    num_attempts=ctx.attempt,
+                    total_llm_calls=ctx.total_llm_calls,
+                    total_tokens=ctx.total_tokens,
+                    latency_ms=(time.perf_counter() - start_time) * 1000,
+                    is_verified=True,
+                )
+
+            # Verify-Repair Loop: formulate targeted qualitative repair prompt
+            if ctx.attempt < self.config.max_retries:
+                repair_prompt = build_qualitative_repair_prompt(
+                    previous_output=qual_output.model_dump_json(indent=2),
+                    verification_errors=ver_result.errors,
+                    attempt_number=ctx.attempt,
+                )
+                ctx.messages.append({"role": "assistant", "content": raw_content})
+                ctx.messages.append({"role": "user", "content": repair_prompt})
+
+        # Return best unverified qualitative solution
+        return Solution(
+            problem_id=ctx.problem_id,
+            is_qualitative=True,
+            qualitative_output=last_qualitative_output,
+            principles_applied=(
+                last_qualitative_output.core_principles if last_qualitative_output else []
+            ),
+            final_explanation=(
+                last_qualitative_output.conclusion if last_qualitative_output else None
+            ),
+            solve_steps=ctx.solve_steps,
+            verification_result=last_verification_result,
+            num_attempts=ctx.attempt,
+            total_llm_calls=ctx.total_llm_calls,
+            total_tokens=ctx.total_tokens,
+            latency_ms=(time.perf_counter() - start_time) * 1000,
+            is_verified=False,
+            error_message="Max repair attempts exceeded for qualitative verification",
+        )
+
+    def _solve_quantitative(
+        self, problem_text: str, problem_id: str | None = None
+    ) -> Solution:
+        """Solve a quantitative physics word problem end-to-end."""
         start_time = time.perf_counter()
         ctx = SolveContext(
             problem_text=problem_text,

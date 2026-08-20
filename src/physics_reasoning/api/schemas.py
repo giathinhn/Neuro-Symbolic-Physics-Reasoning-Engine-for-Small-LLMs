@@ -19,9 +19,13 @@ class SolveRequest(BaseModel):
 class SolveResponse(BaseModel):
     """Response payload for /solve endpoint."""
 
-    answer: float | None = Field(None, description="Calculated numerical answer")
-    unit: str | None = Field(None, description="Physical unit of the answer")
-    is_verified: bool = Field(False, description="Whether the answer passed all verification checks")
+    is_qualitative: bool = Field(False, description="Whether the problem is a qualitative explanation")
+    answer: float | None = Field(None, description="Calculated numerical answer (for quantitative problems)")
+    unit: str | None = Field(None, description="Physical unit of the answer (for quantitative problems)")
+    explanation: str | None = Field(None, description="Physical explanation conclusion (for qualitative problems)")
+    principles_applied: list[str] = Field(default_factory=list, description="Physical principles/laws applied")
+    causal_chain: list[dict[str, Any]] = Field(default_factory=list, description="Step-by-step causal explanation chain")
+    is_verified: bool = Field(False, description="Whether the answer/explanation passed all verification checks")
     equations_used: list[str] = Field(default_factory=list, description="IDs or expressions of equations used")
     quantities: list[dict[str, Any]] = Field(default_factory=list, description="Extracted physical quantities")
     verification: dict[str, Any] = Field(default_factory=dict, description="Summary of verification checks")

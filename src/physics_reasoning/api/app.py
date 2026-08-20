@@ -118,9 +118,25 @@ async def solve_problem(request: SolveRequest) -> SolveResponse:
             "checks_performed": solution.verification_result.checks_performed,
         }
 
+    causal_chain_list = []
+    if solution.qualitative_output and solution.qualitative_output.causal_chain:
+        causal_chain_list = [
+            {
+                "step_number": s.step_number,
+                "state_or_action": s.state_or_action,
+                "physical_mechanism": s.physical_mechanism,
+                "governing_principle": s.governing_principle,
+            }
+            for s in solution.qualitative_output.causal_chain
+        ]
+
     return SolveResponse(
+        is_qualitative=solution.is_qualitative,
         answer=solution.answer_value,
         unit=solution.answer_unit,
+        explanation=solution.final_explanation,
+        principles_applied=solution.principles_applied,
+        causal_chain=causal_chain_list,
         is_verified=solution.is_verified,
         equations_used=solution.equations_used,
         quantities=[q.model_dump() for q in solution.quantities_extracted],

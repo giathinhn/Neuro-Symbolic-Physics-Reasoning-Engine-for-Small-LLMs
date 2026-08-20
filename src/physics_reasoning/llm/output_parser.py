@@ -108,3 +108,49 @@ def validate_parsed_output(output: LLMParsedOutput) -> list[str]:
             warnings.append(f"Equation '{eq.expression}' is missing '='.")
 
     return warnings
+
+
+def parse_qualitative_llm_output(raw_output: str) -> QualitativeParsedOutput:
+    """Parse raw LLM output into validated QualitativeParsedOutput model."""
+    from physics_reasoning.core.models import QualitativeParsedOutput
+
+    if not raw_output or not raw_output.strip():
+        raise LLMOutputParseError("LLM qualitative output is empty", raw_output=raw_output)
+
+    clean_text = raw_output.strip()
+
+    # Strategy 1: Direct JSON parse
+    try:
+        data = json.loads(clean_text)
+        return QualitativeParsedOutput.model_validate(data)
+    except Exception:
+        pass
+
+    # Strategy 2: Code fence
+    code_block = _extract_json_block(clean_text)
+    if code_block:
+        try:
+            data = json.loads(code_block)
+            return QualitativeParsedOutput.model_validate(data)
+        except Exception:
+            pass
+
+    # Strategy 3: Outermost braces
+    outer_braces = _extract_outermost_braces(clean_text)
+    if outer_braces:
+        try:
+            data = json.loads(outer_braces)
+            return QualitativeParsedOutput.model_validate(data)
+        except Exception:
+            pass
+
+    # Fallback: Create structured QualitativeParsedOutput from raw text
+    return QualitativeParsedOutput(
+        problem_understanding="Trực tiếp từ văn bản phản hồi",
+        observed_phenomenon=clean_text[:100],
+        core_principles=[],
+        causal_chain=[],
+        conclusion=clean_text,
+        scientific_keywords=[],
+    )
+
