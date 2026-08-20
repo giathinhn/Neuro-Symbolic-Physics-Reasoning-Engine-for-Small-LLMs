@@ -46,32 +46,64 @@ def solve(problem_text: str, model: str | None, config: str | None, output_json:
     click.echo("========================================================")
     click.echo(f"Problem: {problem_text}\n")
 
-    if solution.is_verified:
-        click.echo(f"[*] Status:   VERIFIED SUCCESS (Attempt #{solution.num_attempts})")
-        click.echo(f"[*] Answer:   {solution.answer_value} {solution.answer_unit}")
-    else:
-        click.echo(f"[!] Status:   UNVERIFIED / FAILED (Attempt #{solution.num_attempts})")
-        if solution.answer_value is not None:
-            click.echo(f"[!] Answer:   {solution.answer_value} {solution.answer_unit} (Unverified)")
-        if solution.error_message:
-            click.echo(f"[!] Error:    {solution.error_message}")
+    if solution.is_qualitative:
+        click.echo("[*] Problem Type: QUALITATIVE PHENOMENON EXPLANATION")
+        if solution.is_verified:
+            click.echo(f"[*] Status:       VERIFIED SUCCESS (Attempt #{solution.num_attempts})")
+        else:
+            click.echo(f"[!] Status:       UNVERIFIED (Attempt #{solution.num_attempts})")
+            if solution.error_message:
+                click.echo(f"[!] Warning:      {solution.error_message}")
 
-    click.echo(f"[*] Formulas: {', '.join(solution.equations_used) if solution.equations_used else 'None'}")
-    click.echo(f"[*] Latency:  {solution.latency_ms:.0f} ms | Tokens: {solution.total_tokens}")
+        click.echo(f"[*] Principles:   {', '.join(solution.principles_applied) if solution.principles_applied else 'N/A'}")
+        click.echo(f"\n[*] Explanation Conclusion:\n{solution.final_explanation or 'No explanation generated'}")
 
-    if verbose:
-        click.echo("\nExtracted Quantities:")
-        for q in solution.quantities_extracted:
-            role = "TARGET" if q.is_target else "GIVEN"
-            click.echo(f"  - {q.symbol} ({q.name}): {q.value} {q.unit or ''} [{role}]")
+        if verbose and solution.qualitative_output and solution.qualitative_output.causal_chain:
+            click.echo("\n--- Step-by-step Causal Reasoning Chain ---")
+            for step in solution.qualitative_output.causal_chain:
+                click.echo(f"  Step {step.step_number}: {step.state_or_action}")
+                click.echo(f"    -> Cơ chế: {step.physical_mechanism}")
+                if step.governing_principle:
+                    click.echo(f"    -> Nguyên lý: {step.governing_principle}")
 
         if solution.verification_result:
-            click.echo("\nVerification Checks:")
+            click.echo("\n--- Verification Checks ---")
             for check_name in solution.verification_result.checks_performed:
                 passed = check_name in solution.verification_result.checks_passed
                 mark = "[PASS]" if passed else "[FAIL]"
                 click.echo(f"  {mark} {check_name}")
+            if solution.verification_result.errors:
+                for err in solution.verification_result.errors:
+                    click.echo(f"  [!] {err.error_type.value}: {err.message}")
 
+    else:
+        click.echo("[*] Problem Type: QUANTITATIVE CALCULATION")
+        if solution.is_verified:
+            click.echo(f"[*] Status:       VERIFIED SUCCESS (Attempt #{solution.num_attempts})")
+            click.echo(f"[*] Answer:       {solution.answer_value} {solution.answer_unit}")
+        else:
+            click.echo(f"[!] Status:       UNVERIFIED / FAILED (Attempt #{solution.num_attempts})")
+            if solution.answer_value is not None:
+                click.echo(f"[!] Answer:       {solution.answer_value} {solution.answer_unit} (Unverified)")
+            if solution.error_message:
+                click.echo(f"[!] Error:        {solution.error_message}")
+
+        click.echo(f"[*] Formulas:     {', '.join(solution.equations_used) if solution.equations_used else 'None'}")
+
+        if verbose:
+            click.echo("\nExtracted Quantities:")
+            for q in solution.quantities_extracted:
+                role = "TARGET" if q.is_target else "GIVEN"
+                click.echo(f"  - {q.symbol} ({q.name}): {q.value} {q.unit or ''} [{role}]")
+
+            if solution.verification_result:
+                click.echo("\nVerification Checks:")
+                for check_name in solution.verification_result.checks_performed:
+                    passed = check_name in solution.verification_result.checks_passed
+                    mark = "[PASS]" if passed else "[FAIL]"
+                    click.echo(f"  {mark} {check_name}")
+
+    click.echo(f"\n[*] Latency: {solution.latency_ms:.0f} ms | Tokens: {solution.total_tokens}")
     click.echo("========================================================\n")
 
 
