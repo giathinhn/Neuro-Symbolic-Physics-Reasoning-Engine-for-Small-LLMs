@@ -35,6 +35,7 @@ from physics_reasoning.llm.provider import LLMProvider, LiteLLMProvider
 from physics_reasoning.physics.constants import PHYSICAL_CONSTANTS, PHYSICAL_CONSTANT_UNITS
 from physics_reasoning.physics.equation_retriever import EquationRetriever
 from physics_reasoning.physics.knowledge_base import KnowledgeBase
+from physics_reasoning.physics.problem_preprocessor import ProblemPreprocessor
 from physics_reasoning.physics.qualitative_kb import QualitativeKnowledgeBase
 from physics_reasoning.physics.quantity_extractor import QuantityExtractor
 from physics_reasoning.pipeline.classifier import ProblemClassifier
@@ -260,12 +261,16 @@ class PipelineOrchestrator:
             max_tool_calls_per_attempt=self.config.max_tool_calls_per_attempt,
         )
 
+        # 0. Denoise and normalize problem statement
+        clean_text, conditions = ProblemPreprocessor.denoise_text(problem_text)
+        effective_problem_text = clean_text if clean_text else problem_text
+
         # 1. Retrieve relevant equations for problem to provide as targeted hints
-        relevant_eqs = self.retriever.retrieve_for_problem(problem_text)
+        relevant_eqs = self.retriever.retrieve_for_problem(effective_problem_text)
         eq_hints = [f"{eq.name} ({eq.expression})" for eq in relevant_eqs]
         available_eq_names = eq_hints or [f"{eq.name} ({eq.expression})" for eq in list(self.kb.equations.values())[:30]]
         system_prompt = build_system_prompt(available_eq_names)
-        user_prompt = build_solve_prompt(problem_text)
+        user_prompt = build_solve_prompt(effective_problem_text)
 
         ctx.messages = [
             {"role": "system", "content": system_prompt},
@@ -376,6 +381,15 @@ class PipelineOrchestrator:
                                 known_values_si[q.symbol] = float(q.value)
                         else:
                             known_values_si[q.symbol] = float(q.value)
+
+            # Expand synonyms in known_values_si and var_units
+            from physics_reasoning.solver.symbolic_solver import _find_synonyms
+            for sym_k, sym_v in list(known_values_si.items()):
+                for syn in _find_synonyms(sym_k):
+                    if syn not in known_values_si:
+                        known_values_si[syn] = sym_v
+                    if sym_k in var_units and syn not in var_units:
+                        var_units[syn] = var_units[sym_k]
 
             # Symbolic Solving
             solve_res = self.solver.solve_system(

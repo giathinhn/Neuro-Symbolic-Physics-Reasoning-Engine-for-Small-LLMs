@@ -20,7 +20,9 @@ CRITICAL INSTRUCTIONS:
    - Dimensions: length "l" (m), width "w" (m), height "h" (m), volume "V" (m**3) (Formula: V = l * w * h)
    - Kinematics: acceleration "a" (m/s**2), velocity "v" (m/s), initial velocity "v_i" (m/s), displacement "d" / "h" (m), time "t" (s)
    - Electricity: voltage / Hiệu điện thế "U" (V), resistance / Điện trở "R" (ohm), current / Cường độ dòng điện "I" (A)
-   - Pressure / Áp suất: symbol "P_press" (Pa), Force / Lực "F" (N), Area / Diện tích "A" (m**2)
+   - Pressure / Áp suất: symbol "p" (Pa), Force / Lực "F" (N), Area / Diện tích "S" (m**2)
+   - Mechanical Work & Power: Power "P" (W), Work "A" (J) (Formula: P = (m * g * h) / t or P = (F * h) / t or A = m * g * h)
+   - Thermodynamics / Cân bằng nhiệt: mass "m_1", "m_2", initial temperatures "t_1", "t_2", equilibrium temperature "t_cb" (Formula: m_1 * (t_cb - t_1) + m_2 * (t_cb - t_2) = 0. Always pair mass 1 with initial temperature 1, and mass 2 with initial temperature 2!)
 3. Identify the EXACT TARGET quantity asked in the question (role: "target", symbol, and unit). Note: "Khối lượng riêng" is density ("rho"), NOT mass ("m")!
 4. Select the standard physical equation(s) connecting the given quantities to the target.
 5. Always return a valid JSON object matching the requested schema.

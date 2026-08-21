@@ -33,13 +33,13 @@ PHYSICS_SYNONYM_GROUPS: list[set[str]] = [
     {"A", "W_work", "work", "cong"},
     {"t", "time", "delta_t"},
     {"v", "v_i", "v_avg", "u", "speed", "velocity"},
-    {"t_cb", "T_final", "t_final", "T_cb", "t_eq", "T_eq", "T_equilibrium", "Tf", "tf", "T_f"},
-    {"t_1", "T_1", "t1", "T1", "T_hot", "t_hot", "temperature_1"},
-    {"t_2", "T_2", "t2", "T2", "T_cold", "t_cold", "temperature_2"},
+    {"t_cb", "T_final", "t_final", "T_cb", "t_eq", "T_eq", "T_equilibrium", "Tf", "tf", "T_f", "tc", "t_c", "Tc", "T_c", "t_can_bang", "nhiet_do_can_bang"},
+    {"t_1", "T_1", "t1", "T1", "T_hot", "t_hot", "temperature_1", "t_initial_1", "t_dau_1"},
+    {"t_2", "T_2", "t2", "T2", "T_cold", "t_cold", "temperature_2", "t_initial_2", "t_dau_2"},
     {"m", "mass"},
-    {"m_1", "m1", "m_hot", "mass_1"},
-    {"m_2", "m2", "m_cold", "mass_2"},
-    {"c_water", "c_heat", "c_specific", "specific_heat", "nhiet_dung_rieng"},
+    {"m_1", "m1", "m_hot", "mass_1", "M1", "M_1"},
+    {"m_2", "m2", "m_cold", "mass_2", "M2", "M_2"},
+    {"c_water", "c_heat", "c_specific", "specific_heat", "nhiet_dung_rieng", "c", "C"},
     {"c_1", "c1"},
     {"c_2", "c2"},
     {"Q", "Q_toa", "Q_thu", "heat", "nhiet_luong"},
@@ -228,9 +228,12 @@ class SymbolicSolver:
             sol_val = None
             if isinstance(sol_item, dict):
                 for k, v in sol_item.items():
-                    if str(k) in target_names or k in target_syms:
+                    if str(k) in target_names or k in target_syms or any(syn in target_names for syn in _find_synonyms(str(k))):
                         sol_val = v
                         break
+                # If target was not matched by name but dict has only 1 solved value, use it
+                if sol_val is None and len(sol_item) == 1:
+                    sol_val = next(iter(sol_item.values()))
             else:
                 sol_val = sol_item
 

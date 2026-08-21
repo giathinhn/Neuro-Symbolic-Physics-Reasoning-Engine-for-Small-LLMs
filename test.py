@@ -6,7 +6,7 @@ from physics_reasoning.pipeline.orchestrator import PipelineOrchestrator
 
 orchestrator = PipelineOrchestrator()
 
-# Đổi câu hỏi của bạn tại đây
+# Đổi câu hỏi của bạn tại đây 
 question = "Trộn 200g nước ở 80°C + 300g nước ở 20°C. Hãy cân bằng nhiệt"
 print(f"[*] Đang xử lý câu hỏi: {question}\n")
 
