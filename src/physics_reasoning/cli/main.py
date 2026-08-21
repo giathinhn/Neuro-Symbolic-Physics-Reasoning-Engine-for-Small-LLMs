@@ -21,21 +21,8 @@ def cli():
     pass
 
 
-@cli.command()
-@click.argument("problem_text", type=str)
-@click.option("--model", default=None, help="LLM model name (e.g. 'ollama/phi3:mini', 'gpt-4o-mini')")
-@click.option("--config", default=None, help="Path to config YAML file")
-@click.option("--json", "output_json", is_flag=True, help="Output solution in JSON format")
-@click.option("--verbose", is_flag=True, help="Print detailed solving steps and verification results")
-def solve(problem_text: str, model: str | None, config: str | None, output_json: bool, verbose: bool):
-    """Solve a physics word problem using the neuro-symbolic engine."""
-    cfg = load_config(config)
-    if model:
-        cfg.model_name = model
-
-    orchestrator = PipelineOrchestrator(config=cfg)
-    solution = orchestrator.solve(problem_text)
-
+def _display_solution(solution, problem_text: str, verbose: bool = False, output_json: bool = False) -> None:
+    """Format and print the solution to console."""
     if output_json:
         click.echo(solution.model_dump_json(indent=2))
         return
@@ -105,6 +92,101 @@ def solve(problem_text: str, model: str | None, config: str | None, output_json:
 
     click.echo(f"\n[*] Latency: {solution.latency_ms:.0f} ms | Tokens: {solution.total_tokens}")
     click.echo("========================================================\n")
+
+
+@cli.command()
+@click.argument("problem_text", type=str, required=False, default=None)
+@click.option("--interactive", "-i", is_flag=True, help="Enter interactive question-answering mode")
+@click.option("--model", default=None, help="LLM model name (e.g. 'ollama_chat/qwen2.5:3b', 'gpt-4o-mini')")
+@click.option("--config", default=None, help="Path to config YAML file")
+@click.option("--json", "output_json", is_flag=True, help="Output solution in JSON format")
+@click.option("--verbose", is_flag=True, help="Print detailed solving steps and verification results")
+def solve(
+    problem_text: str | None,
+    interactive: bool,
+    model: str | None,
+    config: str | None,
+    output_json: bool,
+    verbose: bool,
+):
+    """Solve a physics word problem using the neuro-symbolic engine."""
+    if interactive:
+        ctx = click.get_current_context()
+        ctx.invoke(interactive_cmd, model=model, config=config, verbose=verbose)
+        return
+
+    if not problem_text:
+        try:
+            problem_text = click.prompt("[?] Nhập câu hỏi vật lý", prompt_suffix=" > ", type=str)
+        except (KeyboardInterrupt, EOFError):
+            click.echo("\nĐã hủy.")
+            return
+
+        if not problem_text.strip():
+            click.echo("Không có câu hỏi nào được nhập.")
+            return
+
+    cfg = load_config(config)
+    if model:
+        cfg.model_name = model
+
+    orchestrator = PipelineOrchestrator(config=cfg)
+    solution = orchestrator.solve(problem_text)
+    _display_solution(solution, problem_text, verbose=verbose, output_json=output_json)
+
+
+@cli.command(name="interactive")
+@click.option("--model", default=None, help="LLM model name (e.g. 'ollama_chat/qwen2.5:3b', 'gpt-4o-mini')")
+@click.option("--config", default=None, help="Path to config YAML file")
+@click.option("--verbose", "-v", is_flag=True, help="Print detailed solving steps and verification results")
+def interactive_cmd(model: str | None, config: str | None, verbose: bool):
+    """Start an interactive terminal session to enter and solve physics questions continuously."""
+    cfg = load_config(config)
+    if model:
+        cfg.model_name = model
+
+    click.echo("\n========================================================")
+    click.echo("  NEURO-SYMBOLIC PHYSICS REASONING ENGINE (INTERACTIVE) ")
+    click.echo("========================================================")
+    click.echo(f"Model: {cfg.model_name}")
+    click.echo("Lệnh hỗ trợ:")
+    click.echo("  - Gõ 'exit', 'quit' hoặc 'q' để thoát.")
+    click.echo("  - Gõ 'verbose' để bật/tắt hiển thị các bước giải chi tiết.")
+    click.echo("  - Gõ 'clear' hoặc 'cls' để xóa màn hình.")
+    click.echo("========================================================\n")
+
+    orchestrator = PipelineOrchestrator(config=cfg)
+
+    while True:
+        try:
+            problem_text = click.prompt("[?] Nhập câu hỏi vật lý", prompt_suffix=" > ", type=str)
+        except (KeyboardInterrupt, EOFError):
+            click.echo("\n\nThoát chương trình. Tạm biệt!")
+            break
+
+        cleaned = problem_text.strip()
+        if not cleaned:
+            continue
+
+        if cleaned.lower() in ("exit", "quit", "q", ":q"):
+            click.echo("Tạm biệt!")
+            break
+
+        if cleaned.lower() == "verbose":
+            verbose = not verbose
+            state = "BẬT (ON)" if verbose else "TẮT (OFF)"
+            click.echo(f"[*] Chế độ chi tiết (verbose) đã chuyển sang: {state}\n")
+            continue
+
+        if cleaned.lower() in ("clear", "cls"):
+            click.clear()
+            continue
+
+        try:
+            solution = orchestrator.solve(cleaned)
+            _display_solution(solution, cleaned, verbose=verbose, output_json=False)
+        except Exception as e:
+            click.echo(f"[!] Đã xảy ra lỗi khi xử lý bài toán: {e}\n", err=True)
 
 
 @cli.command()

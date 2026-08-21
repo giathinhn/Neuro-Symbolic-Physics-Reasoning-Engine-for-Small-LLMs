@@ -20,3 +20,24 @@ class TestCLI:
         result = runner.invoke(cli, ["validate-kb"])
         assert result.exit_code == 0
         assert "validation PASSED" in result.output
+
+    def test_cli_interactive_exit(self):
+        runner = CliRunner()
+        result = runner.invoke(cli, ["interactive"], input="exit\n")
+        assert result.exit_code == 0
+        assert "INTERACTIVE" in result.output
+        assert "Tạm biệt" in result.output
+
+    def test_cli_interactive_verbose_toggle(self):
+        runner = CliRunner()
+        result = runner.invoke(cli, ["interactive"], input="verbose\nq\n")
+        assert result.exit_code == 0
+        assert "BẬT (ON)" in result.output
+        assert "Tạm biệt" in result.output
+
+    def test_cli_solve_interactive_flag(self):
+        runner = CliRunner()
+        result = runner.invoke(cli, ["solve", "-i"], input="quit\n")
+        assert result.exit_code == 0
+        assert "INTERACTIVE" in result.output
+        assert "Tạm biệt" in result.output

@@ -23,12 +23,24 @@ uv pip install -e ".[dev]"
 
 ## CLI Usage
 
-Solve a physics problem:
+### 1. Chế độ tương tác trực tiếp (Interactive Mode - Nhập câu hỏi liên tục):
 ```bash
-uv run physics-engine solve "A 2 kg object experiences a force of 10 N. Find its acceleration."
+uv run physics-engine interactive
+# hoặc
+uv run physics-engine solve -i
+```
+Trong chế độ này, bạn có thể gõ câu hỏi liên tục vào terminal, gõ `verbose` để bật/tắt chi tiết các bước giải, hoặc gõ `exit` / `quit` để thoát.
+
+### 2. Giải từng câu hỏi trực tiếp trên dòng lệnh:
+```bash
+uv run physics-engine solve "Một vật có khối lượng 2 kg chịu tác dụng của lực 10 N. Tính gia tốc của vật."
+```
+Nếu chạy `uv run physics-engine solve` mà không truyền câu hỏi, chương trình sẽ tự động nhắc bạn nhập câu hỏi vào terminal:
+```bash
+uv run physics-engine solve
 ```
 
-Output in JSON format:
+### 3. Xuất kết quả dưới định dạng JSON:
 ```bash
 uv run physics-engine solve "A 2 kg object experiences a force of 10 N. Find its acceleration." --json
 ```
