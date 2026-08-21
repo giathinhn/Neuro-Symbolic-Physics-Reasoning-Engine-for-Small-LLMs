@@ -7,7 +7,7 @@ from physics_reasoning.pipeline.orchestrator import PipelineOrchestrator
 orchestrator = PipelineOrchestrator()
 
 # Đổi câu hỏi của bạn tại đây
-question = "Một cần trục nâng một thùng hàng có khối lượng 500 kg lên cao 6 m trong thời gian 15 s. Công suất trung bình của cần trục là bao nhiêu? (Lấy g = 10 m/s^2)."
+question = "Trộn 200g nước ở 80°C + 300g nước ở 20°C. Hãy cân bằng nhiệt"
 print(f"[*] Đang xử lý câu hỏi: {question}\n")
 
 solution = orchestrator.solve(question)

@@ -11,6 +11,8 @@ from physics_reasoning.core.exceptions import LLMError, LLMOutputParseError
 from physics_reasoning.core.models import (
     Equation,
     LLMParsedOutput,
+    ParsedEquation,
+    ParsedQuantity,
     PhysicsQuantity,
     QualitativeParsedOutput,
     Solution,

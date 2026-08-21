@@ -63,7 +63,7 @@ class QuantityExtractor:
 
         # Target detection from text
         text_lower = text.lower()
-        if any(k in text_lower for k in ["nhiệt độ của nước khi cân bằng", "nhiệt độ cân bằng"]):
+        if any(k in text_lower for k in ["nhiệt độ của nước khi cân bằng", "nhiệt độ cân bằng", "cân bằng nhiệt", "nhiệt độ khi cân bằng", "nhiệt độ chung", "nhiệt độ sau cùng"]):
             extracted.append(
                 ParsedQuantity(
                     name="temperature_equilibrium",
@@ -225,18 +225,33 @@ class QuantityExtractor:
         self, parsed_quantities: list[ParsedQuantity], problem_text: str
     ) -> list[ParsedQuantity]:
         """Merge LLM-extracted quantities with deterministic text-extracted quantities."""
-        existing_abs_values = {
-            round(abs(float(q.value)), 4) for q in parsed_quantities if q.value is not None
-        }
-        existing_symbols = {q.symbol for q in parsed_quantities if q.symbol}
-        has_target = any(q.role == QuantityRole.TARGET for q in parsed_quantities)
-
         text_quantities = self.extract_quantities_from_text(problem_text)
         merged = list(parsed_quantities)
 
+        # Correct units in parsed_quantities using ground-truth text-extracted units
+        for pq in merged:
+            if pq.value is not None:
+                pq_val_rnd = round(abs(float(pq.value)), 4)
+                for tq in text_quantities:
+                    if tq.value is not None and round(abs(float(tq.value)), 4) == pq_val_rnd:
+                        if tq.unit and tq.unit != pq.unit:
+                            pq.unit = tq.unit
+                        break
+
+        existing_abs_values = {
+            round(abs(float(q.value)), 4) for q in merged if q.value is not None
+        }
+        existing_symbols = {q.symbol for q in merged if q.symbol}
+        has_target = any(q.role == QuantityRole.TARGET for q in merged)
+
         for tq in text_quantities:
             if tq.role == QuantityRole.TARGET:
-                if not has_target:
+                # If target is t_cb and LLM generated delta_T or no target, add/prefer t_cb
+                if not has_target or (tq.symbol == "t_cb" and not any(q.symbol in ("t_cb", "T_final", "t_final") for q in merged)):
+                    # Unmark any bogus delta_T target
+                    for q in merged:
+                        if q.symbol == "delta_T" and q.role == QuantityRole.TARGET:
+                            q.role = QuantityRole.GIVEN
                     merged.append(tq)
                     has_target = True
             elif tq.value is not None:
