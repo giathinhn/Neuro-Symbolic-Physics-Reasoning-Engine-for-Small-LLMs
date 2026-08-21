@@ -7,7 +7,7 @@ from physics_reasoning.pipeline.orchestrator import PipelineOrchestrator
 orchestrator = PipelineOrchestrator()
 
 # Đổi câu hỏi của bạn tại đây
-question = "Cho đoạn mạch gồm hai điện trở $R_1 = 10\ \Omega$ và $R_2 = 20\ \Omega$ mắc nối tiếp vào hiệu điện thế $U = 12\text{ V}$. Cường độ dòng điện chạy qua điện trở $R_1$ là bao nhiêu?"
+question = "Một cần trục nâng một thùng hàng có khối lượng 500 kg lên cao 6 m trong thời gian 15 s. Công suất trung bình của cần trục là bao nhiêu? (Lấy g = 10 m/s^2)."
 print(f"[*] Đang xử lý câu hỏi: {question}\n")
 
 solution = orchestrator.solve(question)

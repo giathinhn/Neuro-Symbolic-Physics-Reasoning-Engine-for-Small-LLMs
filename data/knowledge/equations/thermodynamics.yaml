@@ -50,3 +50,35 @@ equations:
     conditions: ["no phase change"]
     dimension_lhs: "M L^2 T^-2"
     dimension_rhs: "M L^2 T^-2"
+
+  - id: "heat_absorption_delta_t"
+    name: "Heat absorption formula Q = m * c * (t_2 - t_1)"
+    expression: "Q = m * c * (t_2 - t_1)"
+    variables: ["Q", "m", "c", "t_2", "t_1"]
+    variable_quantities:
+      Q: "heat"
+      m: "mass"
+      c: "specific_heat"
+      t_2: "temperature_2"
+      t_1: "temperature_1"
+    domain: "thermodynamics"
+    topic: "heat_balance"
+    description: "Heat absorbed when heating mass m from temperature t1 to t2"
+    conditions: ["no phase change"]
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
+  - id: "fuel_combustion_heat"
+    name: "Heat from fuel combustion Q = q_fuel * m"
+    expression: "Q = q_fuel * m"
+    variables: ["Q", "q_fuel", "m"]
+    variable_quantities:
+      Q: "heat"
+      q_fuel: "fuel_heat_value"
+      m: "mass"
+    domain: "thermodynamics"
+    topic: "heat_balance"
+    description: "Heat produced by burning mass m of fuel with specific heat value q_fuel"
+    conditions: ["complete combustion"]
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"

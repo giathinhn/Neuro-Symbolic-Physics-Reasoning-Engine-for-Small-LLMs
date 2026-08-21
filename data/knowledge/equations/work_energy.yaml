@@ -60,6 +60,102 @@ equations:
     dimension_lhs: "M L^2 T^-3"
     dimension_rhs: "M L^2 T^-3"
 
+  - id: "power_force_height_time"
+    name: "Power from force, height, time"
+    expression: "P = (F * h) / t"
+    variables: ["P", "F", "h", "t"]
+    variable_quantities:
+      P: "power"
+      F: "force"
+      h: "height"
+      t: "time"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Power required to lift weight/force F by height h in time t"
+    conditions: []
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
+  - id: "power_lifting_mght"
+    name: "Power lifting from mass, gravity, height, time"
+    expression: "P = (m * g * h) / t"
+    variables: ["P", "m", "g", "h", "t"]
+    variable_quantities:
+      P: "power"
+      m: "mass"
+      g: "gravity"
+      h: "height"
+      t: "time"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Power required to lift mass m by height h in time t"
+    conditions: []
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
+  - id: "power_avg_mght"
+    name: "Average Power lifting from mass, gravity, height, time"
+    expression: "P_avg = (m * g * h) / t"
+    variables: ["P_avg", "m", "g", "h", "t"]
+    variable_quantities:
+      P_avg: "power"
+      m: "mass"
+      g: "gravity"
+      h: "height"
+      t: "time"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Average power required to lift mass m by height h in time t"
+    conditions: []
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
+  - id: "work_lifting_mgh"
+    name: "Mechanical work lifting mass A = m * g * h"
+    expression: "A = m * g * h"
+    variables: ["A", "m", "g", "h"]
+    variable_quantities:
+      A: "work"
+      m: "mass"
+      g: "gravity"
+      h: "height"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Mechanical work done to lift mass m by height h"
+    conditions: []
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
+  - id: "work_lifting_P_h"
+    name: "Mechanical work lifting weight A = P_weight * h"
+    expression: "A = P_weight * h"
+    variables: ["A", "P_weight", "h"]
+    variable_quantities:
+      A: "work"
+      P_weight: "weight"
+      h: "height"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Mechanical work done to lift weight P_weight by height h"
+    conditions: []
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
+  - id: "power_force_vel"
+    name: "Power from force and velocity"
+    expression: "P = F * v"
+    variables: ["P", "F", "v"]
+    variable_quantities:
+      P: "power"
+      F: "force"
+      v: "velocity"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Mechanical power equals force times velocity"
+    conditions: []
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
   - id: "power_def"
     name: "Power definition"
     expression: "P = W_work / t"

@@ -87,21 +87,21 @@ class EquationRetriever:
 
         # Vietnamese physics domain keywords
         if any(w in p_lower for w in ["rơi tự do", "thả rơi", "độ cao", "free fall", "chạm đất"]):
-            matched_ids.extend(["kin_free_fall", "weight_P"])
-        if any(w in p_lower for w in ["vận tốc", "quãng đường", "xe đạp", "chuyển động", "thời gian", "speed", "velocity"]):
+            matched_ids.extend(["kin_free_fall", "force_gravity_mg", "weight_formula", "weight_P"])
+        if any(w in p_lower for w in ["vận tốc", "quãng đường", "xe đạp", "chuyển động", "thời gian", "speed", "velocity", "gặp nhau", "đuổi theo"]):
             matched_ids.extend(["kin_uniform_motion_s", "kin_vel_def", "kin_eq1", "kin_eq2"])
-        if any(w in p_lower for w in ["áp suất", "ghế", "tiếp xúc", "diện tích", "pressure", "chân ghế", "sàn"]):
-            matched_ids.extend(["solid_pressure", "weight_P"])
-        if any(w in p_lower for w in ["cần cẩu", "công suất", "công cơ học", "nâng", "power", "work"]):
-            matched_ids.extend(["power_from_work_time", "power_force_dist_time", "work_A_def", "work_def", "power_def"])
-        if any(w in p_lower for w in ["song song", "điện trở", "hiệu điện thế", "mạch", "ohm", "cường độ", "resistor"]):
-            matched_ids.extend(["parallel_resistors_two", "ohm_law", "series_resistors_two"])
-        if any(w in p_lower for w in ["trộn", "nhiệt độ", "cân bằng nhiệt", "nước ở", "tỏa", "thu", "heat", "temperature"]):
-            matched_ids.extend(["thermal_equilibrium", "thermal_equilibrium_general", "heat_transfer"])
+        if any(w in p_lower for w in ["áp suất", "ghế", "tiếp xúc", "diện tích", "pressure", "chân ghế", "sàn", "đáy bình", "chất lỏng", "độ sâu"]):
+            matched_ids.extend(["solid_pressure", "hydrostatic_pressure_depth", "hydrostatic_pressure_rho_g_h", "force_gravity_mg", "weight_formula", "weight_P"])
+        if any(w in p_lower for w in ["cần cẩu", "cần trục", "công suất", "công cơ học", "nâng", "kéo", "power", "work", "thùng hàng"]):
+            matched_ids.extend(["power_lifting_mght", "power_avg_mght", "power_force_height_time", "power_force_dist_time", "power_from_work_time", "work_lifting_mgh", "work_lifting_P_h", "work_A_def", "work_def", "force_gravity_mg", "weight_formula", "power_def"])
+        if any(w in p_lower for w in ["song song", "nối tiếp", "điện trở", "hiệu điện thế", "mạch", "ohm", "cường độ", "resistor", "công suất điện", "điện năng", "tiêu thụ", "jun-len-xơ", "nhiệt lượng tỏa ra trên"]):
+            matched_ids.extend(["parallel_resistors_two", "ohm_law", "series_resistors_two", "electric_power_ui", "electric_power_i2r", "electric_power_u2_div_r", "electric_energy_uit", "joule_lenz_heat"])
+        if any(w in p_lower for w in ["trộn", "nhiệt độ", "cân bằng nhiệt", "nước ở", "tỏa", "thu", "heat", "temperature", "đun sôi", "nhiệt lượng cần", "nhiên liệu", "đốt cháy"]):
+            matched_ids.extend(["thermal_equilibrium", "thermal_equilibrium_general", "heat_absorption_delta_t", "heat_transfer", "fuel_combustion_heat"])
         if any(w in p_lower for w in ["ác-si-mét", "ac si met", "nhúng chìm", "lực đẩy", "chìm hoàn toàn", "buoyant", "trọng lượng riêng"]):
-            matched_ids.extend(["archimedes_buoyancy", "weight_P", "density_mass_volume"])
+            matched_ids.extend(["archimedes_buoyancy", "force_gravity_mg", "weight_formula", "weight_P", "density_mass_volume", "specific_weight_from_density"])
         if any(w in p_lower for w in ["khối lượng riêng", "hình hộp", "kích thước", "thể tích", "density"]):
-            matched_ids.extend(["volume_box_def", "density_mass_volume"])
+            matched_ids.extend(["volume_box_def", "density_mass_volume", "specific_weight_from_density", "force_gravity_mg"])
 
         results: list[Equation] = []
         seen = set()

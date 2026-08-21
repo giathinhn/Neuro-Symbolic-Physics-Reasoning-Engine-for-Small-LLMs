@@ -14,6 +14,36 @@ equations:
     dimension_lhs: "M L T^-2"
     dimension_rhs: "M L T^-2"
 
+  - id: "force_gravity_mg"
+    name: "Gravitational force / lifting force F = m * g"
+    expression: "F = m * g"
+    variables: ["F", "m", "g"]
+    variable_quantities:
+      F: "force"
+      m: "mass"
+      g: "gravity"
+    domain: "mechanics"
+    topic: "newton_laws"
+    description: "Gravitational force or lifting force required to lift mass m against gravity"
+    conditions: ["near Earth surface"]
+    dimension_lhs: "M L T^-2"
+    dimension_rhs: "M L T^-2"
+
+  - id: "weight_formula"
+    name: "Weight formula P_weight = m * g"
+    expression: "P_weight = m * g"
+    variables: ["P_weight", "m", "g"]
+    variable_quantities:
+      P_weight: "weight"
+      m: "mass"
+      g: "gravity"
+    domain: "mechanics"
+    topic: "newton_laws"
+    description: "Weight is the gravitational force acting on a mass"
+    conditions: ["near Earth surface"]
+    dimension_lhs: "M L T^-2"
+    dimension_rhs: "M L T^-2"
+
   - id: "weight_P"
     name: "Weight formula P = m * g"
     expression: "P = m * g"
@@ -43,6 +73,52 @@ equations:
     conditions: ["near Earth surface"]
     dimension_lhs: "M L T^-2"
     dimension_rhs: "M L T^-2"
+
+  - id: "hydrostatic_pressure_depth"
+    name: "Hydrostatic Pressure p = d * h"
+    expression: "p = d * h"
+    variables: ["p", "d", "h"]
+    variable_quantities:
+      p: "pressure"
+      d: "specific_weight"
+      h: "height"
+    domain: "mechanics"
+    topic: "pressure"
+    description: "Hydrostatic pressure at depth h in liquid of specific weight d"
+    conditions: ["incompressible liquid"]
+    dimension_lhs: "M L^-1 T^-2"
+    dimension_rhs: "M L^-1 T^-2"
+
+  - id: "hydrostatic_pressure_rho_g_h"
+    name: "Hydrostatic Pressure p = rho * g * h"
+    expression: "p = rho * g * h"
+    variables: ["p", "rho", "g", "h"]
+    variable_quantities:
+      p: "pressure"
+      rho: "density"
+      g: "gravity"
+      h: "height"
+    domain: "mechanics"
+    topic: "pressure"
+    description: "Hydrostatic pressure at depth h in liquid of density rho"
+    conditions: ["incompressible liquid"]
+    dimension_lhs: "M L^-1 T^-2"
+    dimension_rhs: "M L^-1 T^-2"
+
+  - id: "specific_weight_from_density"
+    name: "Specific weight from density d = rho * g"
+    expression: "d = rho * g"
+    variables: ["d", "rho", "g"]
+    variable_quantities:
+      d: "specific_weight"
+      rho: "density"
+      g: "gravity"
+    domain: "mechanics"
+    topic: "density"
+    description: "Relation between specific weight and density"
+    conditions: []
+    dimension_lhs: "M L^-2 T^-2"
+    dimension_rhs: "M L^-2 T^-2"
 
   - id: "solid_pressure"
     name: "Solid pressure definition"

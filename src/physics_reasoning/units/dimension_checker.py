@@ -88,13 +88,19 @@ DEFAULT_PHYSICS_UNITS: dict[str, str] = {
     "t2": "kelvin",
     "rho": "kilogram / meter ** 3",
     "rho_water": "kilogram / meter ** 3",
+    "rho_res": "ohm * meter",
     "d_spec": "newton / meter ** 3",
+    "P_weight": "newton",
+    "P_avg": "watt",
+    "q_fuel": "joule / kilogram",
 }
 
 
 def _infer_unit_for_symbol(sym: str) -> str | None:
     """Infer physical unit from symbol naming conventions."""
     s = sym.lower()
+    if s.startswith("p_weight") or s in ("p_weight", "p_trong_luong", "trong_luong"):
+        return "newton"
     if s.startswith("f_") or s.endswith("_force") or "force" in s or s in ("f", "f_net", "f_a", "f_acs", "f_archimedes", "f_g", "f_drag", "f_pull", "f_push", "f_aerodynamic_force"):
         return "newton"
     if s.startswith("a_") or s.startswith("s_") or "area" in s or s in ("s", "a", "s_total", "a_total", "s_1", "s_2", "a_1", "a_2"):
@@ -107,8 +113,12 @@ def _infer_unit_for_symbol(sym: str) -> str | None:
         return "volt"
     if s.startswith("p_press") or "press" in s or sym == "p" or s.startswith("p_ap"):
         return "pascal"
-    if s.startswith("p_power") or "power" in s or sym.startswith("P_") or sym == "P" or "cong_suat" in s:
+    if s.startswith("p_power") or "power" in s or sym.startswith("P_") or sym == "P" or "cong_suat" in s or s == "p_avg":
         return "watt"
+    if s.startswith("q_fuel") or "nhien_lieu" in s:
+        return "joule / kilogram"
+    if s.startswith("rho_res") or "dien_tro_suat" in s:
+        return "ohm * meter"
     if s.startswith("w_") or s.startswith("a_work") or "work" in s or s in ("a", "w", "q"):
         return "joule"
     if s.startswith("v_") or s in ("v", "u", "v_i", "v_f", "v_avg", "speed", "velocity"):

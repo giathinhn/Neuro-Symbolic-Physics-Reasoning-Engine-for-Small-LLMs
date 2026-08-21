@@ -20,16 +20,14 @@ from physics_reasoning.solver.expression_parser import (
     parse_expression,
 )
 from physics_reasoning.solver.numerical import evaluate_numeric
-
 PHYSICS_SYNONYM_GROUPS: list[set[str]] = [
-    {"h", "d", "s", "y", "x", "l", "depth", "height", "distance", "path", "quang_duong"},
+    {"h", "s", "y", "x", "l", "depth", "height", "distance", "path", "quang_duong"},
     {"S", "S_total", "A_total", "area", "total_area", "dien_tich"},
     {"S_1", "A_1", "S1", "A1", "single_area", "dien_tich_1"},
     {"S_2", "A_2", "S2", "A2", "dien_tich_2"},
-    {"F", "F_net", "force", "F_pull", "F_push"},
-    {"F_A", "F_acs", "F_archimedes", "buoyant_force"},
-    {"d_spec", "d_water", "specific_weight", "trong_luong_rieng"},
-    {"F_g", "P_weight", "weight", "trong_luong"},
+    {"F", "F_net", "force", "F_pull", "F_push", "F_g", "P_weight", "weight", "trong_luong"},
+    {"F_A", "F_acs", "F_archimedes", "buoyant_force", "F_aerodynamic_force"},
+    {"d", "d_spec", "d_water", "d_liquid", "specific_weight", "trong_luong_rieng"},
     {"P", "P_power", "power", "cong_suat", "P_crane", "P_engine"},
     {"p", "P_press", "pressure", "ap_suat"},
     {"A", "W_work", "work", "cong"},
@@ -174,10 +172,10 @@ class SymbolicSolver:
                 warnings=["No unknown variables remain to solve"],
             )
 
-        # Solve system for all remaining unknowns simultaneously
+        # Solve system for all remaining unknowns
         raw_solutions: list[Any] = []
         try:
-            sol = solve(subbed_eqs, list(remaining_symbols), dict=True)
+            sol = solve(subbed_eqs, dict=True)
             if isinstance(sol, list):
                 raw_solutions.extend(sol)
             elif isinstance(sol, dict):
@@ -185,12 +183,14 @@ class SymbolicSolver:
         except Exception:
             pass
 
-        # Fallback if simultaneous solve with full symbol list didn't yield dict solutions
+        # Fallback with explicit symbol list if dict=True yielded nothing
         if not raw_solutions:
             try:
-                sol = solve(subbed_eqs, dict=True)
+                sol = solve(subbed_eqs, list(remaining_symbols), dict=True)
                 if isinstance(sol, list):
                     raw_solutions.extend(sol)
+                elif isinstance(sol, dict):
+                    raw_solutions.append(sol)
             except Exception:
                 pass
 
@@ -240,6 +240,12 @@ class SymbolicSolver:
             try:
                 num_val = evaluate_numeric(sol_val)
                 if math.isfinite(num_val):
+                    # Filter spurious 0.0 if all known inputs are positive and target is non-zero quantity
+                    all_known_positive = all(isinstance(v, (int, float)) and v > 0 for v in known_values.values()) if known_values else False
+                    if math.isclose(num_val, 0.0, abs_tol=1e-9) and all_known_positive and target_variable.lower() in ("p", "p_avg", "p_power", "a", "w", "w_work", "f", "r", "r_eq", "i", "u", "v", "d", "s"):
+                        # Check if this 0.0 is from an underdetermined trivial kernel
+                        if len(raw_solutions) > 1 or any(isinstance(s, dict) and any(not isinstance(val, (int, float, sympy.Number)) for val in s.values()) for s in raw_solutions):
+                            continue
                     if not any(
                         math.isclose(num_val, existing, abs_tol=self.numerical_tolerance)
                         for existing in numeric_solutions

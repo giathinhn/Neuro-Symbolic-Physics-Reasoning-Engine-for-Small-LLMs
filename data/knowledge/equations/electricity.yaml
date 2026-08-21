@@ -101,3 +101,81 @@ equations:
     conditions: ["two resistors in series"]
     dimension_lhs: "M L^2 T^-3 I^-2"
     dimension_rhs: "M L^2 T^-3 I^-2"
+
+  - id: "electric_power_ui"
+    name: "Electric power P = U * I"
+    expression: "P = U * I"
+    variables: ["P", "U", "I"]
+    variable_quantities:
+      P: "power"
+      U: "voltage"
+      I: "current"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Electric power equals voltage times current"
+    conditions: []
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
+  - id: "electric_power_i2r"
+    name: "Electric power P = I^2 * R"
+    expression: "P = I^2 * R"
+    variables: ["P", "I", "R"]
+    variable_quantities:
+      P: "power"
+      I: "current"
+      R: "resistance"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Electric power dissipated in resistor equals I squared times R"
+    conditions: []
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
+  - id: "electric_power_u2_div_r"
+    name: "Electric power P = U^2 / R"
+    expression: "P = U^2 / R"
+    variables: ["P", "U", "R"]
+    variable_quantities:
+      P: "power"
+      U: "voltage"
+      R: "resistance"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Electric power equals U squared divided by R"
+    conditions: []
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
+  - id: "electric_energy_uit"
+    name: "Electrical energy A = U * I * t"
+    expression: "A = U * I * t"
+    variables: ["A", "U", "I", "t"]
+    variable_quantities:
+      A: "work"
+      U: "voltage"
+      I: "current"
+      t: "time"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Electrical energy consumed in time t"
+    conditions: []
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
+  - id: "joule_lenz_heat"
+    name: "Joule-Lenz heat law Q = I^2 * R * t"
+    expression: "Q = I^2 * R * t"
+    variables: ["Q", "I", "R", "t"]
+    variable_quantities:
+      Q: "heat"
+      I: "current"
+      R: "resistance"
+      t: "time"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Heat dissipated by electric current through resistor"
+    conditions: []
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+

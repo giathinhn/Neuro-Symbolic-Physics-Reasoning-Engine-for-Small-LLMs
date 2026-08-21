@@ -146,19 +146,19 @@ quantities:
   - name: "temperature_equilibrium"
     symbol: "t_cb"
     dimension: "Theta"
-    si_unit: "celsius"
+    si_unit: "kelvin"
     aliases: ["nhiet do can bang", "T_final", "t_final", "equilibrium temperature"]
 
   - name: "temperature_1"
     symbol: "t_1"
     dimension: "Theta"
-    si_unit: "celsius"
+    si_unit: "kelvin"
     aliases: ["T_1", "T_hot", "t_hot", "t1"]
 
   - name: "temperature_2"
     symbol: "t_2"
     dimension: "Theta"
-    si_unit: "celsius"
+    si_unit: "kelvin"
     aliases: ["T_2", "T_cold", "t_cold", "t2"]
 
   - name: "kinetic_energy"
@@ -292,3 +292,10 @@ quantities:
     dimension: "M L^2 T^-3 I^-2"
     si_unit: "ohm"
     aliases: ["equivalent resistance", "total resistance", "R_td", "dien tro tuong duong"]
+
+  - name: "fuel_heat_value"
+    symbol: "q_fuel"
+    dimension: "L^2 T^-2"
+    si_unit: "joule / kilogram"
+    aliases: ["fuel heat value", "nang suat toa nhiet", "q_nhien_lieu"]
+
