@@ -7,7 +7,7 @@ from physics_reasoning.pipeline.orchestrator import PipelineOrchestrator
 orchestrator = PipelineOrchestrator()
 
 # Đổi câu hỏi của bạn tại đây
-question = "Một khối kim loại hình hộp chữ nhật có kích thước 5 cm x 10 cm x 20 cm và khối lượng 2,7 kg. Khối lượng riêng của kim loại này là bao nhiêu?"
+question = "Cho đoạn mạch gồm hai điện trở $R_1 = 10\ \Omega$ và $R_2 = 20\ \Omega$ mắc nối tiếp vào hiệu điện thế $U = 12\text{ V}$. Cường độ dòng điện chạy qua điện trở $R_1$ là bao nhiêu?"
 print(f"[*] Đang xử lý câu hỏi: {question}\n")
 
 solution = orchestrator.solve(question)

@@ -45,19 +45,26 @@ class EquationValidityCheck(BaseCheck):
             )
             return errors
 
+        valid_count = 0
         for eq in parsed_output.equations:
-            # 1. Check syntax
+            # Check syntax
             try:
                 parse_equation_string(eq.expression)
+                valid_count += 1
             except Exception as e:
+                # If expression looks like a unit constant assignment e.g. "rho = 1000 kg/m^3", treat as info/warning
                 errors.append(
                     VerificationError(
                         error_type=ErrorType.SYNTAX_ERROR,
-                        severity=ErrorSeverity.FATAL,
-                        message=f"Equation '{eq.expression}' has invalid syntax: {e}",
+                        severity=ErrorSeverity.WARNING,
+                        message=f"Equation '{eq.expression}' has non-standard syntax: {e}",
                         context={"expression": eq.expression},
-                        suggestion="Ensure equations use standard format like 'y = m * x + b'.",
+                        suggestion="Ensure equations use standard algebraic format like 'y = m * x + b'.",
                     )
                 )
+
+        if valid_count == 0 and errors:
+            # Escalate the first error to FATAL if no equation was valid
+            errors[0].severity = ErrorSeverity.FATAL
 
         return errors

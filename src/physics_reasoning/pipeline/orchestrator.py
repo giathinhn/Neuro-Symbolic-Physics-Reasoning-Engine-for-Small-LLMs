@@ -258,8 +258,10 @@ class PipelineOrchestrator:
             max_tool_calls_per_attempt=self.config.max_tool_calls_per_attempt,
         )
 
-        # 1. Prepare initial conversation messages
-        available_eq_names = [f"{eq.name} ({eq.expression})" for eq in self.kb.equations.values()]
+        # 1. Retrieve relevant equations for problem to provide as targeted hints
+        relevant_eqs = self.retriever.retrieve_for_problem(problem_text)
+        eq_hints = [f"{eq.name} ({eq.expression})" for eq in relevant_eqs]
+        available_eq_names = eq_hints or [f"{eq.name} ({eq.expression})" for eq in list(self.kb.equations.values())[:30]]
         system_prompt = build_system_prompt(available_eq_names)
         user_prompt = build_solve_prompt(problem_text)
 
@@ -313,7 +315,6 @@ class PipelineOrchestrator:
                     output_data={"error": str(e)},
                     duration_ms=(time.perf_counter() - attempt_start) * 1000.0,
                 )
-                # Retry with formatting reminder
                 ctx.messages.append(
                     {
                         "role": "user",
@@ -322,23 +323,26 @@ class PipelineOrchestrator:
                 )
                 continue
 
-            # Standardize quantities
-            quantities = self.quantity_extractor.standardize_all(parsed_output.quantities)
+            # Merge LLM-extracted quantities with deterministic text-extracted quantities
+            merged_parsed = self.quantity_extractor.merge_with_text_quantities(
+                parsed_output.quantities, problem_text
+            )
+            quantities = self.quantity_extractor.standardize_all(merged_parsed)
             last_quantities_extracted = quantities
 
             # Match equations against knowledge base
             equations_used: list[Equation] = []
             eq_expressions: list[str] = []
             for eq_item in parsed_output.equations:
-                eq_expressions.append(eq_item.expression)
+                if eq_item.expression and "=" in eq_item.expression:
+                    eq_expressions.append(eq_item.expression)
                 matched_eq = None
                 if eq_item.equation_id:
                     matched_eq = self.kb.get_equation(eq_item.equation_id)
-                if not matched_eq:
+                if not matched_eq and eq_item.expression:
                     matched_eq = self.retriever.match_expression(eq_item.expression)
-                if matched_eq:
+                if matched_eq and matched_eq not in equations_used:
                     equations_used.append(matched_eq)
-            last_equations_used = equations_used
 
             # Extract target variable
             target_var = parsed_output.target_variable
@@ -353,7 +357,7 @@ class PipelineOrchestrator:
             known_values_si: dict[str, float] = {}
             var_units: dict[str, str] = dict(PHYSICAL_CONSTANT_UNITS)
 
-            # Add standard physical constants (e.g. g = 9.8)
+            # Add standard physical constants as default
             for const_sym, const_val in PHYSICAL_CONSTANTS.items():
                 known_values_si[const_sym] = const_val
 
@@ -377,7 +381,39 @@ class PipelineOrchestrator:
                 known_values=known_values_si,
                 target_variable=target_var,
             )
+
+            # Fallback to KB retrieved equations if LLM equations could not be solved
+            if (not solve_res.is_numeric or not solve_res.solutions) and relevant_eqs:
+                # First try solving purely with KB retrieved equations
+                kb_eqs = [req.expression for req in relevant_eqs]
+                kb_solve_res = self.solver.solve_system(
+                    equations=kb_eqs,
+                    known_values=known_values_si,
+                    target_variable=target_var,
+                )
+                if kb_solve_res.is_numeric and kb_solve_res.solutions:
+                    solve_res = kb_solve_res
+                    eq_expressions = kb_eqs
+                    equations_used = list(relevant_eqs)
+                else:
+                    # Next try merging valid LLM equations + KB equations
+                    fallback_eqs = list(eq_expressions)
+                    for req in relevant_eqs:
+                        if req.expression not in fallback_eqs:
+                            fallback_eqs.append(req.expression)
+                            if req not in equations_used:
+                                equations_used.append(req)
+
+                    solve_res = self.solver.solve_system(
+                        equations=fallback_eqs,
+                        known_values=known_values_si,
+                        target_variable=target_var,
+                    )
+                    if solve_res.is_numeric and solve_res.solutions:
+                        eq_expressions = fallback_eqs
+
             last_solve_result = solve_res
+            last_equations_used = equations_used
 
             # Determine answer unit
             target_q = next((q for q in quantities if q.symbol == target_var), None)
@@ -391,13 +427,17 @@ class PipelineOrchestrator:
             if solve_res.is_numeric and solve_res.solutions:
                 # Select positive solution if available (default for magnitudes)
                 num_solutions = [s for s in solve_res.solutions if isinstance(s, (int, float))]
+                strict_positive = [s for s in num_solutions if s > 0]
                 positive_solutions = [s for s in num_solutions if s >= 0]
-                selected_val = positive_solutions[0] if positive_solutions else num_solutions[0]
+                selected_val = strict_positive[0] if strict_positive else (positive_solutions[0] if positive_solutions else num_solutions[0])
 
                 # Convert to requested target unit if different from SI
                 if target_unit:
                     try:
-                        conv = self.unit_engine.convert(selected_val, target_q.si_unit or target_unit, target_unit)
+                        si_u = target_q.si_unit if target_q and target_q.si_unit else target_unit
+                        if target_unit in ("celsius", "degC", "°C", "độ C") and si_u in ("celsius", "degC", "°C", "độ C", "kelvin"):
+                            si_u = "kelvin"
+                        conv = self.unit_engine.convert(selected_val, si_u, target_unit)
                         answer_value = conv.to_value
                     except Exception:
                         answer_value = selected_val
@@ -407,6 +447,7 @@ class PipelineOrchestrator:
 
             # Fill in missing variable units from KnowledgeBase
             from physics_reasoning.solver.expression_parser import extract_symbol_names
+            from physics_reasoning.solver.symbolic_solver import _find_synonyms
             for eq_expr in eq_expressions:
                 for sym in extract_symbol_names(eq_expr):
                     if sym not in var_units:
@@ -416,8 +457,14 @@ class PipelineOrchestrator:
 
             # Verification Check
             all_values_for_verification = dict(known_values_si)
+            for k, v in list(known_values_si.items()):
+                for syn in _find_synonyms(k):
+                    if syn not in all_values_for_verification:
+                        all_values_for_verification[syn] = v
             if answer_value is not None and target_var:
                 all_values_for_verification[target_var] = selected_val
+                for syn in _find_synonyms(target_var):
+                    all_values_for_verification[syn] = selected_val
 
             # If intermediate variables were solved, also evaluate them
             if solve_res.is_numeric:
@@ -466,13 +513,85 @@ class PipelineOrchestrator:
             )
             ctx.messages.append({"role": "user", "content": repair_prompt})
 
-        total_latency_ms = (time.perf_counter() - start_time) * 1000.0
-
+        # If LLM attempts failed verification, attempt a clean solve using verified Knowledge Base equations
         is_verified = (
             last_verification_result is not None
             and last_verification_result.is_valid
             and answer_value is not None
         )
+
+        if not is_verified and relevant_eqs:
+            kb_eqs = [req.expression for req in relevant_eqs]
+            kb_solve_res = self.solver.solve_system(
+                equations=kb_eqs,
+                known_values=known_values_si,
+                target_variable=target_var,
+            )
+            if kb_solve_res.is_numeric and kb_solve_res.solutions:
+                num_sols = [s for s in kb_solve_res.solutions if isinstance(s, (int, float))]
+                strict_pos_sols = [s for s in num_sols if s > 0]
+                pos_sols = [s for s in num_sols if s >= 0]
+                kb_val = strict_pos_sols[0] if strict_pos_sols else (pos_sols[0] if pos_sols else num_sols[0])
+
+                kb_var_units = dict(var_units)
+                from physics_reasoning.solver.expression_parser import extract_symbol_names
+                from physics_reasoning.solver.symbolic_solver import _find_synonyms
+                for eq_expr in kb_eqs:
+                    for sym in extract_symbol_names(eq_expr):
+                        if sym not in kb_var_units:
+                            kb_q = self.kb.get_quantity_by_symbol(sym)
+                            if kb_q and kb_q.si_unit:
+                                kb_var_units[sym] = kb_q.si_unit
+
+                kb_all_values = dict(known_values_si)
+                for k, v in list(known_values_si.items()):
+                    for syn in _find_synonyms(k):
+                        if syn not in kb_all_values:
+                            kb_all_values[syn] = v
+                if target_var:
+                    kb_all_values[target_var] = kb_val
+                    for syn in _find_synonyms(target_var):
+                        kb_all_values[syn] = kb_val
+
+                kb_out = LLMParsedOutput(
+                    problem_understanding="Solved via verified physics knowledge base",
+                    quantities=last_parsed_output.quantities if last_parsed_output else [],
+                    equations=[
+                        ParsedEquation(equation_id=req.id, expression=req.expression, justification=req.description)
+                        for req in relevant_eqs
+                    ],
+                    target_variable=target_var or "",
+                    solution_steps=[],
+                    proposed_answer=kb_val,
+                    proposed_unit=target_unit,
+                )
+
+                kb_v_res = self.verifier.verify(
+                    parsed_output=kb_out,
+                    solve_result=kb_solve_res,
+                    equations_used=list(relevant_eqs),
+                    var_units=kb_var_units,
+                    all_values=kb_all_values,
+                )
+                if kb_v_res.is_valid:
+                    last_verification_result = kb_v_res
+                    last_solve_result = kb_solve_res
+                    last_equations_used = list(relevant_eqs)
+                    if target_unit:
+                        try:
+                            si_u = target_q.si_unit if target_q and target_q.si_unit else target_unit
+                            if target_unit in ("celsius", "degC", "°C", "độ C") and si_u in ("celsius", "degC", "°C", "độ C", "kelvin"):
+                                si_u = "kelvin"
+                            conv = self.unit_engine.convert(kb_val, si_u, target_unit)
+                            answer_value = conv.to_value
+                        except Exception:
+                            answer_value = kb_val
+                    else:
+                        answer_value = kb_val
+                    answer_unit = target_unit
+                    is_verified = True
+
+        total_latency_ms = (time.perf_counter() - start_time) * 1000.0
 
         error_message = None
         if not is_verified and last_verification_result and last_verification_result.errors:

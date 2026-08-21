@@ -37,10 +37,15 @@ class DimensionalCheck(BaseCheck):
         for eq in parsed_output.equations:
             res = self.dim_checker.check_equation(eq.expression, var_units)
             if not res.is_consistent:
+                # If the equation failed to parse or is auxiliary, check severity
+                severity = ErrorSeverity.ERROR
+                if "Failed to parse equation" in res.message:
+                    severity = ErrorSeverity.WARNING
+
                 errors.append(
                     VerificationError(
                         error_type=ErrorType.DIMENSION_MISMATCH,
-                        severity=ErrorSeverity.ERROR,
+                        severity=severity,
                         message=res.message,
                         context={
                             "equation": eq.expression,

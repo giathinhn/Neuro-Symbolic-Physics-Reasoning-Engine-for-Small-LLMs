@@ -1,4 +1,19 @@
 equations:
+  - id: "work_A_def"
+    name: "Mechanical Work formula A = F * s"
+    expression: "A = F * s"
+    variables: ["A", "F", "s"]
+    variable_quantities:
+      A: "work"
+      F: "force"
+      s: "path"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Mechanical work done by force over distance"
+    conditions: ["force parallel to displacement"]
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
   - id: "work_def"
     name: "Work definition"
     expression: "W_work = F * d"
@@ -13,6 +28,52 @@ equations:
     conditions: ["force parallel to displacement"]
     dimension_lhs: "M L^2 T^-2"
     dimension_rhs: "M L^2 T^-2"
+
+  - id: "power_from_work_time"
+    name: "Power formula P = A / t"
+    expression: "P = A / t"
+    variables: ["P", "A", "t"]
+    variable_quantities:
+      P: "power"
+      A: "work"
+      t: "time"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Power equals mechanical work divided by time"
+    conditions: ["constant power"]
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
+  - id: "power_force_dist_time"
+    name: "Power from force, distance, time"
+    expression: "P = (F * s) / t"
+    variables: ["P", "F", "s", "t"]
+    variable_quantities:
+      P: "power"
+      F: "force"
+      s: "path"
+      t: "time"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Power delivered by force over distance in time t"
+    conditions: []
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
+
+  - id: "power_def"
+    name: "Power definition"
+    expression: "P = W_work / t"
+    variables: ["P", "W_work", "t"]
+    variable_quantities:
+      P: "power"
+      W_work: "work"
+      t: "time"
+    domain: "mechanics"
+    topic: "work_energy"
+    description: "Power is the rate at which work is done"
+    conditions: ["constant power"]
+    dimension_lhs: "M L^2 T^-3"
+    dimension_rhs: "M L^2 T^-3"
 
   - id: "ke_def"
     name: "Kinetic energy"
@@ -60,21 +121,6 @@ equations:
     dimension_lhs: "M L^2 T^-2"
     dimension_rhs: "M L^2 T^-2"
 
-  - id: "power_def"
-    name: "Power definition"
-    expression: "P = W_work / t"
-    variables: ["P", "W_work", "t"]
-    variable_quantities:
-      P: "power"
-      W_work: "work"
-      t: "time"
-    domain: "mechanics"
-    topic: "work_energy"
-    description: "Power is the rate at which work is done"
-    conditions: ["constant power"]
-    dimension_lhs: "M L^2 T^-3"
-    dimension_rhs: "M L^2 T^-3"
-
   - id: "power_force_vel"
     name: "Power from force and velocity"
     expression: "P = F * v"
@@ -89,19 +135,3 @@ equations:
     conditions: ["force parallel to velocity"]
     dimension_lhs: "M L^2 T^-3"
     dimension_rhs: "M L^2 T^-3"
-
-  - id: "energy_cons"
-    name: "Conservation of mechanical energy"
-    expression: "KE_i + PE_i = KE_f + PE_f"
-    variables: ["KE_i", "PE_i", "KE_f", "PE_f"]
-    variable_quantities:
-      KE_i: "kinetic_energy"
-      PE_i: "potential_energy"
-      KE_f: "kinetic_energy"
-      PE_f: "potential_energy"
-    domain: "mechanics"
-    topic: "work_energy"
-    description: "Total mechanical energy is conserved in isolated conservative system"
-    conditions: ["no non-conservative forces"]
-    dimension_lhs: "M L^2 T^-2"
-    dimension_rhs: "M L^2 T^-2"

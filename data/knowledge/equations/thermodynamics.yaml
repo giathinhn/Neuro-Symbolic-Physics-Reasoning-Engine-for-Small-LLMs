@@ -1,0 +1,52 @@
+equations:
+  - id: "thermal_equilibrium"
+    name: "Thermal equilibrium equation"
+    expression: "m_1 * (t_cb - t_1) + m_2 * (t_cb - t_2) = 0"
+    variables: ["m_1", "t_cb", "t_1", "m_2", "t_2"]
+    variable_quantities:
+      m_1: "mass_1"
+      t_cb: "temperature_equilibrium"
+      t_1: "temperature_1"
+      m_2: "mass_2"
+      t_2: "temperature_2"
+    domain: "thermodynamics"
+    topic: "heat_balance"
+    description: "Heat balance for two bodies of the same substance: Q_toa = Q_thu"
+    conditions: ["no heat loss to environment", "same specific heat"]
+    dimension_lhs: "M Theta"
+    dimension_rhs: "0"
+
+  - id: "thermal_equilibrium_general"
+    name: "General heat balance equation"
+    expression: "m_1 * c_1 * (t_cb - t_1) + m_2 * c_2 * (t_cb - t_2) = 0"
+    variables: ["m_1", "c_1", "t_cb", "t_1", "m_2", "c_2", "t_2"]
+    variable_quantities:
+      m_1: "mass_1"
+      c_1: "specific_heat"
+      t_cb: "temperature_equilibrium"
+      t_1: "temperature_1"
+      m_2: "mass_2"
+      c_2: "specific_heat"
+      t_2: "temperature_2"
+    domain: "thermodynamics"
+    topic: "heat_balance"
+    description: "General heat balance equation for heat exchange between two bodies"
+    conditions: ["no heat loss to environment"]
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "0"
+
+  - id: "heat_transfer"
+    name: "Heat transfer formula"
+    expression: "Q = m * c * delta_T"
+    variables: ["Q", "m", "c", "delta_T"]
+    variable_quantities:
+      Q: "heat"
+      m: "mass"
+      c: "specific_heat"
+      delta_T: "temperature"
+    domain: "thermodynamics"
+    topic: "heat_balance"
+    description: "Heat absorbed or released during temperature change"
+    conditions: ["no phase change"]
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"

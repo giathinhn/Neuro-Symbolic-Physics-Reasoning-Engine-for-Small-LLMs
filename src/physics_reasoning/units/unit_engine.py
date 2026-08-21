@@ -25,11 +25,37 @@ class UnitEngine:
             return "dimensionless"
 
         s = unit_str.strip()
+        # Remove parenthesized abbreviations if preceded by full unit: e.g. "Watt (W)" -> "watt", "Newton (N)" -> "newton", "Pascal (Pa)" -> "pascal"
+        s = re.sub(r"\s*\([A-Za-z0-9_]+\)", "", s).strip()
         # Replace ^ with ** for powers: m/s^2 -> m/s**2
         s = re.sub(r"\^([+-]?\d+)", r"**\1", s)
-        # Fix common symbols
-        s = s.replace("degC", "celsius").replace("°C", "celsius")
+        # Fix common symbols and Vietnamese unit names
+        s = s.replace("degC", "celsius").replace("°C", "celsius").replace("độ C", "celsius").replace("độ c", "celsius")
         s = s.replace("degF", "fahrenheit").replace("°F", "fahrenheit")
+        s = s.replace("Ω", "ohm").replace("ω", "ohm")
+        s = s.replace("giây", "second").replace("phút", "minute").replace("giờ", "hour")
+
+        # Case normalization for common physics units
+        s_lower = s.lower()
+        if s_lower in ("watt", "w"):
+            return "watt"
+        if s_lower in ("joule", "j"):
+            return "joule"
+        if s_lower in ("pascal", "pa"):
+            return "pascal"
+        if s_lower in ("newton", "n"):
+            return "newton"
+        if s_lower in ("volt", "v"):
+            return "volt"
+        if s_lower in ("ampere", "amp", "a"):
+            return "ampere"
+        if s_lower in ("kelvin", "k"):
+            return "kelvin"
+        if s_lower in ("second", "s", "sec"):
+            return "second"
+        if s_lower in ("meter", "m"):
+            return "meter"
+
         return s
 
     def parse_unit(self, unit_str: str) -> Quantity:

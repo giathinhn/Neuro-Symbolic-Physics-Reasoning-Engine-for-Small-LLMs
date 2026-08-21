@@ -1,4 +1,19 @@
 equations:
+  - id: "kin_uniform_motion_s"
+    name: "Uniform motion formula s = v * t"
+    expression: "s = v * t"
+    variables: ["s", "v", "t"]
+    variable_quantities:
+      s: "path"
+      v: "velocity"
+      t: "time"
+    domain: "mechanics"
+    topic: "kinematics"
+    description: "Distance traveled equals velocity times time in uniform motion"
+    conditions: ["constant velocity"]
+    dimension_lhs: "L"
+    dimension_rhs: "L"
+
   - id: "kin_vel_def"
     name: "Velocity definition"
     expression: "v = d / t"
@@ -13,6 +28,21 @@ equations:
     conditions: ["constant velocity"]
     dimension_lhs: "L T^-1"
     dimension_rhs: "L T^-1"
+
+  - id: "kin_free_fall"
+    name: "Free fall height"
+    expression: "h = (1/2) * g * t^2"
+    variables: ["h", "g", "t"]
+    variable_quantities:
+      h: "height"
+      g: "gravity"
+      t: "time"
+    domain: "mechanics"
+    topic: "kinematics"
+    description: "Distance fallen from rest under gravity"
+    conditions: ["free fall from rest", "no air resistance"]
+    dimension_lhs: "L"
+    dimension_rhs: "L"
 
   - id: "kin_acc_def"
     name: "Acceleration definition"
@@ -105,20 +135,5 @@ equations:
     topic: "kinematics"
     description: "Displacement using average velocity"
     conditions: ["constant acceleration"]
-    dimension_lhs: "L"
-    dimension_rhs: "L"
-
-  - id: "kin_free_fall"
-    name: "Free fall height"
-    expression: "h = (1/2) * g * t^2"
-    variables: ["h", "g", "t"]
-    variable_quantities:
-      h: "height"
-      g: "gravity"
-      t: "time"
-    domain: "mechanics"
-    topic: "kinematics"
-    description: "Distance fallen from rest under gravity"
-    conditions: ["free fall from rest", "no air resistance"]
     dimension_lhs: "L"
     dimension_rhs: "L"

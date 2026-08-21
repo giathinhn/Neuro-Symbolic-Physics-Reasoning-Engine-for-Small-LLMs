@@ -3,25 +3,49 @@ quantities:
     symbol: "F"
     dimension: "M L T^-2"
     si_unit: "newton"
-    aliases: ["net force", "applied force", "resultant force", "thrust", "tension"]
+    aliases: ["net force", "applied force", "resultant force", "thrust", "tension", "luc"]
+
+  - name: "buoyant_force"
+    symbol: "F_A"
+    dimension: "M L T^-2"
+    si_unit: "newton"
+    aliases: ["luc day ac si met", "luc day archimedes", "Archimedes force", "buoyant force", "F_acs"]
+
+  - name: "specific_weight"
+    symbol: "d"
+    dimension: "M L^-2 T^-2"
+    si_unit: "newton / meter ** 3"
+    aliases: ["trong luong rieng", "specific weight"]
 
   - name: "mass"
     symbol: "m"
     dimension: "M"
     si_unit: "kilogram"
-    aliases: ["object mass", "body mass"]
+    aliases: ["object mass", "body mass", "khoi luong"]
+
+  - name: "mass_1"
+    symbol: "m_1"
+    dimension: "M"
+    si_unit: "kilogram"
+    aliases: ["mass 1", "m_hot", "m1"]
+
+  - name: "mass_2"
+    symbol: "m_2"
+    dimension: "M"
+    si_unit: "kilogram"
+    aliases: ["mass 2", "m_cold", "m2"]
 
   - name: "acceleration"
     symbol: "a"
     dimension: "L T^-2"
     si_unit: "meter / second ** 2"
-    aliases: ["deceleration", "retardation", "rate of acceleration"]
+    aliases: ["deceleration", "retardation", "rate of acceleration", "gia toc"]
 
   - name: "velocity"
     symbol: "v"
     dimension: "L T^-1"
     si_unit: "meter / second"
-    aliases: ["speed", "rate of motion"]
+    aliases: ["speed", "rate of motion", "van toc"]
 
   - name: "initial_velocity"
     symbol: "v_i"
@@ -47,6 +71,12 @@ quantities:
     si_unit: "meter"
     aliases: ["distance", "height", "length", "position change", "depth"]
 
+  - name: "path"
+    symbol: "s"
+    dimension: "L"
+    si_unit: "meter"
+    aliases: ["quang duong", "distance traveled", "distance"]
+
   - name: "length"
     symbol: "l"
     dimension: "L"
@@ -69,109 +99,145 @@ quantities:
     symbol: "h"
     dimension: "L"
     si_unit: "meter"
-    aliases: ["altitude", "elevation"]
+    aliases: ["altitude", "elevation", "do cao"]
 
   - name: "time"
     symbol: "t"
     dimension: "T"
     si_unit: "second"
-    aliases: ["duration", "time interval", "elapsed time"]
+    aliases: ["duration", "time interval", "elapsed time", "thoi gian"]
 
   - name: "weight"
-    symbol: "W"
+    symbol: "P"
     dimension: "M L T^-2"
     si_unit: "newton"
-    aliases: ["gravitational force"]
+    aliases: ["gravitational force", "trong luong", "W"]
 
   - name: "gravity"
     symbol: "g"
     dimension: "L T^-2"
     si_unit: "meter / second ** 2"
-    aliases: ["gravitational acceleration", "acceleration due to gravity"]
+    aliases: ["gravitational acceleration", "acceleration due to gravity", "gia toc trong truong"]
 
   - name: "work"
-    symbol: "W_work"
+    symbol: "A"
     dimension: "M L^2 T^-2"
     si_unit: "joule"
-    aliases: ["work done"]
+    aliases: ["work done", "cong co hoc", "W_work", "W"]
+
+  - name: "heat"
+    symbol: "Q"
+    dimension: "M L^2 T^-2"
+    si_unit: "joule"
+    aliases: ["nhiet luong", "heat energy"]
+
+  - name: "specific_heat"
+    symbol: "c"
+    dimension: "L^2 T^-2 Theta^-1"
+    si_unit: "joule / (kilogram * kelvin)"
+    aliases: ["nhiet dung rieng", "specific heat capacity", "c_water"]
+
+  - name: "temperature"
+    symbol: "t"
+    dimension: "Theta"
+    si_unit: "celsius"
+    aliases: ["nhiet do", "temperature", "T"]
+
+  - name: "temperature_equilibrium"
+    symbol: "t_cb"
+    dimension: "Theta"
+    si_unit: "celsius"
+    aliases: ["nhiet do can bang", "T_final", "t_final", "equilibrium temperature"]
+
+  - name: "temperature_1"
+    symbol: "t_1"
+    dimension: "Theta"
+    si_unit: "celsius"
+    aliases: ["T_1", "T_hot", "t_hot", "t1"]
+
+  - name: "temperature_2"
+    symbol: "t_2"
+    dimension: "Theta"
+    si_unit: "celsius"
+    aliases: ["T_2", "T_cold", "t_cold", "t2"]
 
   - name: "kinetic_energy"
     symbol: "KE"
     dimension: "M L^2 T^-2"
     si_unit: "joule"
-    aliases: ["kinetic energy"]
+    aliases: ["kinetic energy", "dong nang"]
 
   - name: "potential_energy"
     symbol: "PE"
     dimension: "M L^2 T^-2"
     si_unit: "joule"
-    aliases: ["gravitational potential energy"]
+    aliases: ["gravitational potential energy", "the nang"]
 
   - name: "power"
     symbol: "P"
     dimension: "M L^2 T^-3"
     si_unit: "watt"
-    aliases: ["power output", "rate of work"]
+    aliases: ["power output", "rate of work", "cong suat", "P_power"]
 
   - name: "momentum"
     symbol: "p"
     dimension: "M L T^-1"
     si_unit: "kilogram * meter / second"
-    aliases: ["linear momentum"]
+    aliases: ["linear momentum", "dong luong"]
 
   - name: "impulse"
     symbol: "J"
     dimension: "M L T^-1"
     si_unit: "newton * second"
-    aliases: ["impulse force"]
+    aliases: ["impulse force", "xung luong"]
 
   - name: "friction_force"
     symbol: "f"
     dimension: "M L T^-2"
     si_unit: "newton"
-    aliases: ["frictional force", "friction"]
+    aliases: ["frictional force", "friction", "luc ma sat"]
 
   - name: "normal_force"
     symbol: "N"
     dimension: "M L T^-2"
     si_unit: "newton"
-    aliases: ["normal reaction"]
+    aliases: ["normal reaction", "ap luc", "phan luc"]
 
   - name: "friction_coefficient"
     symbol: "mu"
     dimension: "dimensionless"
     si_unit: "dimensionless"
-    aliases: ["coefficient of friction"]
+    aliases: ["coefficient of friction", "he so ma sat"]
 
   - name: "density"
     symbol: "rho"
     dimension: "M L^-3"
     si_unit: "kilogram / meter ** 3"
-    aliases: ["mass density"]
+    aliases: ["mass density", "khoi luong rieng", "rho_water"]
 
   - name: "volume"
     symbol: "V"
     dimension: "L^3"
     si_unit: "meter ** 3"
-    aliases: ["capacity"]
+    aliases: ["capacity", "the tich"]
 
   - name: "pressure"
-    symbol: "P_press"
+    symbol: "p"
     dimension: "M L^-1 T^-2"
     si_unit: "pascal"
-    aliases: ["fluid pressure", "surface pressure"]
+    aliases: ["fluid pressure", "surface pressure", "ap suat", "P_press"]
 
   - name: "area"
-    symbol: "A"
+    symbol: "S"
     dimension: "L^2"
     si_unit: "meter ** 2"
-    aliases: ["surface area", "cross-sectional area"]
+    aliases: ["surface area", "cross-sectional area", "dien tich", "tong dien tich", "A"]
 
   - name: "voltage"
     symbol: "U"
     dimension: "M L^2 T^-3 I^-1"
     si_unit: "volt"
-    aliases: ["electric potential", "potential difference", "voltage", "V"]
+    aliases: ["electric potential", "potential difference", "voltage", "V", "hieu dien the"]
 
   - name: "voltage_1"
     symbol: "U_1"
@@ -189,7 +255,7 @@ quantities:
     symbol: "I"
     dimension: "I"
     si_unit: "ampere"
-    aliases: ["electric current", "current intensity"]
+    aliases: ["electric current", "current intensity", "cuong do dong dien"]
 
   - name: "current_1"
     symbol: "I_1"
@@ -207,22 +273,22 @@ quantities:
     symbol: "R"
     dimension: "M L^2 T^-3 I^-2"
     si_unit: "ohm"
-    aliases: ["electric resistance", "resistor"]
+    aliases: ["electric resistance", "resistor", "dien tro"]
 
   - name: "resistance_1"
     symbol: "R_1"
     dimension: "M L^2 T^-3 I^-2"
     si_unit: "ohm"
-    aliases: ["resistance 1", "resistor 1"]
+    aliases: ["resistance 1", "resistor 1", "R1"]
 
   - name: "resistance_2"
     symbol: "R_2"
     dimension: "M L^2 T^-3 I^-2"
     si_unit: "ohm"
-    aliases: ["resistance 2", "resistor 2"]
+    aliases: ["resistance 2", "resistor 2", "R2"]
 
   - name: "equivalent_resistance"
     symbol: "R_eq"
     dimension: "M L^2 T^-3 I^-2"
     si_unit: "ohm"
-    aliases: ["equivalent resistance", "total resistance", "R_td"]
+    aliases: ["equivalent resistance", "total resistance", "R_td", "dien tro tuong duong"]

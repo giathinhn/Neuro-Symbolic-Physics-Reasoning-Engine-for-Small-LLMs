@@ -38,7 +38,8 @@ class SubstitutionCheck(BaseCheck):
 
         for eq in parsed_output.equations:
             is_sat, res = self.solver.verify_substitution(eq.expression, all_values)
-            if not is_sat:
+            # Only report error if the equation had all variables provided (res < inf) but was not satisfied
+            if not is_sat and res < float("inf"):
                 errors.append(
                     VerificationError(
                         error_type=ErrorType.SUBSTITUTION_ERROR,

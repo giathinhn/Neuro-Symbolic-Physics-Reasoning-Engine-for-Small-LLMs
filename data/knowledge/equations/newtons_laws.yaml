@@ -14,8 +14,23 @@ equations:
     dimension_lhs: "M L T^-2"
     dimension_rhs: "M L T^-2"
 
-  - id: "weight_def"
-    name: "Weight equation"
+  - id: "weight_P"
+    name: "Weight formula P = m * g"
+    expression: "P = m * g"
+    variables: ["P", "m", "g"]
+    variable_quantities:
+      P: "weight"
+      m: "mass"
+      g: "gravity"
+    domain: "mechanics"
+    topic: "newton_laws"
+    description: "Weight is the gravitational force acting on a mass"
+    conditions: ["near Earth surface"]
+    dimension_lhs: "M L T^-2"
+    dimension_rhs: "M L T^-2"
+
+  - id: "weight_W"
+    name: "Weight formula W = m * g"
     expression: "W = m * g"
     variables: ["W", "m", "g"]
     variable_quantities:
@@ -24,10 +39,55 @@ equations:
       g: "gravity"
     domain: "mechanics"
     topic: "newton_laws"
-    description: "Weight is the force of gravity on a mass"
+    description: "Weight formula using W"
     conditions: ["near Earth surface"]
     dimension_lhs: "M L T^-2"
     dimension_rhs: "M L T^-2"
+
+  - id: "solid_pressure"
+    name: "Solid pressure definition"
+    expression: "p = F / S"
+    variables: ["p", "F", "S"]
+    variable_quantities:
+      p: "pressure"
+      F: "force"
+      S: "area"
+    domain: "mechanics"
+    topic: "pressure"
+    description: "Pressure equals normal force divided by contact area"
+    conditions: ["perpendicular uniform force"]
+    dimension_lhs: "M L^-1 T^-2"
+    dimension_rhs: "M L^-1 T^-2"
+
+  - id: "archimedes_buoyancy"
+    name: "Archimedes Buoyancy Force"
+    expression: "F_A = d * V"
+    variables: ["F_A", "d", "V"]
+    variable_quantities:
+      F_A: "buoyant_force"
+      d: "specific_weight"
+      V: "volume"
+    domain: "mechanics"
+    topic: "archimedes"
+    description: "Archimedes buoyant force equals specific weight of liquid times submerged volume"
+    conditions: ["submerged object in liquid"]
+    dimension_lhs: "M L T^-2"
+    dimension_rhs: "M L T^-2"
+
+  - id: "density_mass_volume"
+    name: "Density definition"
+    expression: "m = rho * V"
+    variables: ["m", "rho", "V"]
+    variable_quantities:
+      m: "mass"
+      rho: "density"
+      V: "volume"
+    domain: "mechanics"
+    topic: "density"
+    description: "Mass equals density times volume"
+    conditions: []
+    dimension_lhs: "M"
+    dimension_rhs: "M"
 
   - id: "friction_def"
     name: "Friction force"
