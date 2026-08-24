@@ -135,24 +135,41 @@ QUALITATIVE_SYSTEM_PROMPT_TEMPLATE = """You are an expert physics educator and r
 Your task is to explain physics phenomena using rigorous, step-by-step physical principles and causal reasoning chains.
 
 CRITICAL REASONING RULES:
-1. Identify the core physical principle/law:
-   - Quán tính (inertia_law): vật duy trì vận tốc khi có lực hãm/tăng tốc đột ngột.
-   - Áp suất chất rắn (solid_pressure): p = F/S, diện tích tiếp xúc S nhỏ thì áp suất p lớn (dao sắc, đinh nhọn).
-   - Sự nhiễm điện do cọ xát (electrostatic_charging_friction): Khi quay cọ xát với không khí, cánh quạt bị nhiễm điện và hút các vật nhỏ nhẹ như hạt bụi.
-   - Lực đẩy Ác-si-mét (archimedes_buoyant_force): F_A = d * V, điều kiện chìm/nổi do d_vat so với d_long.
-   - Lực ma sát (friction_mechanisms): ma sát trượt, lăn, nghỉ cản trở chuyển động.
-   - Sự bay hơi thu nhiệt (evaporation_cooling): chất lỏng bay hơi lấy nhiệt làm mát môi trường xung quanh.
-   - Dẫn nhiệt (thermal_conduction) & Sự dãn nở nhiệt (thermal_expansion_uneven).
-2. Form a complete, unbroken Causal Chain:
+1. Identify the EXACT core physical principle/law:
+   - Quán tính (inertia_law): vật có xu hướng duy trì vận tốc; khi phanh gấp người ngã chúi về PHÍA TRƯỚC, khi rẽ phải người nghiêng sang TRÁI.
+   - Áp suất chất rắn (solid_pressure_area): p = F/S; diện tích S nhỏ thì áp suất p lớn (mũi kim, đinh nhọn, dao sắc); diện tích S lớn thì áp suất p nhỏ tránh lún (bánh xích, móng nhà).
+   - Áp suất khí quyển (atmospheric_pressure_effects): khí quyển tác dụng áp suất lên mọi vật; khi hút bớt khí bên trong thì áp suất khí quyển bên ngoài ép bẹp hộp sữa hoặc đẩy nước lên trong ống hút; nắp ấm có lỗ để cân bằng áp suất.
+   - Bình thông nhau (communicating_vessels_principle): các nhánh cùng một chất lỏng đứng yên có mặt thoáng ở cùng độ cao; vòi ấm đun nước phải cao ngang miệng ấm.
+   - Sự nhiễm điện do cọ xát (electrostatic_charging_friction): khi cọ xát với không khí, cánh quạt bị nhiễm điện nên sinh lực tĩnh điện hút các hạt bụi nhỏ nhẹ.
+   - Lực đẩy Ác-si-mét & Chìm nổi (archimedes_buoyancy_floating): F_A = d * V; vật nổi khi trọng lượng riêng trung bình d_v < d_l (tàu thủy rỗng nên d_tb < d_nuoc).
+   - Lực ma sát (friction_mechanisms): ma sát trượt, lăn, nghỉ cản trở chuyển động; khía rãnh lốp xe tăng ma sát; tra dầu mỡ giảm ma sát.
+   - Dãn nở nhiệt không đồng đều (thermal_expansion_unequal): rót nước sôi vào cốc dày dễ vỡ vì thủy tinh dẫn nhiệt kém, lớp trong nở ra trước khi lớp ngoài kịp nở gây ứng suất nứt vỡ.
+   - Dẫn nhiệt (heat_conduction_rate): kim loại dẫn nhiệt nhanh hơn gỗ nên mùa đông sờ vào kim loại thấy lạnh hơn.
+   - Sự bay hơi thu nhiệt (evaporation_heat_absorption): bay hơi luôn thu nhiệt từ bề mặt tiếp xúc làm giảm nhiệt độ và mát da (cồn, mồ hôi).
+   - Sự ngưng tụ của hơi nước (condensation_dew_formation): hơi nước trong không khí gặp bề mặt lạnh bị ngưng tụ thành giọt nước (cốc nước đá, sương mù, mờ gương).
+   - Đối lưu & Bức xạ nhiệt (convection_thermal_radiation): khí nóng nhẹ bay lên, khí lạnh nặng chìm xuống tạo dòng đối lưu (điều hòa lắp trên cao, lò sưởi dưới sàn).
+   - Truyền thẳng ánh sáng (light_rectilinear_propagation): ánh sáng truyền thẳng trong môi trường trong suốt đồng tính (bóng tối, nhật thực, nguyệt thực).
+   - Phản xạ ánh sáng & Gương (light_reflection_mirrors): gương cầu lồi có thị trường (vùng nhìn thấy) rộng hơn gương phẳng (gương chiếu hậu ô tô, gương khúc cua).
+   - Khúc xạ ánh sáng (light_refraction_phenomena): ánh sáng đổi hướng qua mặt phân cách làm ảnh ảo của đáy hồ/bể bơi bị nâng cao lên (trông nông hơn thực tế), đũa trong nước trông như bị gãy.
+   - Nguồn âm & Dao động (sound_source_vibration): vật phát ra âm khi đang dao động (mặt trống, dây đàn).
+   - Sự truyền âm (sound_propagation_media): âm truyền tốt trong chất rắn, lỏng, khí (v_rắn > v_lỏng > v_khí); KHÔNG TRUYỀN trong chân không.
+   - Phản xạ âm & Tiếng vang (sound_reflection_echo): nghe tiếng vang khi âm phản xạ đến sau âm trực tiếp ít nhất 1/15s; vật mềm xốp hấp thụ âm tốt dùng cách âm.
+
+2. Form a complete, unbroken Causal Chain (at least 2-3 steps):
    - Step 1: Initial State & External Action (Trạng thái ban đầu và tác động/thay đổi xảy ra).
    - Step 2: Physical Mechanism (Cơ chế vật lý theo định luật: tại sao các bộ phận phản ứng khác nhau do tính chất vật lý).
    - Step 3: Observed Consequence (Hệ quả cuối cùng giải thích đúng hiện tượng được hỏi).
+
 3. AVOID COMMON MISCONCEPTIONS:
    - NEVER refer to "inertia" as a force (quán tính không phải là lực đẩy/kéo).
    - Do NOT confuse force (áp lực F) with pressure (áp suất p = F/S).
    - Do NOT confuse heat (nhiệt lượng) with temperature (nhiệt độ).
    - Do NOT claim dust sticks solely because of friction (cánh quạt bám bụi là do cọ xát tạo ra sự NHIỄM ĐIỆN hút bụi nhẹ).
    - Do NOT claim objects sink solely because they are heavy (chìm/nổi do trọng lượng riêng so với chất lỏng).
+   - Do NOT claim water outside an iced glass leaked through the glass (là do hơi nước trong không khí NGƯNG TỤ khi gặp lạnh).
+   - Do NOT claim the stick in water physically snapped (là do KHÚC XẠ ÁNH SÁNG tạo ảnh ảo bị lệch).
+   - Do NOT claim a vacuum has a natural suction force (là do ÁP SUẤT KHÍ QUYỂN bên ngoài đẩy vào).
+
 4. Always respond with a structured JSON object matching the requested schema.
 
 {available_principles_section}
@@ -161,29 +178,29 @@ CRITICAL REASONING RULES:
 QUALITATIVE_JSON_SCHEMA_EXAMPLE = """{
   "problem_understanding": "Tóm tắt hiện tượng cần giải thích",
   "observed_phenomenon": "Hiện tượng được quan sát trong thực tế",
-  "core_principles": ["inertia_law"],
+  "core_principles": ["<id_nguyen_ly_phu_hop_tu_danh_sach>"],
   "causal_chain": [
     {
       "step_number": 1,
-      "state_or_action": "Xe và hành khách đang cùng chuyển động về phía trước với vận tốc v.",
-      "physical_mechanism": "Khi xe phanh gấp, lực ma sát giữa bánh xe và mặt đường làm xe và phần dưới cơ thể hành khách tiếp xúc với ghế/sàn xe giảm nhanh vận tốc.",
-      "governing_principle": "inertia_law"
+      "state_or_action": "Trạng thái ban đầu và tác động/thay đổi xảy ra.",
+      "physical_mechanism": "Cơ chế tác động vật lý ban đầu theo định luật.",
+      "governing_principle": "<id_nguyen_ly>"
     },
     {
       "step_number": 2,
-      "state_or_action": "Phần thân trên của hành khách chưa chịu lực hãm ngay.",
-      "physical_mechanism": "Do có quán tính, phần thân trên tiếp tục duy trì vận tốc v ban đầu hướng về phía trước.",
-      "governing_principle": "inertia_law"
+      "state_or_action": "Phản ứng của hệ vật hoặc các bộ phận liên quan.",
+      "physical_mechanism": "Cơ chế vật lý chi tiết giải thích sự khác biệt.",
+      "governing_principle": "<id_nguyen_ly>"
     },
     {
       "step_number": 3,
-      "state_or_action": "Kết quả tổng thể của chuyển động",
-      "physical_mechanism": "Phần thân trên di chuyển nhanh hơn phần thân dưới, khiến hành khách có xu hướng bị ngã chúi về phía trước.",
-      "governing_principle": "inertia_law"
+      "state_or_action": "Kết quả tổng thể của hiện tượng.",
+      "physical_mechanism": "Hệ quả quan sát được trả lời trực tiếp câu hỏi bài toán.",
+      "governing_principle": "<id_nguyen_ly>"
     }
   ],
-  "conclusion": "Khi xe phanh gấp, do có quán tính nên phần thân trên của hành khách tiếp tục duy trì vận tốc cũ trong khi phần dưới đã dừng lại cùng xe, khiến người bị ngã chúi về phía trước.",
-  "scientific_keywords": ["quán tính", "duy trì vận tốc", "phanh gấp", "chuyển động"]
+  "conclusion": "Câu kết luận khoa học cô đọng giải thích đầy đủ và chính xác hiện tượng.",
+  "scientific_keywords": ["từ_khóa_1", "từ_khóa_2"]
 }"""
 
 
@@ -197,13 +214,20 @@ def build_qualitative_system_prompt(available_principles: list[str] | None = Non
     return QUALITATIVE_SYSTEM_PROMPT_TEMPLATE.format(available_principles_section=section)
 
 
-def build_qualitative_solve_prompt(problem_text: str) -> str:
+def build_qualitative_solve_prompt(
+    problem_text: str, relevant_principles: list[str] | None = None
+) -> str:
     """Build user prompt for explaining a qualitative physics phenomenon."""
+    principle_hints = ""
+    if relevant_principles:
+        hints_str = "\n".join(f"  * {p}" for p in relevant_principles)
+        principle_hints = f"\nCANDIDATE PRINCIPLES FOR THIS PROBLEM:\n{hints_str}\n(Select the most appropriate principle ID from above for 'core_principles')\n"
+
     return f"""Please provide a rigorous, scientifically grounded explanation for the following physics phenomenon:
 
 PHENOMENON QUESTION:
 "{problem_text}"
-
+{principle_hints}
 Respond ONLY with a JSON object following this format:
 ```json
 {QUALITATIVE_JSON_SCHEMA_EXAMPLE}

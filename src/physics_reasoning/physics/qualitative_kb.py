@@ -9,7 +9,11 @@ from typing import Any
 import yaml
 
 from physics_reasoning.core.exceptions import KnowledgeBaseError
-from physics_reasoning.core.models import QualitativePrinciple
+from physics_reasoning.core.models import (
+    CausalStep,
+    QualitativeParsedOutput,
+    QualitativePrinciple,
+)
 
 
 class QualitativeKnowledgeBase:
@@ -62,7 +66,8 @@ class QualitativeKnowledgeBase:
         stop_words = {
             "tại", "sao", "khi", "thì", "lại", "bị", "có", "là", "và", "trong",
             "cho", "của", "được", "ra", "vào", "với", "hơn", "so", "ở", "các",
-            "những", "một", "nào", "hãy", "gì", "như", "thế", "này", "why", "how", "what", "is", "the", "a", "an"
+            "những", "một", "nào", "hãy", "gì", "như", "thế", "này", "why", "how", "what", "is", "the", "a", "an",
+            "giải", "thích", "vì", "sao", "hiện", "tượng"
         }
         q_words = set(re.findall(r"\w+", q_lower)) - stop_words
 
@@ -71,20 +76,32 @@ class QualitativeKnowledgeBase:
         for p in self.principles.values():
             score = 0.0
 
-            # Check keywords
+            # 1. Exact keyword match
             for kw in p.keywords:
                 kw_lower = kw.lower()
                 if kw_lower in q_lower:
-                    score += 10.0
+                    # Longer keywords get higher weights
+                    score += 10.0 + len(kw_lower.split()) * 3.0
 
-            # Check typical phenomena similarity
+            # 2. Typical phenomena similarity (n-gram & token overlap)
             for tp in p.typical_phenomena:
-                tp_words = set(re.findall(r"\w+", tp.lower())) - stop_words
+                tp_lower = tp.lower()
+                # Direct subphrase match
+                if any(phrase in q_lower for phrase in [tp_lower[:20], tp_lower[-20:]] if len(phrase) >= 10):
+                    score += 25.0
+
+                tp_words = set(re.findall(r"\w+", tp_lower)) - stop_words
                 overlap = len(tp_words.intersection(q_words))
-                if overlap >= 2:
-                    score += overlap * 4.0
+                if overlap >= 3:
+                    score += overlap * 6.0
+                elif overlap == 2:
+                    score += 8.0
                 elif overlap == 1:
                     score += 2.0
+
+            # 3. Principle name match
+            if p.name.lower() in q_lower:
+                score += 20.0
 
             if score > 0:
                 scored.append((score, p))
@@ -116,3 +133,57 @@ class QualitativeKnowledgeBase:
                     break
 
         return matched
+
+    def synthesize_fallback_explanation(
+        self, problem_text: str, principle: QualitativePrinciple
+    ) -> QualitativeParsedOutput:
+        """Synthesize a canonical qualitative explanation when LLM verification fails."""
+        # Find best matching typical phenomenon if any
+        q_lower = problem_text.lower()
+        matched_tp = ""
+        for tp in principle.typical_phenomena:
+            tp_words = set(re.findall(r"\w+", tp.lower()))
+            q_words = set(re.findall(r"\w+", q_lower))
+            if len(tp_words.intersection(q_words)) >= 2:
+                matched_tp = tp
+                break
+
+        steps: list[CausalStep] = [
+            CausalStep(
+                step_number=1,
+                state_or_action=f"Xem xét trạng thái ban đầu và hiện tượng: '{problem_text.strip()}'.",
+                physical_mechanism=f"Hiện tượng này chịu sự chi phối trực tiếp của {principle.name}.",
+                governing_principle=principle.id,
+            ),
+            CausalStep(
+                step_number=2,
+                state_or_action="Quá trình biến đổi vật lý diễn ra theo quy luật tự nhiên.",
+                physical_mechanism=principle.description,
+                governing_principle=principle.id,
+            ),
+            CausalStep(
+                step_number=3,
+                state_or_action="Kết quả quan sát được trong thực tế.",
+                physical_mechanism=(
+                    matched_tp
+                    if matched_tp
+                    else f"Theo {principle.name}, điều này dẫn tới hiện tượng được nêu trong bài toán."
+                ),
+                governing_principle=principle.id,
+            ),
+        ]
+
+        conclusion = (
+            matched_tp
+            if matched_tp
+            else f"Hiện tượng '{problem_text.strip()}' xảy ra là do {principle.name}: {principle.description}"
+        )
+
+        return QualitativeParsedOutput(
+            problem_understanding=f"Giải thích hiện tượng: {problem_text.strip()}",
+            observed_phenomenon=problem_text.strip(),
+            core_principles=[principle.id],
+            causal_chain=steps,
+            conclusion=conclusion,
+            scientific_keywords=principle.keywords[:5],
+        )

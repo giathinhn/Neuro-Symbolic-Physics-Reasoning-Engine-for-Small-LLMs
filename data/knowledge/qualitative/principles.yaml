@@ -5,7 +5,7 @@ principles:
     domain: "inertia_motion"
     description: "Quán tính là tính chất giữ nguyên vận tốc (cả về hướng và độ lớn) của mọi vật. Khi không có lực tác dụng hoặc các lực cân bằng, vật đứng yên sẽ tiếp tục đứng yên, vật đang chuyển động sẽ tiếp tục chuyển động thẳng đều. Khi có lực tác dụng, vận tốc của vật không thể thay đổi đột ngột ngay lập tức mà cần có thời gian."
     formula_or_rule: "F_net = 0 => v = const; m càng lớn => quán tính càng lớn"
-    keywords: ["quán tính", "inertia", "giữ nguyên vận tốc", "thay đổi đột ngột", "không kịp đổi vận tốc", "phanh gấp", "rẽ đột ngột", "giũ bụi", "vẩy mực"]
+    keywords: ["quán tính", "inertia", "giữ nguyên vận tốc", "thay đổi đột ngột", "không kịp đổi vận tốc", "phanh gấp", "rẽ đột ngột", "giũ bụi", "vẩy mực", "chúi người", "ngả người", "nghiêng người"]
     preconditions: ["vật có khối lượng", "có sự thay đổi trạng thái chuyển động của hệ quy chiếu hoặc vật liên kết"]
     typical_phenomena:
       - "Xe phanh gấp thì người ngồi trên xe ngã chúi về phía trước"
@@ -25,7 +25,7 @@ principles:
     domain: "pressure_force"
     description: "Áp suất là độ lớn của áp lực trên một đơn vị diện tích bị ép: p = F / S. Khi áp lực F không đổi, nếu giảm diện tích tiếp xúc S thì áp suất p tăng lên (tác dụng ép mạnh hơn); nếu tăng diện tích tiếp xúc S thì áp suất p giảm đi (tác dụng ép nhẹ hơn, tránh lún)."
     formula_or_rule: "p = F / S (F const: S giảm => p tăng; S tăng => p giảm)"
-    keywords: ["áp suất", "áp lực", "diện tích tiếp xúc", "nhọn", "bản rộng", "bánh xích", "lưỡi dao", "mũi kim", "đầu đinh", "lún", "bị ép"]
+    keywords: ["áp suất", "áp lực", "diện tích tiếp xúc", "nhọn", "bản rộng", "bánh xích", "lưỡi dao", "mũi kim", "đầu đinh", "lún", "bị ép", "quai cặp"]
     preconditions: ["áp lực F tác dụng vuông góc lên mặt bị ép"]
     typical_phenomena:
       - "Đầu đinh và mũi kim làm nhọn để dễ cắm/đâm xuyên vào vật"
@@ -44,7 +44,7 @@ principles:
     domain: "friction"
     description: "Lực ma sát xuất hiện ở mặt tiếp xúc giữa hai vật và cản trở chuyển động tương đối. Ma sát có thể có ích hoặc có hại. Để tăng ma sát có ích: tăng độ nhám bề mặt, tạo khía rãnh, tăng áp lực. Để giảm ma sát có hại: làm nhẵn bề mặt, tra dầu mỡ bôi trơn, thay ma sát trượt bằng ma sát lăn (ổ bi)."
     formula_or_rule: "F_ms = mu * N; F_ms_lan << F_ms_truot"
-    keywords: ["lực ma sát", "ma sát trượt", "ma sát lăn", "ma sát nghỉ", "khía rãnh", "đế giày", "lốp xe", "tra dầu", "ổ bi", "trơn trượt", "rải cát"]
+    keywords: ["lực ma sát", "ma sát trượt", "ma sát lăn", "ma sát nghỉ", "khía rãnh", "đế giày", "lốp xe", "tra dầu", "ổ bi", "trơn trượt", "rải cát", "phấn ma-giê"]
     preconditions: ["tiếp xúc giữa hai bề mặt vật rắn"]
     typical_phenomena:
       - "Mặt dưới đế giày và lốp xe có khía rãnh để tăng ma sát, chống trơn trượt"
@@ -62,7 +62,7 @@ principles:
     domain: "archimedes_buoyancy"
     description: "Một vật nhúng trong chất lỏng chịu lực đẩy Ác-si-mét hướng thẳng đứng từ dưới lên bằng trọng lượng phần chất lỏng bị chiếm chỗ: F_A = d_l * V. Vật nổi khi trọng lượng riêng trung bình d_v < d_l (hoặc F_A > P khi chìm hoàn toàn); vật lơ lửng khi d_v = d_l; vật chìm khi d_v > d_l."
     formula_or_rule: "F_A = d_liquid * V_displaced; d_v < d_l => nổi; d_v > d_l => chìm"
-    keywords: ["lực đẩy ác-si-mét", "archimedes", "chìm", "nổi", "lơ lửng", "trọng lượng riêng", "thể tích chiếm chỗ", "tàu thủy", "viên bi sắt", "thuyền sắt"]
+    keywords: ["lực đẩy ác-si-mét", "archimedes", "chìm", "nổi", "lơ lửng", "trọng lượng riêng", "thể tích chiếm chỗ", "tàu thủy", "viên bi sắt", "thuyền sắt", "khinh khí cầu"]
     preconditions: ["vật đặt trong chất lỏng hoặc chất khí có trọng trường"]
     typical_phenomena:
       - "Khối sắt đặc bị chìm nhưng tàu thủy bằng thép rất nặng lại nổi trên mặt nước (do thiết kế rỗng làm tăng thể tích chiếm chỗ, giảm trọng lượng riêng trung bình)"
@@ -73,13 +73,60 @@ principles:
       - "Vật nặng thì chìm, vật nhẹ thì nổi bất kể thể tích và hình dạng"
       - "Tàu nổi vì làm bằng kim loại đặc biệt nhẹ hơn nước"
 
-  # 5. Nhiệt học - Sự dãn nở vì nhiệt không đồng đều (Thermal Expansion)
+  # 5. Cơ học - Áp suất chất lỏng và Độ sâu (Fluid Pressure)
+  - id: "fluid_pressure_depth"
+    name: "Áp suất chất lỏng phụ thuộc độ sâu"
+    domain: "pressure_force"
+    description: "Chất lỏng gây áp suất theo mọi phương lên đáy bình, thành bình và các vật nhúng trong lòng nó. Áp suất chất lỏng ở độ sâu h được tính bởi p = d * h. Càng xuống sâu, áp suất chất lỏng càng lớn."
+    formula_or_rule: "p = d_liquid * h (h càng lớn => p càng lớn)"
+    keywords: ["áp suất chất lỏng", "độ sâu", "đập nước", "chân đập", "thợ lặn", "bộ đồ lặn", "lỗ thủng", "bắn ra xa"]
+    preconditions: ["chất lỏng đứng yên trong bình hoặc thủy vực"]
+    typical_phenomena:
+      - "Chân đập nước luôn được xây dày hơn đỉnh đập (vì càng xuống sâu áp suất nước càng lớn)"
+      - "Thợ lặn xuống biển sâu phải mặc bộ đồ lặn chịu áp suất cao"
+      - "Khi dùi các lỗ ở các độ cao khác nhau trên thành bình chứa nước, tia nước ở lỗ dưới cùng bắn ra xa nhất"
+    common_misconceptions:
+      - "Áp suất nước chỉ ép xuống đáy chứ không tác dụng lên thành bình"
+
+  # 6. Cơ học - Áp suất khí quyển (Atmospheric Pressure)
+  - id: "atmospheric_pressure_effects"
+    name: "Áp suất khí quyển và các hiện tượng liên quan"
+    domain: "pressure_force"
+    description: "Trái Đất được bao bọc bởi lớp khí quyển dày, không khí có trọng lượng nên gây ra áp suất khí quyển lên mọi vật trên mặt đất và theo mọi phương. Sự chênh lệch giữa áp suất khí quyển bên ngoài và áp suất bên trong tạo ra lực đẩy/nén các vật thể."
+    formula_or_rule: "p_ngoai > p_trong => Lực F = (p_ngoai - p_trong) * S ép vật"
+    keywords: ["áp suất khí quyển", "ống hút", "giác hút", "bình sữa", "hộp sữa xẹp", "lỗ nhỏ nắp ấm", "ống nhỏ giọt", "giác hơi"]
+    preconditions: ["có lớp không khí quyển bao quanh"]
+    typical_phenomena:
+      - "Khi cắm ống hút vào hộp sữa và hút bớt không khí bên trong, hộp sữa bị bẹp dúm lại (do áp suất khí quyển bên ngoài lớn hơn áp suất bên trong hộp sữa)"
+      - "Giác hút cao su ấn chặt vào tường kính/gạch men thì dính chặt (do đẩy không khí bên trong ra, áp suất khí quyển bên ngoài ép chặt giác hút vào tường)"
+      - "Trên nắp ấm trà thường có một lỗ thủng nhỏ (để không khí lưu thông làm áp suất trong ấm bằng áp suất khí quyển, giúp nước chảy ra dễ dàng khi rót)"
+      - "Dùng ống hút để uống nước (khi hút, áp suất trong ống giảm, áp suất khí quyển tác dụng lên mặt nước đẩy nước dâng lên trong ống hút)"
+    common_misconceptions:
+      - "Chân không có lực hút tự nhiên kéo nước lên"
+      - "Giác hút dính được là do chất keo vô hình"
+
+  # 7. Cơ học - Bình thông nhau (Communicating Vessels)
+  - id: "communicating_vessels_principle"
+    name: "Nguyên lý bình thông nhau"
+    domain: "fluid_mechanics"
+    description: "Trong bình thông nhau chứa cùng một chất lỏng đứng yên, các mực chất lỏng ở các nhánh luôn luôn ở cùng một độ cao (cùng độ cao mặt thoáng) bất kể hình dạng và kích thước của các nhánh."
+    formula_or_rule: "p_A = p_B => d * h_A = d * h_B => h_A = h_B"
+    keywords: ["bình thông nhau", "mực nước ngang nhau", "ấm nước", "vòi ấm", "ống đo mực nước", "máy thủy lực"]
+    preconditions: ["chứa cùng một chất lỏng đứng yên và thông đáy"]
+    typical_phenomena:
+      - "Vòi của ấm đun nước hoặc bình tưới luôn được thiết kế cao ngang bằng miệng ấm (để khi rót đầy nước không bị tràn ra ngoài theo nguyên lý bình thông nhau)"
+      - "Ống thủy tinh đo mực chất lỏng ở các bồn chứa nước lớn"
+      - "Thợ xây dùng ống nhựa mềm chứa nước để cân thăng bằng các điểm trên tường"
+    common_misconceptions:
+      - "Nhánh nào to hơn thì mực nước sẽ dâng cao hơn"
+
+  # 8. Nhiệt học - Sự dãn nở vì nhiệt không đồng đều (Thermal Expansion)
   - id: "thermal_expansion_unequal"
     name: "Sự dãn nở vì nhiệt không đồng đều và ứng suất nhiệt"
     domain: "thermal_expansion_heat"
     description: "Các chất nở ra khi nóng lên và co lại khi lạnh đi. Khi các phần của cùng một vật hoặc các vật tiếp xúc dãn nở không đồng đều (do chênh lệch nhiệt độ hoặc chất liệu dẫn nhiệt kém) và bị ngăn cản, sẽ sinh ra lực rất lớn (nội ứng suất) làm cong vênh hoặc vỡ nứt vật."
     formula_or_rule: "Delta_L = L0 * alpha * Delta_T; Dãn nở bị cản trở => sinh ngoại lực lớn"
-    keywords: ["nở vì nhiệt", "dãn nở", "co lại", "dẫn nhiệt kém", "cốc dày", "cốc mỏng", "nước sôi", "đường ray", "khe hở", "băng kép", "nứt", "vỡ"]
+    keywords: ["nở vì nhiệt", "dãn nở", "co lại", "dẫn nhiệt kém", "cốc dày", "cốc mỏng", "nước sôi", "đường ray", "khe hở", "băng kép", "nứt", "vỡ", "nổ lốp"]
     preconditions: ["có sự thay đổi nhiệt độ và truyền nhiệt trong vật thể"]
     typical_phenomena:
       - "Rót nước sôi vào cốc thủy tinh dày dễ vỡ hơn cốc thủy tinh mỏng (lớp trong tiếp xúc nước nóng nở ra ngay trong khi lớp ngoài chưa kịp nóng và chưa nở, làm nứt vỡ cốc)"
@@ -90,13 +137,13 @@ principles:
       - "Cốc dày dễ vỡ hơn cốc mỏng vì cốc dày giữ nhiệt lâu hơn"
       - "Khi nóng lên các chất chỉ nở theo chiều dài chứ không nở theo thể tích"
 
-  # 6. Nhiệt học - Dẫn nhiệt và Truyền nhiệt (Heat Conduction & Transfer)
+  # 9. Nhiệt học - Dẫn nhiệt và Truyền nhiệt (Heat Conduction & Transfer)
   - id: "heat_conduction_rate"
     name: "Tính dẫn nhiệt của các chất và cơ chế truyền nhiệt"
     domain: "heat_transfer"
     description: "Dẫn nhiệt là sự truyền nhiệt năng từ phần này sang phần khác của một vật hoặc giữa các vật tiếp xúc. Kim loại dẫn nhiệt tốt nhất; chất rắn phi kim, chất lỏng dẫn nhiệt kém; chất khí dẫn nhiệt kém nhất (chân không không dẫn nhiệt). Cảm giác nóng/lạnh khi chạm tay phụ thuộc vào tốc độ dẫn nhiệt ra/vào tay."
     formula_or_rule: "K_metal >> K_wood, K_water >> K_air"
-    keywords: ["dẫn nhiệt", "truyền nhiệt", "kim loại", "gỗ", "sứ", "chạm vào", "cảm giác lạnh", "áo bông", "nồi kim loại", "quai nhựa"]
+    keywords: ["dẫn nhiệt", "truyền nhiệt", "kim loại", "gỗ", "sứ", "chạm vào", "cảm giác lạnh", "áo bông", "nồi kim loại", "quai nhựa", "chim xù lông"]
     preconditions: ["tiếp xúc nhiệt giữa các vật có nhiệt độ chênh lệch"]
     typical_phenomena:
       - "Vào mùa đông sờ vào kim loại thấy lạnh hơn sờ vào thanh gỗ dù cùng nhiệt độ phòng (kim loại dẫn nhiệt từ tay ra nhanh hơn)"
@@ -107,13 +154,13 @@ principles:
       - "Kim loại vào mùa đông có nhiệt độ thấp hơn gỗ trong cùng một phòng"
       - "Áo len tự sinh ra nhiệt để làm ấm cơ thể"
 
-  # 7. Nhiệt học - Sự bay hơi và thu nhiệt (Evaporation Cooling)
+  # 10. Nhiệt học - Sự bay hơi và thu nhiệt (Evaporation Cooling)
   - id: "evaporation_heat_absorption"
     name: "Sự bay hơi và cơ chế thu nhiệt làm mát"
     domain: "phase_change_evaporation"
     description: "Sự bay hơi là quá trình chuyển từ thể lỏng sang thể khí xảy ra ở mặt thoáng của chất lỏng. Quá trình bay hơi luôn thu nhiệt từ môi trường xung quanh hoặc từ vật thể tiếp xúc, làm cho bề mặt đó bị giảm nhiệt độ và mát đi."
     formula_or_rule: "Lỏng -> Khí (Bay hơi) => Thu nhiệt lượng Q từ bề mặt tiếp xúc => T_surface giảm"
-    keywords: ["bay hơi", "thu nhiệt", "cồn", "mồ hôi", "mát", "hạ nhiệt độ", "quạt gió", "bốc hơi"]
+    keywords: ["bay hơi", "thu nhiệt", "cồn", "mồ hôi", "mát", "hạ nhiệt độ", "quạt gió", "bốc hơi", "bình gốm"]
     preconditions: ["chất lỏng có mặt thoáng tiếp xúc không khí"]
     typical_phenomena:
       - "Thoa một ít cồn hoặc ete lên mu bàn tay thấy mát lạnh (cồn bay hơi rất nhanh và thu nhiệt từ da tay)"
@@ -124,28 +171,43 @@ principles:
       - "Cồn làm tay mát vì bản thân chất cồn có nhiệt độ âm hoặc lạnh hơn nước"
       - "Quạt gió thổi ra khí lạnh làm giảm nhiệt độ phòng"
 
-  # 8. Cơ học - Áp suất chất lỏng và bình thông nhau (Fluid Pressure)
-  - id: "fluid_pressure_depth"
-    name: "Áp suất chất lỏng phụ thuộc độ sâu"
-    domain: "pressure_force"
-    description: "Chất lỏng gây áp suất theo mọi phương lên đáy bình, thành bình và các vật nhúng trong lòng nó. Áp suất chất lỏng ở độ sâu h được tính bởi p = d * h. Càng xuống sâu, áp suất chất lỏng càng lớn."
-    formula_or_rule: "p = d_liquid * h"
-    keywords: ["áp suất chất lỏng", "độ sâu", "đập nước", "chân đập", "thợ lặn", "bộ đồ lặn"]
-    preconditions: ["chất lỏng đứng yên trong bình hoặc thủy vực"]
+  # 11. Nhiệt học - Sự ngưng tụ của hơi nước (Condensation)
+  - id: "condensation_dew_formation"
+    name: "Sự ngưng tụ của hơi nước khi gặp lạnh"
+    domain: "phase_change_condensation"
+    description: "Sự ngưng tụ là quá trình chuyển từ thể khí (hơi) sang thể lỏng. Khi không khí chứa hơi nước tiếp xúc với một bề mặt có nhiệt độ thấp hơn, hơi nước trong không khí bị làm lạnh và ngưng tụ lại thành những giọt nước đọng trên bề mặt đó."
+    formula_or_rule: "Khí (Hơi nước trong không khí) + Lạnh => Lỏng (Giọt nước ngưng tụ)"
+    keywords: ["ngưng tụ", "đọng nước", "cốc nước đá", "sương mù", "mờ kính", "hơi nước", "giọt nước", "mặt ngoài cốc"]
+    preconditions: ["không khí xung quanh có chứa hơi nước và tiếp xúc bề mặt lạnh"]
     typical_phenomena:
-      - "Chân đập nước luôn được xây dày hơn đỉnh đập (vì càng xuống sâu áp suất nước càng lớn)"
-      - "Thợ lặn xuống biển sâu phải mặc bộ đồ lặn chịu áp suất cao"
-      - "Khi dùi các lỗ ở các độ cao khác nhau trên thành bình chứa nước, tia nước ở lỗ dưới cùng bắn ra xa nhất"
+      - "Mặt ngoài của cốc nước đá sau một lúc có các giọt nước đọng lại (hơi nước trong không khí gặp thành cốc lạnh bị ngưng tụ thành giọt nước, không phải nước trong cốc thấm ra)"
+      - "Vào mùa đông hà hơi vào mặt kính hoặc gương thấy mặt kính bị mờ đục đi (hơi nước ấm trong hơi thở gặp kính lạnh bị ngưng tụ)"
+      - "Hiện tượng tạo thành sương mù vào ban đêm và sáng sớm khi nhiệt độ không khí hạ thấp"
     common_misconceptions:
-      - "Áp suất nước chỉ ép xuống đáy chứ không tác dụng lên thành bình"
+      - "Nước đọng ở mặt ngoài cốc là do nước đá bên trong cốc thấm qua thành cốc ra ngoài"
 
-  # 9. Điện học - Nhiễm điện do cọ xát (Electrostatic Charging by Friction)
+  # 12. Nhiệt học - Đối lưu và Bức xạ nhiệt (Convection & Thermal Radiation)
+  - id: "convection_thermal_radiation"
+    name: "Sự đối lưu trong chất lưu và bức xạ nhiệt"
+    domain: "heat_transfer"
+    description: "Đối lưu là hình thức truyền nhiệt bằng các dòng chất lỏng hoặc chất khí di chuyển (khối khí/lỏng nóng nở ra, trọng lượng riêng giảm nên nổi lên; khối khí/lỏng lạnh chìm xuống). Bức xạ nhiệt là sự truyền nhiệt bằng các tia nhiệt đi thẳng (vật màu sẫm bề mặt thô ráp hấp thụ và bức xạ nhiệt tốt hơn vật sáng màu bề mặt nhẵn bóng)."
+    formula_or_rule: "Nóng => d giảm => bay lên; Lạnh => d tăng => chìm xuống (Dòng đối lưu)"
+    keywords: ["đối lưu", "bức xạ nhiệt", "máy lạnh", "lò sưởi", "phích nước", "tráng bạc", "bình giữ nhiệt", "ống khói", "nóng bay lên"]
+    preconditions: ["trong chất lỏng/khí (đối lưu) hoặc trong không gian/chân không (bức xạ)"]
+    typical_phenomena:
+      - "Máy điều hòa làm lạnh luôn lắp ở vị trí trên cao của căn phòng (để luồng khí lạnh nặng chìm xuống tạo dòng đối lưu làm mát đều khắp phòng)"
+      - "Lò sưởi hoặc dàn nóng luôn đặt ở sát sàn nhà dưới thấp (để không khí nóng nhẹ hơn bốc lên tạo dòng đối lưu sưởi ấm căn phòng)"
+      - "Ruột phích nước (bình giữ nhiệt) tráng bạc sáng bóng và hút chân không giữa 2 lớp vỏ (ngăn cản dẫn nhiệt, đối lưu và phản xạ các tia bức xạ nhiệt quay lại)"
+    common_misconceptions:
+      - "Lắp điều hòa dưới thấp và trên cao hiệu quả làm mát phòng như nhau"
+
+  # 13. Điện học - Nhiễm điện do cọ xát (Electrostatic Charging by Friction)
   - id: "electrostatic_charging_friction"
     name: "Sự nhiễm điện do cọ xát và khả năng hút các vật nhẹ"
     domain: "electricity_magnetism"
     description: "Có thể làm nhiễm điện (tích điện) nhiều vật bằng cách cọ xát. Vật bị nhiễm điện có khả năng hút các vật khác (đặc biệt là các vật nhỏ, nhẹ lơ lửng như hạt bụi, mẩu giấy vụn, sợi bông)."
     formula_or_rule: "Cọ xát với không khí/vật thể => Vật tích điện => Sinh lực tĩnh điện hút các hạt bụi nhẹ"
-    keywords: ["nhiễm điện", "cọ xát", "cánh quạt", "bám bụi", "hút bụi", "thước nhựa", "mảnh giấy", "tĩnh điện", "hút vật nhẹ"]
+    keywords: ["nhiễm điện", "cọ xát", "cánh quạt", "bám bụi", "hút bụi", "thước nhựa", "mảnh giấy", "tĩnh điện", "hút vật nhẹ", "lược nhựa", "tóc dựng"]
     preconditions: ["có sự cọ xát giữa các vật liệu cách điện hoặc môi trường không khí"]
     typical_phenomena:
       - "Cánh quạt điện sau một thời gian sử dụng bị bám nhiều bụi, đặc biệt ở mép cánh quạt (khi quay cọ xát mạnh với không khí bị nhiễm điện nên hút các hạt bụi trong không khí)"
@@ -154,3 +216,95 @@ principles:
     common_misconceptions:
       - "Cánh quạt quay tạo ra gió đẩy bụi bám vào cánh quạt"
       - "Cánh quạt dính bụi chỉ vì dầu mỡ từ động cơ chảy ra"
+
+  # 14. Quang học - Định luật truyền thẳng của ánh sáng (Rectilinear Propagation of Light)
+  - id: "light_rectilinear_propagation"
+    name: "Định luật truyền thẳng của ánh sáng và vùng bóng tối"
+    domain: "optics"
+    description: "Trong môi trường trong suốt và đồng tính, ánh sáng truyền đi theo đường thẳng. Khi gặp vật cản sáng, phía sau vật cản sẽ có vùng không nhận được ánh sáng từ nguồn sáng truyền tới gọi là bóng tối (hoặc bóng nửa tối)."
+    formula_or_rule: "Môi trường trong suốt, đồng tính => Ánh sáng truyền thẳng"
+    keywords: ["truyền thẳng", "đường thẳng", "ánh sáng", "bóng tối", "bóng nửa tối", "nhật thực", "nguyệt thực", "ngắm thẳng", "tia sáng"]
+    preconditions: ["môi trường truyền sáng trong suốt và đồng tính"]
+    typical_phenomena:
+      - "Hiện tượng Nhật thực xảy ra khi Mặt Trăng nằm giữa Mặt Trời và Trái Đất, che khuất ánh sáng từ Mặt Trời chiếu xuống Trái Đất (bóng của Mặt Trăng in lên Trái Đất)"
+      - "Hiện tượng Nguyệt thực xảy ra khi Trái Đất nằm giữa Mặt Trời và Mặt Trăng, Trái Đất che khuất ánh sáng Mặt Trời chiếu tới Mặt Trăng"
+      - "Người thợ mộc nhắm một mắt để ngắm độ thẳng của mép gỗ"
+      - "Học sinh xếp hàng thẳng bằng cách nhìn thẳng vào gáy của bạn đứng trước"
+    common_misconceptions:
+      - "Ánh sáng có thể tự uốn cong đi vòng qua vật cản mà không cần gương hay khúc xạ"
+
+  # 15. Quang học - Định luật phản xạ ánh sáng và Gương (Reflection of Light & Mirrors)
+  - id: "light_reflection_mirrors"
+    name: "Định luật phản xạ ánh sáng và ứng dụng của gương"
+    domain: "optics"
+    description: "Khi tia sáng gặp bề mặt nhẵn bóng (như mặt gương), tia sáng bị hắt trở lại môi trường cũ theo định luật phản xạ: Góc phản xạ luôn bằng góc tới (i' = i) và tia phản xạ nằm trong mặt phẳng tới. Gương cầu lồi cho ảnh ảo nhỏ hơn vật nhưng có vùng nhìn thấy (thị trường) rộng hơn nhiều so với gương phẳng cùng kích thước."
+    formula_or_rule: "i' = i; Gương cầu lồi => Thị trường rộng hơn gương phẳng"
+    keywords: ["phản xạ", "gương phẳng", "gương cầu lồi", "gương chiếu hậu", "vùng nhìn thấy", "thị trường rộng", "khúc cua", "ảnh ảo", "góc tới"]
+    preconditions: ["bề mặt phản xạ nhẵn bóng"]
+    typical_phenomena:
+      - "Gương chiếu hậu của xe máy, ô tô hoặc gương đặt ở các khúc cua đường đèo nguy hiểm thường là gương cầu lồi (giúp người lái xe quan sát được vùng không gian phía sau và hai bên rộng hơn nhiều so với gương phẳng)"
+      - "Nhìn thấy hình ảnh của cảnh vật in bóng trên mặt hồ nước phẳng lặng"
+      - "Nha sĩ dùng gương cầu lõm nhỏ để hội tụ ánh sáng và phóng to hình ảnh răng khám bệnh"
+    common_misconceptions:
+      - "Gương cầu lồi cho ảnh to hơn vật nên nhìn rõ hơn"
+
+  # 16. Quang học - Hiện tượng khúc xạ ánh sáng (Refraction of Light)
+  - id: "light_refraction_phenomena"
+    name: "Hiện tượng khúc xạ ánh sáng tại mặt phân cách"
+    domain: "optics"
+    description: "Khúc xạ ánh sáng là hiện tượng tia sáng bị gãy khúc (đổi hướng truyền) khi truyền xiên góc qua mặt phân cách giữa hai môi trường trong suốt khác nhau (ví dụ từ không khí vào nước hoặc ngược lại). Khi nhìn vật trong nước từ không khí, tia sáng từ vật khúc xạ ra xa pháp tuyến, làm mắt nhìn thấy ảnh ảo của vật bị nâng cao lên so với thực tế."
+    formula_or_rule: "n1 * sin(i) = n2 * sin(r); Mắt nhìn vật trong nước => Thấy ảnh ảo nâng cao lên"
+    keywords: ["khúc xạ", "gãy khúc", "mặt phân cách", "cắm đũa", "cốc nước", "đáy hồ", "nông hơn", "bể bơi", "con cá", "ảnh ảo"]
+    preconditions: ["ánh sáng truyền xiên góc qua hai môi trường chiết quang khác nhau"]
+    typical_phenomena:
+      - "Cắm chiếc đũa hoặc ống hút thẳng vào cốc nước, nhìn từ trên xuống thấy đũa như bị gãy khúc ở mặt nước"
+      - "Nhìn xuống đáy hồ nước hoặc đáy bể bơi thấy đáy dường như nông hơn thực tế (do ảnh ảo của đáy bị nâng cao lên bởi hiện tượng khúc xạ ánh sáng)"
+      - "Người đi săn bắt cá bằng xiên/lao phải nhắm đâm xiên xuống dưới vị trí nhìn thấy con cá thì mới trúng"
+    common_misconceptions:
+      - "Chiếc đũa trong cốc nước bị gãy thật sự do áp lực nước"
+      - "Nước làm phóng to vật chứ không phải khúc xạ"
+
+  # 17. Âm học - Nguồn âm và Dao động (Sound Source & Vibration)
+  - id: "sound_source_vibration"
+    name: "Vật phát ra âm khi dao động"
+    domain: "acoustics"
+    description: "Mọi vật phát ra âm thanh (nguồn âm) đều đang dao động. Dao động của nguồn âm truyền đi trong môi trường đàn hồi tạo thành sóng âm đến tai người làm màng nhĩ dao động và cảm nhận được âm thanh."
+    formula_or_rule: "Nguồn phát ra âm <=> Vật đang dao động; Ngừng dao động <=> Ngừng phát âm"
+    keywords: ["nguồn âm", "dao động", "phát ra âm", "dây đàn", "mặt trống", "âm thoa", "màng loa", "lá chuối", "thanh quản"]
+    preconditions: ["có nguồn vật thể dao động trong môi trường"]
+    typical_phenomena:
+      - "Gảy dây đàn ghi-ta, dây đàn rung động phát ra âm thanh; khi chạm nhẹ tay vào dây đàn làm dây ngừng rung thì âm thanh tắt ngay"
+      - "Gõ vào mặt trống, rắc vài mẩu giấy vụn lên mặt trống thấy mẩu giấy nảy lên (chứng tỏ mặt trống đang dao động khi phát ra âm)"
+      - "Đặt tay lên cổ họng khi nói thấy thanh quản rung rung"
+    common_misconceptions:
+      - "Âm thanh tự phát ra từ không khí mà không cần nguồn dao động"
+
+  # 18. Âm học - Sự truyền âm qua các môi trường (Sound Propagation Media)
+  - id: "sound_propagation_media"
+    name: "Sự truyền âm trong các môi trường và tính chất không truyền trong chân không"
+    domain: "acoustics"
+    description: "Âm truyền được qua các môi trường chất rắn, chất lỏng và chất khí nhờ sự lan truyền dao động của các phân tử vật chất. Tốc độ truyền âm: v_rắn > v_lỏng > v_khí. Âm thanh KHÔNG THỂ truyền qua môi trường chân không vì không có các hạt vật chất để truyền dao động."
+    formula_or_rule: "v_solid > v_liquid > v_gas; v_vacuum = 0"
+    keywords: ["truyền âm", "chân không", "chất rắn", "chất lỏng", "chất khí", "áp tai", "mặt đất", "vó ngựa", "đường ray", "phi hành gia"]
+    preconditions: ["môi trường vật chất đàn hồi liên tục"]
+    typical_phenomena:
+      - "Người xưa áp tai xuống đất có thể nghe thấy tiếng vó ngựa từ đằng xa mà người đứng thẳng trong không khí chưa nghe thấy (do chất rắn mặt đất truyền âm nhanh và rõ hơn chất khí)"
+      - "Đặt chuông báo thức trong bình thủy tinh hút chân không thì thấy búa chuông gõ rung nhưng bên ngoài không nghe thấy tiếng kêu (chân không không truyền âm)"
+      - "Các phi hành gia ở ngoài không gian vũ trụ (chân không) không thể nói chuyện trực tiếp mà phải dùng bộ đàm vô tuyến"
+    common_misconceptions:
+      - "Âm thanh truyền trong không khí nhanh hơn trong nước hay kim loại"
+      - "Âm thanh có thể truyền qua chân không như ánh sáng"
+
+  # 19. Âm học - Phản xạ âm và Tiếng vang (Sound Reflection & Echo)
+  - id: "sound_reflection_echo"
+    name: "Hiện tượng phản xạ âm, tiếng vang và cách âm"
+    domain: "acoustics"
+    description: "Khi sóng âm gặp bề mặt vật cản (như bức tường, vách đá), sóng âm bị phản xạ trở lại. Ta nghe thấy tiếng vang khi âm phản xạ đến tai chậm hơn âm trực tiếp một khoảng thời gian ít nhất là 1/15 giây. Các vật liệu mềm, xốp, bề mặt gồ ghề (như mút, rèm nhung, xốp) hấp thụ âm tốt và phản xạ âm kém nên được dùng để cách âm/chống ồn."
+    formula_or_rule: "Delta_t = t_phan_xa - t_truc_tiep >= 1/15 s => Nghe thấy tiếng vang; Vật mềm xốp => Hấp thụ âm tốt"
+    keywords: ["phản xạ âm", "tiếng vang", "hang động", "phòng trống", "cách âm", "mút xốp", "rèm nhung", "hấp thụ âm", "vang"]
+    preconditions: ["sóng âm gặp bề mặt vật cản lớn"]
+    typical_phenomena:
+      - "Nói to trong hang đá lớn hoặc trong căn phòng rộng không có đồ đạc thấy có tiếng vang dội lại (do âm phản xạ từ các vách tường đến tai sau âm trực tiếp)"
+      - "Các phòng thu âm, rạp chiếu phim thường được dán tường bằng mút gai, xốp hoặc treo rèm nhung dày (để hấp thụ âm, giảm phản xạ âm tránh hiện tượng tiếng vang gây ồn)"
+    common_misconceptions:
+      - "Phòng kín không có đồ đạc nghe to và rõ hơn vì không có vật cản"

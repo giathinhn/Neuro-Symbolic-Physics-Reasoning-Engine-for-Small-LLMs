@@ -1,4 +1,5 @@
 misconceptions:
+  # 1. Cơ học - Quán tính
   - id: "inertia_as_force"
     domain: "inertia_motion"
     type: "inertia_as_force"
@@ -10,6 +11,7 @@ misconceptions:
     explanation: "Quán tính là thuộc tính/tính chất tự nhiên của mọi vật có khối lượng nhằm giữ nguyên vận tốc, quán tính KHÔNG PHẢI là một lực cơ học tác dụng từ ngoài vào vật trong hệ quy chiếu quán tính."
     correction: "Giải thích theo tính chất quán tính: do có quán tính nên phần thân người/vật tiếp tục duy trì vận tốc cũ và chưa kịp thay đổi cùng với xe."
 
+  # 2. Cơ học - Áp lực & Áp suất
   - id: "nail_sharp_force"
     domain: "pressure_force"
     type: "pressure_force_confusion"
@@ -21,17 +23,7 @@ misconceptions:
     explanation: "Khi đóng đinh hoặc đâm kim, lực tác dụng F (áp lực) từ búa/tay là như nhau. Đầu đinh nhọn làm giảm diện tích tiếp xúc S, theo công thức p = F/S thì áp suất p tăng lên, chứ không phải lực F tăng."
     correction: "Nêu rõ áp lực F không đổi, diện tích tiếp xúc S nhỏ dẫn đến áp suất p = F/S tăng cao, làm vật dễ bị xuyên thủng."
 
-  - id: "glass_cup_thick_heat"
-    domain: "thermal_expansion_heat"
-    type: "heat_temperature_confusion"
-    name: "Nhầm lẫn cốc dày dễ vỡ do giữ nhiệt thay vì do dãn nở không đồng đều"
-    pattern_regex:
-      - "cốc dày (giữ|chứa) nhiều nhiệt"
-      - "cốc dày hấp thụ nhiệt lâu hơn nên vỡ"
-      - "cốc dày nóng hơn cốc mỏng"
-    explanation: "Thủy tinh là chất dẫn nhiệt kém. Khi rót nước sôi, lớp thủy tinh bên trong tiếp xúc trực tiếp nở ra ngay, trong khi lớp ngoài chưa kịp truyền nhiệt tới nên chưa nở. Sự dãn nở không đồng đều bị ngăn cản gây ra ứng suất nhiệt làm nứt vỡ cốc."
-    correction: "Giải thích theo cơ chế: thủy tinh dẫn nhiệt kém, lớp trong nở ra trước khi lớp ngoài chưa kịp nở, sự dãn nở không đều gây lực phá hủy làm vỡ cốc."
-
+  # 3. Cơ học - Chìm Nổi & Ác-si-mét
   - id: "heavy_always_sinks"
     domain: "archimedes_buoyancy"
     type: "buoyancy_mass_confusion"
@@ -43,13 +35,96 @@ misconceptions:
     explanation: "Điều kiện chìm nổi phụ thuộc vào trọng lượng riêng trung bình d_v so với d_l (hoặc so sánh trọng lượng P với lực đẩy Ác-si-mét cực đại F_A), chứ không phụ thuộc vào độ nặng/khối lượng tuyệt đối của vật."
     correction: "Chỉ ra tàu thủy rỗng làm thể tích chìm V_displaced rất lớn, khiến trọng lượng riêng trung bình của cả con tàu nhỏ hơn trọng lượng riêng của nước (d_tau < d_nuoc)."
 
+  # 4. Cơ học - Áp suất khí quyển
+  - id: "vacuum_suction_force"
+    domain: "pressure_force"
+    type: "vacuum_force_fallacy"
+    name: "Ngộ nhận chân không hoặc miệng tự sinh lực hút kéo nước/hộp sữa"
+    pattern_regex:
+      - "chân không (có|tạo ra|sinh ra) lực hút"
+      - "lực hút của chân không"
+      - "miệng hút nước lên trực tiếp mà không cần không khí"
+    explanation: "Chân không là trạng thái không có vật chất và không tự sinh ra 'lực hút'. Nước hoặc hộp sữa bị ép là do áp suất khí quyển từ môi trường bên ngoài lớn hơn áp suất bên trong đã bị hút bớt khí."
+    correction: "Giải thích rằng khi hút bớt không khí, áp suất bên trong giảm xuống, chính ÁP SUẤT KHÍ QUYỂN bên ngoài tác dụng lực đẩy chất lỏng dâng lên hoặc ép bẹp hộp sữa."
+
+  # 5. Nhiệt học - Dãn nở vì nhiệt
+  - id: "glass_cup_thick_heat"
+    domain: "thermal_expansion_heat"
+    type: "heat_temperature_confusion"
+    name: "Nhầm lẫn cốc dày dễ vỡ do giữ nhiệt thay vì do dãn nở không đồng đều"
+    pattern_regex:
+      - "cốc dày (giữ|chứa) nhiều nhiệt"
+      - "cốc dày hấp thụ nhiệt lâu hơn nên vỡ"
+      - "cốc dày nóng hơn cốc mỏng"
+    explanation: "Thủy tinh là chất dẫn nhiệt kém. Khi rót nước sôi, lớp thủy tinh bên trong tiếp xúc trực tiếp nở ra ngay, trong khi lớp ngoài chưa kịp truyền nhiệt tới nên chưa nở. Sự dãn nở không đồng đều bị ngăn cản gây ra ứng suất nhiệt làm nứt vỡ cốc."
+    correction: "Giải thích theo cơ chế: thủy tinh dẫn nhiệt kém, lớp trong nở ra trước khi lớp ngoài chưa kịp nở, sự dãn nở không đều gây lực phá hủy làm vỡ cốc."
+
+  # 6. Nhiệt học - Cảm giác nhiệt & Áo ấm
+  - id: "wool_creates_heat"
+    domain: "heat_transfer"
+    type: "heat_generation_fallacy"
+    name: "Ngộ nhận áo len hoặc chăn bông tự sinh ra nhiệt"
+    pattern_regex:
+      - "áo (len|bông|ấm) (tự )?(sinh ra|tạo ra|phát ra) nhiệt"
+      - "chăn bông (tự )?sưởi ấm"
+    explanation: "Áo len, chăn bông không tự sinh ra nhiệt năng. Chúng giữ ấm cho cơ thể nhờ các lớp không khí xốp bên trong dẫn nhiệt rất kém, ngăn cản nhiệt lượng từ cơ thể truyền ra môi trường bên ngoài."
+    correction: "Giải thích rằng áo len/chăn bông là vật liệu cách nhiệt (chứa nhiều không khí dẫn nhiệt kém), giúp giữ nhiệt lượng do cơ thể tỏa ra."
+
+  # 7. Nhiệt học - Sự bay hơi làm mát
   - id: "alcohol_cold_nature"
     domain: "phase_change_evaporation"
     type: "evaporation_temperature_confusion"
-    name: "Ngộ nhận cồn/ete làm mát vì bản thân cồn có nhiệt độ lạnh"
+    name: "Ngộ nhận cồn/ete làm mát vì bản thân cồn có nhiệt độ lạnh hoặc quạt thổi khí lạnh"
     pattern_regex:
       - "cồn có nhiệt độ (lạnh|âm|thấp) hơn"
       - "bản chất cồn là chất lạnh"
-      - "quạt tạo ra (gió lạnh|khí lạnh) làm giảm nhiệt độ"
-    explanation: "Cồn ở cùng nhiệt độ phòng với da tay. Cảm giác mát là do cồn là chất lỏng dễ bay hơi; khi bay hơi nó thu một nhiệt lượng lớn từ bề mặt da tiếp xúc làm hạ nhiệt độ bề mặt da."
-    correction: "Giải thích theo cơ chế thu nhiệt khi bay hơi: cồn bay hơi nhanh và thu nhiệt từ da tay, khiến nhiệt độ vùng da đó giảm xuống tạo cảm giác mát lạnh."
+      - "quạt tạo ra (gió lạnh|khí lạnh) làm giảm nhiệt độ phòng"
+      - "quạt làm hạ nhiệt độ không khí"
+    explanation: "Cồn ở cùng nhiệt độ phòng với da tay và quạt gió không làm hạ nhiệt độ phòng. Cảm giác mát là do cồn hoặc mồ hôi là chất lỏng bay hơi; quá trình bay hơi luôn thu một nhiệt lượng lớn từ bề mặt tiếp xúc làm nhiệt độ bề mặt đó giảm xuống."
+    correction: "Giải thích theo cơ chế thu nhiệt khi bay hơi: chất lỏng bay hơi nhanh và thu nhiệt từ bề mặt tiếp xúc, khiến nhiệt độ bề mặt giảm xuống."
+
+  # 8. Nhiệt học - Đọng sương ngoài cốc nước đá
+  - id: "cup_sweats_water_leak"
+    domain: "phase_change_condensation"
+    type: "condensation_leak_fallacy"
+    name: "Ngộ nhận nước ở mặt ngoài cốc đá là do nước bên trong cốc thấm hoặc rò rỉ ra"
+    pattern_regex:
+      - "nước (bên )?trong cốc.*(thấm|ngấm|rỉ|chảy|rò rỉ)"
+      - "(thấm|ngấm|rỉ|chảy|rò rỉ).*qua thành cốc"
+      - "do đá tan thấm qua thành cốc"
+    explanation: "Thủy tinh hoặc kim loại của cốc là vật liệu không thấm nước. Những giọt nước đọng ở mặt ngoài là do hơi nước có sẵn trong không khí xung quanh gặp thành cốc lạnh bị ngưng tụ thành thể lỏng."
+    correction: "Giải thích rõ hiện tượng ngưng tụ: Hơi nước vô hình trong không khí gặp bề mặt ngoài của cốc đá lạnh thì bị ngưng tụ thành các giọt nước li ti bám trên thành cốc."
+
+  # 9. Quang học - Khúc xạ ánh sáng
+  - id: "straight_stick_bent"
+    domain: "optics"
+    type: "optical_illusion_confusion"
+    name: "Ngộ nhận đũa trong nước bị gãy thật sự hoặc nước làm cong vật lý"
+    pattern_regex:
+      - "chiếc đũa (thực sự|thật sự|bị lực nước làm) gãy"
+      - "nước (bẻ gãy|làm cong) chiếc đũa"
+    explanation: "Chiếc đũa vẫn hoàn toàn thẳng. Ta nhìn thấy nó bị gãy là do hiện tượng khúc xạ ánh sáng: tia sáng từ phần đũa ngập trong nước khi truyền qua mặt nước ra không khí bị gãy khúc, mắt nhìn thấy ảnh ảo của chiếc đũa bị nâng lên."
+    correction: "Chỉ rõ đây là hiện tượng khúc xạ ánh sáng tạo ra ảnh ảo của phần đũa trong nước bị lệch vị trí so với phần đũa trong không khí."
+
+  # 10. Âm học - Truyền âm trong chân không
+  - id: "sound_in_vacuum"
+    domain: "acoustics"
+    type: "sound_medium_misconception"
+    name: "Ngộ nhận âm thanh truyền được qua chân không như ánh sáng"
+    pattern_regex:
+      - "âm thanh truyền được (trong|qua) chân không"
+      - "nghe thấy tiếng nổ trong vũ trụ chân không"
+    explanation: "Âm thanh là sóng cơ học (dao động của các phân tử vật chất). Trong môi trường chân không không có các phân tử vật chất nên âm thanh không thể truyền qua."
+    correction: "Nêu rõ âm thanh chỉ truyền được qua môi trường vật chất (rắn, lỏng, khí) và hoàn toàn không thể truyền trong môi trường chân không."
+
+  # 11. Cơ học - Bình thông nhau & Vòi ấm nước
+  - id: "kettle_spout_air_compression"
+    domain: "fluid_mechanics"
+    type: "kettle_air_misconception"
+    name: "Ngộ nhận vòi ấm cao ngang miệng để chống áp suất khí quyển nén hoặc làm vỡ vòi"
+    pattern_regex:
+      - "(áp suất khí quyển|áp suất bên ngoài).*(làm vòi bị nén|làm vỡ bình|không làm vòi bị nén|làm hỏng vòi)"
+      - "để (tránh|không bị) áp suất.*(nén|làm vỡ|hỏng)"
+      - "vòi bị nén"
+    explanation: "Vòi ấm và thân ấm tạo thành một bình thông nhau. Mực nước ở hai nhánh luôn ở cùng độ cao. Nếu vòi thấp hơn miệng ấm, khi rót đầy nước thì nước sẽ bị tràn ra ngoài vòi trước khi đầy ấm."
+    correction: "Giải thích theo nguyên lý bình thông nhau: mực nước trong ấm và vòi luôn ngang nhau; vòi cao ngang miệng ấm để khi đổ nước đầy ấm thì nước không bị tràn ra ngoài vòi."

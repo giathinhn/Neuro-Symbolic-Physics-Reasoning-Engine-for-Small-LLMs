@@ -125,10 +125,12 @@ class PipelineOrchestrator:
 
         # Retrieve relevant principles from KB
         relevant_principles = self.qualitative_kb.find_relevant_principles(problem_text, top_k=5)
-        p_names = [f"{p.name} ({p.id}): {p.description[:80]}..." for p in self.qualitative_kb.principles.values()]
+        p_names = [f"{p.name} ({p.id}): {p.description}" for p in (relevant_principles or list(self.qualitative_kb.principles.values())[:10])]
 
         system_prompt = build_qualitative_system_prompt(p_names)
-        user_prompt = build_qualitative_solve_prompt(problem_text)
+        user_prompt = build_qualitative_solve_prompt(
+            problem_text, [f"{p.id}: {p.name}" for p in relevant_principles]
+        )
 
         ctx.messages = [
             {"role": "system", "content": system_prompt},
@@ -158,6 +160,27 @@ class PipelineOrchestrator:
                     output={"error": str(e)},
                     duration_ms=(time.perf_counter() - attempt_start) * 1000,
                 )
+                # If LLM failed, try fallback knowledge base synthesis
+                if relevant_principles:
+                    fallback_out = self.qualitative_kb.synthesize_fallback_explanation(
+                        problem_text, relevant_principles[0]
+                    )
+                    fallback_ver = self.qualitative_verifier.verify(problem_text, fallback_out)
+                    if fallback_ver.is_valid:
+                        return Solution(
+                            problem_id=ctx.problem_id,
+                            is_qualitative=True,
+                            qualitative_output=fallback_out,
+                            principles_applied=fallback_out.core_principles,
+                            final_explanation=fallback_out.conclusion,
+                            solve_steps=ctx.solve_steps,
+                            verification_result=fallback_ver,
+                            num_attempts=ctx.attempt,
+                            total_llm_calls=ctx.total_llm_calls,
+                            total_tokens=ctx.total_tokens,
+                            latency_ms=(time.perf_counter() - start_time) * 1000,
+                            is_verified=True,
+                        )
                 return Solution(
                     problem_id=ctx.problem_id,
                     is_qualitative=True,
@@ -228,6 +251,28 @@ class PipelineOrchestrator:
                 )
                 ctx.messages.append({"role": "assistant", "content": raw_content})
                 ctx.messages.append({"role": "user", "content": repair_prompt})
+
+        # If LLM attempts failed verification, attempt KB fallback synthesis
+        if relevant_principles:
+            fallback_out = self.qualitative_kb.synthesize_fallback_explanation(
+                problem_text, relevant_principles[0]
+            )
+            fallback_ver = self.qualitative_verifier.verify(problem_text, fallback_out)
+            if fallback_ver.is_valid:
+                return Solution(
+                    problem_id=ctx.problem_id,
+                    is_qualitative=True,
+                    qualitative_output=fallback_out,
+                    principles_applied=fallback_out.core_principles,
+                    final_explanation=fallback_out.conclusion,
+                    solve_steps=ctx.solve_steps,
+                    verification_result=fallback_ver,
+                    num_attempts=ctx.attempt,
+                    total_llm_calls=ctx.total_llm_calls,
+                    total_tokens=ctx.total_tokens,
+                    latency_ms=(time.perf_counter() - start_time) * 1000,
+                    is_verified=True,
+                )
 
         # Return best unverified qualitative solution
         return Solution(

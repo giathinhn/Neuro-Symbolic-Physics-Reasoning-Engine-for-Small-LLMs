@@ -8,7 +8,9 @@ from physics_reasoning.core.enums import ErrorType
 from physics_reasoning.core.models import CausalStep, QualitativeParsedOutput
 from physics_reasoning.physics.qualitative_kb import QualitativeKnowledgeBase
 from physics_reasoning.verifier.qualitative_verifier import (
+    AntiTautologyCheck,
     CausalCompletenessCheck,
+    CausalDirectionalityCheck,
     MisconceptionCheck,
     PrincipleRelevanceCheck,
     QualitativeVerificationPipeline,
@@ -101,6 +103,28 @@ class TestQualitativeVerifier:
         errs = check.run("Xe phanh gấp", bad)
         assert len(errs) > 0
         assert "ngộ nhận" in errs[0].message.lower()
+
+    def test_causal_directionality_check_detects_wrong_direction(self, valid_inertia_output):
+        bad = valid_inertia_output.model_copy(
+            update={
+                "conclusion": "Khi xe phanh gấp, người ngã ra phía sau.",
+            }
+        )
+        check = CausalDirectionalityCheck()
+        errs = check.run("Tại sao khi xe phanh gấp người ngã chúi?", bad)
+        assert len(errs) > 0
+        assert "phía trước" in errs[0].message.lower()
+
+    def test_anti_tautology_check_detects_circular_reasoning(self, valid_inertia_output):
+        bad = valid_inertia_output.model_copy(
+            update={
+                "conclusion": "Hiện tượng này xảy ra vì hiện tượng này là như vậy.",
+            }
+        )
+        check = AntiTautologyCheck()
+        errs = check.run("Tại sao khi xe phanh gấp?", bad)
+        assert len(errs) > 0
+        assert "lặp luận" in errs[0].message.lower() or "tautology" in errs[0].message.lower()
 
     def test_full_qualitative_pipeline_pass(self, qual_kb, valid_inertia_output):
         pipe = QualitativeVerificationPipeline(qual_kb)
