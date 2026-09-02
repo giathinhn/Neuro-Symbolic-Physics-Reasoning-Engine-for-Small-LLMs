@@ -1,0 +1,3339 @@
+{
+  "summary": {
+    "total_problems": 100,
+    "pure_llm_accuracy": 70.0,
+    "neuro_symbolic_accuracy": 45.0,
+    "pure_llm_correct": 70,
+    "neuro_symbolic_correct": 45,
+    "topic_breakdown": {
+      "kinematics": {
+        "total": 15,
+        "pure_correct": 13,
+        "ns_correct": 10
+      },
+      "dynamics": {
+        "total": 15,
+        "pure_correct": 12,
+        "ns_correct": 8
+      },
+      "fluids": {
+        "total": 15,
+        "pure_correct": 4,
+        "ns_correct": 3
+      },
+      "work_energy": {
+        "total": 15,
+        "pure_correct": 12,
+        "ns_correct": 8
+      },
+      "thermodynamics": {
+        "total": 20,
+        "pure_correct": 10,
+        "ns_correct": 7
+      },
+      "electricity": {
+        "total": 20,
+        "pure_correct": 19,
+        "ns_correct": 9
+      }
+    },
+    "pure_avg_latency_s": 12.324886438999968,
+    "ns_avg_latency_s": 45.65417015100002,
+    "total_runtime_s": 2317.3564807
+  },
+  "details": [
+    {
+      "id": "kin_001",
+      "topic": "kinematics",
+      "question": "Một người đi xe đạp chuyển động đều với vận tốc 12 km/h. Tính quãng đường người đó đi được trong thời gian 2.5 giờ.",
+      "ground_truth": {
+        "value": 30.0,
+        "unit": "km"
+      },
+      "pure_llm": {
+        "predicted_value": 30.0,
+        "predicted_unit": "km",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 52.756,
+        "tokens": 316,
+        "raw_output": "To solve this problem, we will use the formula for distance, which is:\n\n\\[ \\text{Distance} = \\text{Speed} \\times \\text{Time} \\]\n\nGiven:\n- Speed = 12 km/h\n- Time = 2.5 hours\n\nStep 1: Substitute the giv"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 30.0,
+        "predicted_unit": "km",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "d = v * t"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 12.462,
+        "tokens": 1123
+      }
+    },
+    {
+      "id": "kin_002",
+      "topic": "kinematics",
+      "question": "Một ô tô chạy trên quãng đường dài 120 km trong thời gian 2 giờ 30 phút. Tính tốc độ trung bình của ô tô theo đơn vị km/h.",
+      "ground_truth": {
+        "value": 48.0,
+        "unit": "km/h"
+      },
+      "pure_llm": {
+        "predicted_value": 48.0,
+        "predicted_unit": "km/h",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 7.367,
+        "tokens": 297,
+        "raw_output": "Để giải bài toán này, chúng ta cần sử dụng công thức cho tốc độ trung bình:\n\n\\[ \\text{Tốc độ trung bình} = \\frac{\\text{Khoảng cách}}{\\text{Thời gian}} \\]\n\nĐầu tiên, chúng ta cần chuyển thời gian từ gi"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 48.0000000001397,
+        "predicted_unit": "km/h",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "v_avg = d / t"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 14.215,
+        "tokens": 1202
+      }
+    },
+    {
+      "id": "kin_003",
+      "topic": "kinematics",
+      "question": "Một đoàn tàu hỏa chuyển động thẳng đều với tốc độ 54 km/h. Tính thời gian để đoàn tàu đi hết quãng đường 450 m.",
+      "ground_truth": {
+        "value": 30.0,
+        "unit": "s"
+      },
+      "pure_llm": {
+        "predicted_value": 30.0,
+        "predicted_unit": "seconds",
+        "is_correct": true,
+        "reason": "Match after unit conversion (seconds -> s)",
+        "latency_s": 8.056,
+        "tokens": 229,
+        "raw_output": "Step 1: Convert the speed from km/h to m/s.\nGiven speed = 54 km/h. \n1 km = 1000 m, 1 hour = 3600 seconds.\nTherefore, 54 km/h = 54 * (1000 m / 3600 s) = 15 m/s.\n\nStep 2: Use the formula for time, which"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 30.0,
+        "predicted_unit": "s",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "kin_uniform_motion_s",
+          "kin_vel_def",
+          "kin_eq1",
+          "kin_eq2"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 10.591,
+        "tokens": 1167
+      }
+    },
+    {
+      "id": "kin_004",
+      "topic": "kinematics",
+      "question": "Một canô đi xuôi dòng từ bến A đến bến B cách nhau 36 km mất 2 giờ. Vận tốc của dòng nước là 3 km/h. Tính vận tốc thực của canô khi nước yên lặng.",
+      "ground_truth": {
+        "value": 15.0,
+        "unit": "km/h"
+      },
+      "pure_llm": {
+        "predicted_value": 21.0,
+        "predicted_unit": "km/h",
+        "is_correct": false,
+        "reason": "Mismatch: pred=21.0 km/h, expected=15.0 km/h",
+        "latency_s": 10.161,
+        "tokens": 426,
+        "raw_output": "Step 1: Define the variables and given information.\n- Distance between A and B (D) = 36 km\n- Time taken (T) = 2 hours\n- Speed of the current (Vc) = 3 km/h\n\nStep 2: Calculate the speed of the cano in s"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 18.0,
+        "predicted_unit": "km/h",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "v_can = d / t"
+        ],
+        "reason": "Mismatch: pred=18.0 km/h, expected=15.0 km/h",
+        "latency_s": 12.785,
+        "tokens": 1155
+      }
+    },
+    {
+      "id": "kin_005",
+      "topic": "kinematics",
+      "question": "Một người đi bộ nửa quãng đường đầu với tốc độ 6 km/h và nửa quãng đường sau với tốc độ 4 km/h. Tính tốc độ trung bình của người đó trên cả quãng đường.",
+      "ground_truth": {
+        "value": 4.8,
+        "unit": "km/h"
+      },
+      "pure_llm": {
+        "predicted_value": 4.8,
+        "predicted_unit": "km/h",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 11.043,
+        "tokens": 459,
+        "raw_output": "Để giải quyết bài toán này, chúng ta cần tính tổng quãng đường và tổng thời gian để đi hết quãng đường. Sau đó, ta có thể tính tốc độ trung bình bằng cách chia tổng quãng đường cho tổng thời gian.\n\nGi"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 4.799999999982538,
+        "predicted_unit": "km/h",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "v_avg = (2 * v1 * v2) / (v1 + v2)"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 16.893,
+        "tokens": 1225
+      }
+    },
+    {
+      "id": "kin_006",
+      "topic": "kinematics",
+      "question": "Xe máy đi từ A đến B dài 90 km với tốc độ 45 km/h. Sau đó đi từ B về A với tốc độ 30 km/h. Tính tốc độ trung bình của cả chuyến đi cả đi lẫn về.",
+      "ground_truth": {
+        "value": 36.0,
+        "unit": "km/h"
+      },
+      "pure_llm": {
+        "predicted_value": 36.0,
+        "predicted_unit": "km/h",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 10.988,
+        "tokens": 368,
+        "raw_output": "Step 1: Calculate the time taken for the trip from A to B.\nGiven distance from A to B = 90 km\nGiven speed from A to B = 45 km/h\nTime taken from A to B = Distance / Speed = 90 km / 45 km/h = 2 hours\n\nS"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 45.0,
+        "predicted_unit": "km/h",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "v_avg = (2 * d_AB) / (t_AB + t_BA)"
+        ],
+        "reason": "Mismatch: pred=45.0 km/h, expected=36.0 km/h",
+        "latency_s": 18.238,
+        "tokens": 1652
+      }
+    },
+    {
+      "id": "kin_007",
+      "topic": "kinematics",
+      "question": "Một xe đang chuyển động với vận tốc 10 m/s thì tăng tốc với gia tốc 2 m/s^2. Tính vận tốc của xe sau 5 giây.",
+      "ground_truth": {
+        "value": 20.0,
+        "unit": "m/s"
+      },
+      "pure_llm": {
+        "predicted_value": 20.0,
+        "predicted_unit": "m/s",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 7.997,
+        "tokens": 229,
+        "raw_output": "Step 1: Identify the initial velocity (u), acceleration (a), and time (t).\nGiven: u = 10 m/s, a = 2 m/s^2, t = 5 s\n\nStep 2: Use the equation of motion to find the final velocity (v) after time t.\nThe "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 20.0,
+        "predicted_unit": "m/s",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "kin_eq1"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 11.216,
+        "tokens": 1180
+      }
+    },
+    {
+      "id": "kin_008",
+      "topic": "kinematics",
+      "question": "Một vật rơi tự do từ độ cao 45 m xuống đất. Bỏ qua sức cản của không khí. Lấy g = 10 m/s^2. Tính thời gian vật rơi chạm đất.",
+      "ground_truth": {
+        "value": 3.0,
+        "unit": "s"
+      },
+      "pure_llm": {
+        "predicted_value": 3.0,
+        "predicted_unit": "seconds",
+        "is_correct": true,
+        "reason": "Match after unit conversion (seconds -> s)",
+        "latency_s": 8.777,
+        "tokens": 359,
+        "raw_output": "To solve this problem, we will use the kinematic equation for uniformly accelerated motion, which is:\n\n\\[ s = ut + \\frac{1}{2}gt^2 \\]\n\nWhere:\n- \\( s \\) is the displacement (height in this case),\n- \\( "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 3.0,
+        "predicted_unit": "s",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "kin_free_fall"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 11.105,
+        "tokens": 1222
+      }
+    },
+    {
+      "id": "kin_009",
+      "topic": "kinematics",
+      "question": "Một ô tô đang chạy với tốc độ 72 km/h thì hãm phanh chuyển động chậm dần đều với gia tốc 4 m/s^2. Tính quãng đường xe đi được từ lúc hãm phanh đến khi dừng hẳn.",
+      "ground_truth": {
+        "value": 50.0,
+        "unit": "m"
+      },
+      "pure_llm": {
+        "predicted_value": 50.0,
+        "predicted_unit": "m",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 8.993,
+        "tokens": 360,
+        "raw_output": "Step 1: Convert the initial speed from km/h to m/s.\nGiven speed = 72 km/h\n1 km/h = 1000 m / 3600 s\nTherefore, 72 km/h = 72 * (1000 / 3600) m/s = 20 m/s\n\nStep 2: Identify the known values.\nInitial spee"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "kin_eq1",
+          "kin_eq2",
+          "kin_uniform_motion_s",
+          "kin_vel_def"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 55.366,
+        "tokens": 7262
+      }
+    },
+    {
+      "id": "kin_010",
+      "topic": "kinematics",
+      "question": "Một vận động viên bơi lội bơi hết cự li 100 m trong thời gian 50 giây. Tính tốc độ bơi của vận động viên theo đơn vị m/s.",
+      "ground_truth": {
+        "value": 2.0,
+        "unit": "m/s"
+      },
+      "pure_llm": {
+        "predicted_value": 2.0,
+        "predicted_unit": "m/s",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 6.403,
+        "tokens": 255,
+        "raw_output": "To solve this problem, we need to use the basic formula for speed, which is:\n\n\\[ \\text{Speed} = \\frac{\\text{Distance}}{\\text{Time}} \\]\n\nGiven:\n- Distance (d) = 100 meters\n- Time (t) = 50 seconds\n\nStep"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 2.0,
+        "predicted_unit": "m/s",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "kin_vel_def"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 10.826,
+        "tokens": 1170
+      }
+    },
+    {
+      "id": "kin_011",
+      "topic": "kinematics",
+      "question": "Âm thanh truyền trong không khí với tốc độ 340 m/s. Một người nhìn thấy tia sét và sau 4 giây mới nghe thấy tiếng sấm. Khoảng cách từ nơi phát ra tia sét đến người đó là bao nhiêu?",
+      "ground_truth": {
+        "value": 1360.0,
+        "unit": "m"
+      },
+      "pure_llm": {
+        "predicted_value": 1360.0,
+        "predicted_unit": "meters",
+        "is_correct": true,
+        "reason": "Match after unit conversion (meters -> m)",
+        "latency_s": 5.726,
+        "tokens": 236,
+        "raw_output": "Step 1: Identify the given information.\n- Speed of sound in air (v) = 340 m/s\n- Time delay (t) = 4 seconds\n- Speed of sound = 340 m/s\n- Time delay (t) = 4 seconds\n\nStep 2: Use the formula for distance"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 1360.0,
+        "predicted_unit": "m",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "d = v * t"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 13.447,
+        "tokens": 1654
+      }
+    },
+    {
+      "id": "kin_012",
+      "topic": "kinematics",
+      "question": "Một người đi xe máy trong nửa thời gian đầu đi với vận tốc 40 km/h, nửa thời gian sau đi với vận tốc 60 km/h. Tính tốc độ trung bình trên toàn bộ thời gian chuyển động.",
+      "ground_truth": {
+        "value": 50.0,
+        "unit": "km/h"
+      },
+      "pure_llm": {
+        "predicted_value": 50.0,
+        "predicted_unit": "km/h",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 9.649,
+        "tokens": 400,
+        "raw_output": "Step 1: Define the variables and the problem.\nLet's denote the total time of travel as \\( t \\). Therefore, the time spent at 40 km/h is \\( \\frac{t}{2} \\) and the time spent at 60 km/h is also \\( \\frac"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 49.99999999995344,
+        "predicted_unit": "km/h",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "v_avg = (v1 + v2) / 2"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 15.095,
+        "tokens": 1228
+      }
+    },
+    {
+      "id": "kin_013",
+      "topic": "kinematics",
+      "question": "Một vật thả rơi tự do không vận tốc đầu từ độ cao h. Sau 2 giây thì vật chạm đất. Lấy g = 10 m/s^2. Tính độ cao h nơi thả vật.",
+      "ground_truth": {
+        "value": 20.0,
+        "unit": "m"
+      },
+      "pure_llm": {
+        "predicted_value": 20.0,
+        "predicted_unit": "m",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 11.728,
+        "tokens": 402,
+        "raw_output": "To solve this problem, we will use the kinematic equations of motion. Specifically, we will use the equation that relates distance, initial velocity, time, and acceleration due to gravity:\n\n\\[ h = v_0"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 20.0,
+        "predicted_unit": "m",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "kin_free_fall"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 10.602,
+        "tokens": 1220
+      }
+    },
+    {
+      "id": "kin_014",
+      "topic": "kinematics",
+      "question": "Một đoàn tàu dài 200 m đi qua một cây cầu dài 800 m với tốc độ không đổi 36 km/h. Tính thời gian kể từ lúc đầu tàu bước vào cầu đến khi đuôi tàu rời khỏi cầu hoàn toàn.",
+      "ground_truth": {
+        "value": 100.0,
+        "unit": "s"
+      },
+      "pure_llm": {
+        "predicted_value": 100.0,
+        "predicted_unit": "s",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 7.093,
+        "tokens": 293,
+        "raw_output": "Step 1: Convert the speed from km/h to m/s.\nGiven speed = 36 km/h\n1 km/h = 1000 m / 3600 s = 5/18 m/s\nTherefore, 36 km/h = 36 * (5/18) m/s = 10 m/s\n\nStep 2: Determine the total distance the front of t"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 100.0,
+        "predicted_unit": "s",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "v_train = v_train * (1000 m / 1 km) * (1 h / 3600 s)",
+          "t_clear = (l_train + l_bridge) / v_train"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 81.603,
+        "tokens": 7728
+      }
+    },
+    {
+      "id": "kin_015",
+      "topic": "kinematics",
+      "question": "Hai người cùng xuất phát từ A đến B cách nhau 60 km. Người thứ nhất đi với vận tốc 30 km/h, người thứ hai đi sau 30 phút nhưng đi với vận tốc 40 km/h. Sau bao lâu kể từ khi người thứ nhất xuất phát thì người thứ hai đuổi kịp người thứ nhất?",
+      "ground_truth": {
+        "value": 2.0,
+        "unit": "h"
+      },
+      "pure_llm": {
+        "predicted_value": 1.5,
+        "predicted_unit": "hours",
+        "is_correct": false,
+        "reason": "Mismatch: pred=1.5 hours, expected=2.0 h",
+        "latency_s": 14.313,
+        "tokens": 529,
+        "raw_output": "Step 1: Determine the head start distance of the second person.\nThe second person starts 30 minutes (or 0.5 hours) after the first person. Given the first person's speed is 30 km/h, the head start dis"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 7200.0,
+        "predicted_unit": "h",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 3,
+        "equations_used": [
+          "kin_uniform_motion_s",
+          "kin_vel_def",
+          "kin_eq1",
+          "kin_eq2"
+        ],
+        "reason": "Mismatch: pred=7200.0 h, expected=2.0 h",
+        "latency_s": 74.966,
+        "tokens": 7023
+      }
+    },
+    {
+      "id": "dyn_016",
+      "topic": "dynamics",
+      "question": "Một lực 50 N tác dụng lên một vật có khối lượng 10 kg đang đứng yên trên mặt phẳng ngang không ma sát. Tính gia tốc mà vật thu được.",
+      "ground_truth": {
+        "value": 5.0,
+        "unit": "m/s^2"
+      },
+      "pure_llm": {
+        "predicted_value": 5.0,
+        "predicted_unit": "m/s",
+        "is_correct": true,
+        "reason": "Value match (unit unverified)",
+        "latency_s": 9.658,
+        "tokens": 301,
+        "raw_output": "To solve this problem, we need to use Newton's Second Law of Motion, which states that the net force acting on an object is equal to the mass of the object multiplied by its acceleration (F = ma).\n\nGi"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 5.0,
+        "predicted_unit": "m/s²",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "a = F / m"
+        ],
+        "reason": "Match after unit conversion (m/s² -> m/s^2)",
+        "latency_s": 15.862,
+        "tokens": 1229
+      }
+    },
+    {
+      "id": "dyn_017",
+      "topic": "dynamics",
+      "question": "Một ô tô có khối lượng 1200 kg đang chuyển động với gia tốc 1.5 m/s^2. Tính độ lớn lực phát động do động cơ xe tạo ra. Bỏ qua ma sát.",
+      "ground_truth": {
+        "value": 1800.0,
+        "unit": "N"
+      },
+      "pure_llm": {
+        "predicted_value": 1800.0,
+        "predicted_unit": "N",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 10.495,
+        "tokens": 346,
+        "raw_output": "To solve this problem, we will use Newton's Second Law of Motion, which states that the net force acting on an object is equal to the mass of the object multiplied by its acceleration. Mathematically,"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 1800.0,
+        "predicted_unit": "N",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "newton2"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 10.357,
+        "tokens": 1147
+      }
+    },
+    {
+      "id": "dyn_018",
+      "topic": "dynamics",
+      "question": "Một vật có khối lượng 250 g. Lấy g = 10 m/s^2. Tính trọng lượng của vật theo đơn vị Newton.",
+      "ground_truth": {
+        "value": 2.5,
+        "unit": "N"
+      },
+      "pure_llm": {
+        "predicted_value": 2.5,
+        "predicted_unit": "N",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 8.367,
+        "tokens": 336,
+        "raw_output": "To solve this problem, we will use the formula for weight, which is given by:\n\n\\[ W = m \\cdot g \\]\n\nWhere:\n- \\( W \\) is the weight of the object.\n- \\( m \\) is the mass of the object.\n- \\( g \\) is the "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 2.5,
+        "predicted_unit": "N",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "force_gravity_mg"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 12.707,
+        "tokens": 1616
+      }
+    },
+    {
+      "id": "dyn_019",
+      "topic": "dynamics",
+      "question": "Một khối gỗ hình hộp chữ nhật có khối lượng 6 kg đặt trên mặt bàn nằm ngang. Diện tích mặt đáy tiếp xúc với bàn là 0.03 m^2. Lấy g = 10 m/s^2. Tính áp suất khối gỗ tác dụng lên mặt bàn.",
+      "ground_truth": {
+        "value": 2000.0,
+        "unit": "Pa"
+      },
+      "pure_llm": {
+        "predicted_value": 2000.0,
+        "predicted_unit": "Pa",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 7.616,
+        "tokens": 328,
+        "raw_output": "Step 1: Identify the given values\n- Mass of the block (m) = 6 kg\n- Area of the base (A) = 0.03 m^2\n- Acceleration due to gravity (g) = 10 m/s^2\n\nStep 2: Calculate the weight of the block\nWeight (W) = "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 2000.0,
+        "predicted_unit": "Pa",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "solid_pressure",
+          "hydrostatic_pressure_depth",
+          "hydrostatic_pressure_rho_g_h",
+          "force_gravity_mg",
+          "weight_formula",
+          "weight_P",
+          "volume_box_def",
+          "density_mass_volume",
+          "specific_weight_from_density"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 11.57,
+        "tokens": 1268
+      }
+    },
+    {
+      "id": "dyn_020",
+      "topic": "dynamics",
+      "question": "Một người có trọng lượng 600 N đứng trên mặt đất. Diện tích tiếp xúc của hai bàn chân với mặt đất là 0.04 m^2. Tính áp suất do người đó tác dụng lên mặt đất khi đứng bằng cả hai chân.",
+      "ground_truth": {
+        "value": 15000.0,
+        "unit": "Pa"
+      },
+      "pure_llm": {
+        "predicted_value": 600.0,
+        "predicted_unit": "N\n\nStep",
+        "is_correct": false,
+        "reason": "Mismatch: pred=600.0 N\n\nStep, expected=15000.0 Pa",
+        "latency_s": 6.594,
+        "tokens": 269,
+        "raw_output": "Step 1: Calculate the total force acting on the ground.\nThe total force acting on the ground is the weight of the person, which is 600 N.\n\nAnswer: 600 N\n\nStep 2: Calculate the area of contact.\nThe are"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 15000.0,
+        "predicted_unit": "Pa",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "solid_pressure"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 9.048,
+        "tokens": 1243
+      }
+    },
+    {
+      "id": "dyn_021",
+      "topic": "dynamics",
+      "question": "Một chiếc đinh có tiết diện mũi đinh là 0.05 mm^2. Búa đóng vào đinh với một lực 100 N. Tính áp suất mũi đinh tác dụng lên tấm gỗ theo đơn vị Pa.",
+      "ground_truth": {
+        "value": 2000000000.0,
+        "unit": "Pa"
+      },
+      "pure_llm": {
+        "predicted_value": 200000000.0,
+        "predicted_unit": "Pa",
+        "is_correct": false,
+        "reason": "Mismatch: pred=200000000.0 Pa, expected=2000000000.0 Pa",
+        "latency_s": 11.611,
+        "tokens": 490,
+        "raw_output": "To solve this problem, we need to use the formula for pressure, which is defined as the force applied divided by the area over which the force is applied. The formula is:\n\n\\[ \\text{Pressure} = \\frac{\\"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 2000000.0,
+        "predicted_unit": "Pa",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "p = F / A"
+        ],
+        "reason": "Mismatch: pred=2000000.0 Pa, expected=2000000000.0 Pa",
+        "latency_s": 64.605,
+        "tokens": 6704
+      }
+    },
+    {
+      "id": "dyn_022",
+      "topic": "dynamics",
+      "question": "Một xe tăng có trọng lượng 350000 N. Diện tích tiếp xúc của các bản xích với mặt đất là 1.4 m^2. Tính áp suất của xe tăng lên mặt đất.",
+      "ground_truth": {
+        "value": 250000.0,
+        "unit": "Pa"
+      },
+      "pure_llm": {
+        "predicted_value": 250000.0,
+        "predicted_unit": "Pa",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 10.821,
+        "tokens": 360,
+        "raw_output": "To solve this problem, we need to use the formula for pressure, which is defined as the force per unit area. The formula is:\n\n\\[ \\text{Pressure} = \\frac{\\text{Force}}{\\text{Area}} \\]\n\nGiven:\n- The for"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 250000.0,
+        "predicted_unit": "Pa",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "solid_pressure"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 13.072,
+        "tokens": 1189
+      }
+    },
+    {
+      "id": "dyn_023",
+      "topic": "dynamics",
+      "question": "Một vật có khối lượng 5 kg đặt trên sàn nhà nằm ngang. Hệ số ma sát trượt giữa vật và sàn là 0.2. Lấy g = 10 m/s^2. Tính độ lớn của lực ma sát trượt khi vật trượt trên sàn.",
+      "ground_truth": {
+        "value": 10.0,
+        "unit": "N"
+      },
+      "pure_llm": {
+        "predicted_value": 10.0,
+        "predicted_unit": "N",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 9.727,
+        "tokens": 415,
+        "raw_output": "Step 1: Identify the given values\n- Mass of the object, \\( m = 5 \\) kg\n- Coefficient of kinetic friction, \\( \\mu_k = 0.2 \\)\n- Acceleration due to gravity, \\( g = 10 \\) m/s² (though this value is not n"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "solid_pressure",
+          "hydrostatic_pressure_depth",
+          "hydrostatic_pressure_rho_g_h",
+          "force_gravity_mg",
+          "weight_formula",
+          "weight_P"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 70.148,
+        "tokens": 7314
+      }
+    },
+    {
+      "id": "dyn_024",
+      "topic": "dynamics",
+      "question": "Một lò xo có độ cứng 100 N/m. Khi treo một vật nặng vào lò xo thì lò xo dãn ra một đoạn 4 cm. Lấy g = 10 m/s^2. Tính khối lượng của vật nặng treo vào lò xo.",
+      "ground_truth": {
+        "value": 0.4,
+        "unit": "kg"
+      },
+      "pure_llm": {
+        "predicted_value": 0.4,
+        "predicted_unit": "kg",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 11.571,
+        "tokens": 400,
+        "raw_output": "Step 1: Identify the given values and the formula to use.\n- Spring stiffness (k) = 100 N/m\n- Extension (x) = 4 cm = 0.04 m\n- Acceleration due to gravity (g) = 10 m/s² (used for weight calculation, not"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 0.004000000000019099,
+        "predicted_unit": "kg",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "x = (k * m) / g",
+          "m = (k * x) / g"
+        ],
+        "reason": "Mismatch: pred=0.004000000000019099 kg, expected=0.4 kg",
+        "latency_s": 87.846,
+        "tokens": 8458
+      }
+    },
+    {
+      "id": "dyn_025",
+      "topic": "dynamics",
+      "question": "Một lò xo có chiều dài tự nhiên 20 cm, độ cứng 80 N/m. Tác dụng một lực kéo 4 N theo phương trục lò xo. Tính chiều dài của lò xo khi bị kéo dãn.",
+      "ground_truth": {
+        "value": 0.25,
+        "unit": "m"
+      },
+      "pure_llm": {
+        "predicted_value": 25.0,
+        "predicted_unit": "cm",
+        "is_correct": true,
+        "reason": "Match after unit conversion (cm -> m)",
+        "latency_s": 11.728,
+        "tokens": 397,
+        "raw_output": "Step 1: Identify the given values\n- Natural length of the spring (L0) = 20 cm = 0.20 m\n- Spring constant (k) = 80 N/m\n- External force (F) = 4 N\n\nStep 2: Apply Hooke's Law\nHooke's Law states that the "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 25.0,
+        "predicted_unit": "cm",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "F = k * (l_s - l_n)"
+        ],
+        "reason": "Match after unit conversion (cm -> m)",
+        "latency_s": 80.996,
+        "tokens": 8256
+      }
+    },
+    {
+      "id": "dyn_026",
+      "topic": "dynamics",
+      "question": "Một quả cầu bằng sắt có thể tích 40 cm^3. Khối lượng riêng của sắt là 7800 kg/m^3. Tính khối lượng của quả cầu sắt theo đơn vị gam.",
+      "ground_truth": {
+        "value": 312.0,
+        "unit": "g"
+      },
+      "pure_llm": {
+        "predicted_value": 312.0,
+        "predicted_unit": "g",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 13.467,
+        "tokens": 463,
+        "raw_output": "Step 1: Calculate the mass of the iron ball using the formula for density, which is density = mass/volume. Rearranging this formula to find mass, we get mass = density * volume.\n\nStep 2: Convert the v"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 312.0000000017171,
+        "predicted_unit": "g",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "volume_box_def",
+          "density_mass_volume",
+          "specific_weight_from_density",
+          "force_gravity_mg"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 59.652,
+        "tokens": 5960
+      }
+    },
+    {
+      "id": "dyn_027",
+      "topic": "dynamics",
+      "question": "Một khối nhôm có khối lượng 810 g và thể tích 300 cm^3. Hãy tính khối lượng riêng của nhôm theo đơn vị kg/m^3.",
+      "ground_truth": {
+        "value": 2700.0,
+        "unit": "kg/m^3"
+      },
+      "pure_llm": {
+        "predicted_value": 2700.0,
+        "predicted_unit": "kg/m^",
+        "is_correct": true,
+        "reason": "Value match (unit unverified)",
+        "latency_s": 9.908,
+        "tokens": 309,
+        "raw_output": "Để giải bài toán này, chúng ta cần thực hiện các bước sau:\n\n1. Tính khối lượng riêng (specific gravity) của nhôm trong đơn vị g/cm^3:\n   - Khối lượng riêng (specific gravity) = Khối lượng / Thể tích\n "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 2700.0,
+        "predicted_unit": "kg/m^3",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "density_def"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 12.844,
+        "tokens": 1140
+      }
+    },
+    {
+      "id": "dyn_028",
+      "topic": "dynamics",
+      "question": "Một viên gạch có khối lượng 2 kg. Trọng lượng riêng của viên gạch là bao nhiêu nếu thể tích của nó là 1.25 dm^3? Lấy g = 10 m/s^2.",
+      "ground_truth": {
+        "value": 16000.0,
+        "unit": "N/m^3"
+      },
+      "pure_llm": {
+        "predicted_value": 1600.0,
+        "predicted_unit": "kg/m",
+        "is_correct": false,
+        "reason": "Mismatch: pred=1600.0 kg/m, expected=16000.0 N/m^3",
+        "latency_s": 10.521,
+        "tokens": 429,
+        "raw_output": "To solve this problem, we need to use the relationship between mass, density, and volume. The density (ρ) of an object can be calculated using the formula:\n\n\\[ \\rho = \\frac{m}{V} \\]\n\nwhere:\n- \\( m \\) "
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "density_def",
+          "archimedes_buoyancy",
+          "force_gravity_mg",
+          "weight_formula",
+          "weight_P",
+          "density_mass_volume",
+          "specific_weight_from_density",
+          "volume_box_def"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 39.833,
+        "tokens": 5980
+      }
+    },
+    {
+      "id": "dyn_029",
+      "topic": "dynamics",
+      "question": "Một khối sắt hình lập phương cạnh 10 cm đặt trên mặt bàn. Khối lượng riêng của sắt là 7800 kg/m^3. Lấy g = 10 m/s^2. Tính áp suất của khối sắt tác dụng lên mặt bàn.",
+      "ground_truth": {
+        "value": 7800.0,
+        "unit": "Pa"
+      },
+      "pure_llm": {
+        "predicted_value": 7800.0,
+        "predicted_unit": "Pa",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 8.98,
+        "tokens": 380,
+        "raw_output": "Step 1: Calculate the volume of the iron block.\nGiven the side length of the cube is 10 cm, we first convert this to meters (10 cm = 0.1 m).\nVolume (V) = side^3 = (0.1 m)^3 = 0.001 m^3.\n\nStep 2: Calcu"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "solid_pressure",
+          "hydrostatic_pressure_depth",
+          "hydrostatic_pressure_rho_g_h",
+          "force_gravity_mg",
+          "weight_formula",
+          "weight_P",
+          "volume_box_def",
+          "density_mass_volume",
+          "specific_weight_from_density"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 56.603,
+        "tokens": 7052
+      }
+    },
+    {
+      "id": "dyn_030",
+      "topic": "dynamics",
+      "question": "Tác dụng một lực F = 60 N vào một vật làm vật chuyển động từ trạng thái nghỉ với gia tốc a = 3 m/s^2. Tính khối lượng của vật.",
+      "ground_truth": {
+        "value": 20.0,
+        "unit": "kg"
+      },
+      "pure_llm": {
+        "predicted_value": 20.0,
+        "predicted_unit": "kg",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 7.749,
+        "tokens": 313,
+        "raw_output": "To solve this problem, we need to use Newton's Second Law of Motion, which states that the force acting on an object is equal to the mass of the object multiplied by its acceleration. Mathematically, "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 20.0,
+        "predicted_unit": "kg",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "newton2"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 12.392,
+        "tokens": 1136
+      }
+    },
+    {
+      "id": "flu_031",
+      "topic": "fluids",
+      "question": "Một thùng cao 1.6 m chứa đầy nước. Trọng lượng riêng của nước là 10000 N/m^3. Tính áp suất của nước tác dụng lên đáy thùng.",
+      "ground_truth": {
+        "value": 16000.0,
+        "unit": "Pa"
+      },
+      "pure_llm": {
+        "predicted_value": 156960.0,
+        "predicted_unit": "Pa",
+        "is_correct": false,
+        "reason": "Mismatch: pred=156960.0 Pa, expected=16000.0 Pa",
+        "latency_s": 12.011,
+        "tokens": 500,
+        "raw_output": "To solve this problem, we need to use the formula for pressure in a fluid, which is given by:\n\n\\[ P = \\rho \\cdot g \\cdot h \\]\n\nWhere:\n- \\( P \\) is the pressure,\n- \\( \\rho \\) (rho) is the density of th"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 16000.0,
+        "predicted_unit": "Pa",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "solid_pressure",
+          "hydrostatic_pressure_depth",
+          "hydrostatic_pressure_rho_g_h",
+          "force_gravity_mg",
+          "weight_formula",
+          "weight_P",
+          "archimedes_buoyancy",
+          "density_mass_volume",
+          "specific_weight_from_density"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 10.924,
+        "tokens": 1228
+      }
+    },
+    {
+      "id": "flu_032",
+      "topic": "fluids",
+      "question": "Một thợ lặn lặn xuống độ sâu 35 m so với mặt nước biển. Trọng lượng riêng của nước biển là 10300 N/m^3. Tính áp suất do nước biển tác dụng lên thợ lặn ở độ sâu đó.",
+      "ground_truth": {
+        "value": 360500.0,
+        "unit": "Pa"
+      },
+      "pure_llm": {
+        "predicted_value": 3499335.0,
+        "predicted_unit": "Pa or",
+        "is_correct": false,
+        "reason": "Mismatch: pred=3499335.0 Pa or, expected=360500.0 Pa",
+        "latency_s": 10.184,
+        "tokens": 434,
+        "raw_output": "Step 1: Identify the given values\n- Depth (d) = 35 m\n- Density of seawater (ρ) = 10300 N/m^3\n\nStep 2: Recall the formula for pressure in a fluid\nThe pressure (P) at a depth h in a fluid with density ρ"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 360500.0,
+        "predicted_unit": "Pa",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "p = rho * h"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 13.589,
+        "tokens": 1293
+      }
+    },
+    {
+      "id": "flu_033",
+      "topic": "fluids",
+      "question": "Một vật có thể tích 500 cm^3 được nhúng chìm hoàn toàn trong nước. Trọng lượng riêng của nước là 10000 N/m^3. Tính độ lớn lực đẩy Ác-si-mét tác dụng lên vật.",
+      "ground_truth": {
+        "value": 5.0,
+        "unit": "N"
+      },
+      "pure_llm": {
+        "predicted_value": 490.5,
+        "predicted_unit": "N",
+        "is_correct": false,
+        "reason": "Mismatch: pred=490.5 N, expected=5.0 N",
+        "latency_s": 9.253,
+        "tokens": 389,
+        "raw_output": "Step 1: Identify the given values\n- Volume of the object (V) = 500 cm³ = 500 × 10⁻⁶ m³ (since 1 cm³ = 10⁻⁶ m³)\n- Density of water (ρ_water) = 10000 N/m³\n\nStep 2: Calculate the buoyant force\nThe buoyan"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 49.0,
+        "predicted_unit": "N",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "F_A = rho_water * V * g"
+        ],
+        "reason": "Mismatch: pred=49.0 N, expected=5.0 N",
+        "latency_s": 72.467,
+        "tokens": 7765
+      }
+    },
+    {
+      "id": "flu_034",
+      "topic": "fluids",
+      "question": "Treo một vật vào lực kế ở ngoài không khí, lực kế chỉ 8 N. Nhúng vật chìm hoàn toàn vào nước thì lực kế chỉ 5 N. Trọng lượng riêng của nước là 10000 N/m^3. Tính thể tích của vật theo đơn vị m^3.",
+      "ground_truth": {
+        "value": 0.0003,
+        "unit": "m^3"
+      },
+      "pure_llm": {
+        "predicted_value": 10000.0,
+        "predicted_unit": "N/m^3",
+        "is_correct": false,
+        "reason": "Mismatch: pred=10000.0 N/m^3, expected=0.0003 m^3",
+        "latency_s": 15.381,
+        "tokens": 629,
+        "raw_output": "Step 1: Understanding the problem\nThe problem involves a force measurement device (force gauge) that measures the force exerted on it. When the object is placed in the air, the force gauge reads 8 N. "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 3.0612244898087226e-05,
+        "predicted_unit": "m**3",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "W_air = m * g",
+          "W_water = m * g - F_buoyancy",
+          "F_buoyancy = rho_water * V_object * g",
+          "W_water = m * g - rho_water * V_object * g"
+        ],
+        "reason": "Match after unit conversion (m**3 -> m^3)",
+        "latency_s": 121.816,
+        "tokens": 8972
+      }
+    },
+    {
+      "id": "flu_035",
+      "topic": "fluids",
+      "question": "Một khối gỗ hình hộp có thể tích 0.04 m^3 nổi trên mặt nước. Biết phần gỗ chìm trong nước có thể tích là 0.024 m^3. Trọng lượng riêng của nước là 10000 N/m^3. Tính trọng lượng của khối gỗ.",
+      "ground_truth": {
+        "value": 240.0,
+        "unit": "N"
+      },
+      "pure_llm": {
+        "predicted_value": 235.44,
+        "predicted_unit": "N",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 9.395,
+        "tokens": 311,
+        "raw_output": "Step 1: Determine the buoyant force acting on the wood.\nThe buoyant force is equal to the weight of the water displaced by the submerged part of the wood. The volume of the submerged part is 0.024 m^3"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "archimedes_buoyancy",
+          "force_gravity_mg",
+          "weight_formula",
+          "weight_P",
+          "density_mass_volume",
+          "specific_weight_from_density",
+          "volume_box_def"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 64.162,
+        "tokens": 7126
+      }
+    },
+    {
+      "id": "flu_036",
+      "topic": "fluids",
+      "question": "Một khối gỗ nổi trên mặt nước, thể tích phần chìm bằng 3/4 thể tích toàn phần của khối gỗ. Biết trọng lượng riêng của nước là 10000 N/m^3. Tính trọng lượng riêng của gỗ.",
+      "ground_truth": {
+        "value": 7500.0,
+        "unit": "N/m^3"
+      },
+      "pure_llm": {
+        "predicted_value": 10000.0,
+        "predicted_unit": "N/m",
+        "is_correct": false,
+        "reason": "Mismatch: pred=10000.0 N/m, expected=7500.0 N/m^3",
+        "latency_s": 40.455,
+        "tokens": 616,
+        "raw_output": "To solve this problem, we need to use the principles of buoyancy and Archimedes' principle. According to Archimedes' principle, the buoyant force on an object is equal to the weight of the fluid displ"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 2500.0,
+        "predicted_unit": "N/m^3",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "rho_wood = rho_water * (1 - 3/4)"
+        ],
+        "reason": "Mismatch: pred=2500.0 N/m^3, expected=7500.0 N/m^3",
+        "latency_s": 9.26,
+        "tokens": 1193
+      }
+    },
+    {
+      "id": "flu_037",
+      "topic": "fluids",
+      "question": "Một bình hình trụ chứa dầu có trọng lượng riêng 8000 N/m^3. Chiều cao cột dầu trong bình là 80 cm. Tính áp suất của dầu tại một điểm cách đáy bình 20 cm.",
+      "ground_truth": {
+        "value": 4800.0,
+        "unit": "Pa"
+      },
+      "pure_llm": {
+        "predicted_value": 15696.0,
+        "predicted_unit": "Pa",
+        "is_correct": false,
+        "reason": "Mismatch: pred=15696.0 Pa, expected=4800.0 Pa",
+        "latency_s": 10.712,
+        "tokens": 435,
+        "raw_output": "Step 1: Identify the given values\n- Density of the oil (ρ) = 8000 N/m³\n- Height of the oil column (H) = 80 cm = 0.80 m\n- Distance from the bottom to the point of interest (h) = 20 cm = 0.20 m\n\nStep 2:"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 62720.0,
+        "predicted_unit": "Pa",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "hydrostatic_pressure_rho_g_h"
+        ],
+        "reason": "Mismatch: pred=62720.0 Pa, expected=4800.0 Pa",
+        "latency_s": 66.369,
+        "tokens": 7506
+      }
+    },
+    {
+      "id": "flu_038",
+      "topic": "fluids",
+      "question": "Một quả cầu nhôm có thể tích 200 cm^3 được nhúng chìm trong dầu có trọng lượng riêng 8000 N/m^3. Tính độ lớn lực đẩy Ác-si-mét tác dụng lên quả cầu nhôm.",
+      "ground_truth": {
+        "value": 1.6,
+        "unit": "N"
+      },
+      "pure_llm": {
+        "predicted_value": 0.0002,
+        "predicted_unit": "m",
+        "is_correct": false,
+        "reason": "Mismatch: pred=0.0002 m, expected=1.6 N",
+        "latency_s": 15.767,
+        "tokens": 619,
+        "raw_output": "Step 1: Determine the weight of the aluminum ball.\nGiven the volume of the ball is 200 cm^3, we first convert this to m^3 for consistency with the density units. 1 cm^3 = 10^-6 m^3, so 200 cm^3 = 200 "
+      },
+      "neuro_symbolic": {
+        "predicted_value": -10.38800000003539,
+        "predicted_unit": "N",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "F_A = (rho_alum - rho_oil) * g * V"
+        ],
+        "reason": "Mismatch: pred=-10.38800000003539 N, expected=1.6 N",
+        "latency_s": 86.167,
+        "tokens": 8555
+      }
+    },
+    {
+      "id": "flu_039",
+      "topic": "fluids",
+      "question": "Một máy nén thủy lực có diện tích pittông nhỏ là 4 cm^2 và diện tích pittông lớn là 200 cm^2. Tác dụng lên pittông nhỏ một lực F1 = 120 N. Tính lực nâng F2 tác dụng lên pittông lớn.",
+      "ground_truth": {
+        "value": 6000.0,
+        "unit": "N"
+      },
+      "pure_llm": {
+        "predicted_value": 6.0,
+        "predicted_unit": "",
+        "is_correct": false,
+        "reason": "Mismatch: pred=6.0 , expected=6000.0 N",
+        "latency_s": 17.06,
+        "tokens": 631,
+        "raw_output": "Step 1: Identify the principle involved.\nThe principle involved here is Pascal's Law, which states that pressure is transmitted equally in all directions in a confined fluid. This means that the press"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 2.3999999999941792,
+        "predicted_unit": "N",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "F2 = F1 * (A1 / A2)"
+        ],
+        "reason": "Mismatch: pred=2.3999999999941792 N, expected=6000.0 N",
+        "latency_s": 21.529,
+        "tokens": 1489
+      }
+    },
+    {
+      "id": "flu_040",
+      "topic": "fluids",
+      "question": "Một thỏi kim loại có khối lượng 5.4 kg và khối lượng riêng 2700 kg/m^3. Khi nhúng chìm hoàn toàn vào nước có trọng lượng riêng d = 10000 N/m^3 thì lực đẩy Ác-si-mét tác dụng lên thỏi kim loại là bao nhiêu?",
+      "ground_truth": {
+        "value": 20.0,
+        "unit": "N"
+      },
+      "pure_llm": {
+        "predicted_value": 9.81,
+        "predicted_unit": "m/s",
+        "is_correct": false,
+        "reason": "Mismatch: pred=9.81 m/s, expected=20.0 N",
+        "latency_s": 17.059,
+        "tokens": 637,
+        "raw_output": "Step 1: Calculate the volume of the metal object.\nGiven the mass (m) of the metal object is 5.4 kg and its density (ρ) is 2700 kg/m³, we can use the formula for density to find the volume (V):\n\\[ V = "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 518.6159999966621,
+        "predicted_unit": "N",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "F = rho * g * V * g",
+          "V = m / rho",
+          "g = 9.81 m/s^2"
+        ],
+        "reason": "Mismatch: pred=518.6159999966621 N, expected=20.0 N",
+        "latency_s": 114.632,
+        "tokens": 9311
+      }
+    },
+    {
+      "id": "flu_041",
+      "topic": "fluids",
+      "question": "Một quả bóng bay chứa khí Heli có thể tích 2 m^3. Trọng lượng riêng của không khí là 12.9 N/m^3. Tính độ lớn lực đẩy Ác-si-mét của không khí tác dụng lên quả bóng.",
+      "ground_truth": {
+        "value": 25.8,
+        "unit": "N"
+      },
+      "pure_llm": {
+        "predicted_value": 25.8,
+        "predicted_unit": "N",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 14.623,
+        "tokens": 526,
+        "raw_output": "Step 1: Calculate the weight of the air displaced by the balloon.\nGiven the volume of the balloon is 2 m³ and the density of air is 12.9 N/m³, we can calculate the weight of the air displaced by the b"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 25.800000000046566,
+        "predicted_unit": "N",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "F_A = rho_air * V"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 16.571,
+        "tokens": 1253
+      }
+    },
+    {
+      "id": "flu_042",
+      "topic": "fluids",
+      "question": "Một tàu thủy có lượng choán nước là 5000 tấn. Tính thể tích phần nước biển bị tàu chiếm chỗ khi nổi cân bằng. Biết khối lượng riêng của nước biển là 1025 kg/m^3.",
+      "ground_truth": {
+        "value": 4878.04878,
+        "unit": "m^3"
+      },
+      "pure_llm": {
+        "predicted_value": 4882.0,
+        "predicted_unit": "m",
+        "is_correct": true,
+        "reason": "Value match (unit unverified)",
+        "latency_s": 9.278,
+        "tokens": 378,
+        "raw_output": "Step 1: Understand the given information\n- The ship's displacement (volume of water displaced) is equal to the volume of water the ship displaces when floating.\n- The mass of the ship (given as 5000 t"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 4878.048780500889,
+        "predicted_unit": "m^3",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "V = m / rho"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 66.669,
+        "tokens": 6608
+      }
+    },
+    {
+      "id": "flu_043",
+      "topic": "fluids",
+      "question": "Treo một vật kim loại vào lực kế, ở ngoài không khí lực kế chỉ 3.9 N, khi nhúng ngập trong nước (d = 10000 N/m^3) lực kế chỉ 3.4 N. Tính khối lượng riêng của kim loại đó theo đơn vị kg/m^3. Lấy g = 10 m/s^2.",
+      "ground_truth": {
+        "value": 7800.0,
+        "unit": "kg/m^3"
+      },
+      "pure_llm": {
+        "predicted_value": 0.5,
+        "predicted_unit": "N",
+        "is_correct": false,
+        "reason": "Mismatch: pred=0.5 N, expected=7800.0 kg/m^3",
+        "latency_s": 16.948,
+        "tokens": 645,
+        "raw_output": "Step 1: Define the variables and understand the problem.\n- Let the density of the metal be \\( \\rho_m \\) (in kg/m³).\n- Let the density of water be \\( \\rho_w = 1000 \\) kg/m³.\n- The weight of the metal i"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "volume_box_def",
+          "density_mass_volume",
+          "specific_weight_from_density",
+          "force_gravity_mg"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 110.501,
+        "tokens": 8139
+      }
+    },
+    {
+      "id": "flu_044",
+      "topic": "fluids",
+      "question": "Một ống hình chữ U chứa thủy ngân có trọng lượng riêng 136000 N/m^3. Người ta đổ thêm một cột nước cao 27.2 cm vào nhánh trái. Trọng lượng riêng của nước là 10000 N/m^3. Tính độ chênh lệch mực thủy ngân ở hai nhánh.",
+      "ground_truth": {
+        "value": 0.02,
+        "unit": "m"
+      },
+      "pure_llm": {
+        "predicted_value": 2.0,
+        "predicted_unit": "cm",
+        "is_correct": true,
+        "reason": "Match after unit conversion (cm -> m)",
+        "latency_s": 14.749,
+        "tokens": 553,
+        "raw_output": "Step 1: Identify the given data\n- Density of mercury (ρ_m) = 136000 N/m^3\n- Height of water column (h_w) = 27.2 cm = 0.272 m\n- Density of water (ρ_w) = 10000 N/m^3\n\nStep 2: Understand the problem\nThe "
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "archimedes_buoyancy",
+          "force_gravity_mg",
+          "weight_formula",
+          "weight_P",
+          "density_mass_volume",
+          "specific_weight_from_density"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 85.678,
+        "tokens": 7745
+      }
+    },
+    {
+      "id": "flu_045",
+      "topic": "fluids",
+      "question": "Một tảng băng nổi trên biển với thể tích phần nổi là 200 m^3. Khối lượng riêng của băng là 900 kg/m^3, của nước biển là 1020 kg/m^3. Tính thể tích toàn bộ tảng băng.",
+      "ground_truth": {
+        "value": 1700.0,
+        "unit": "m^3"
+      },
+      "pure_llm": {
+        "predicted_value": 9.81,
+        "predicted_unit": "m/s",
+        "is_correct": false,
+        "reason": "Mismatch: pred=9.81 m/s, expected=1700.0 m^3",
+        "latency_s": 16.987,
+        "tokens": 624,
+        "raw_output": "Step 1: Determine the mass of the floating ice.\nThe volume of the ice that is above water (part that is not submerged) is 200 m³. The density of ice is 900 kg/m³. Therefore, the mass of the part of th"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 200.0,
+        "predicted_unit": "m^3",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "V_f = V_b * (rho_w - rho_b) / (rho_w - rho_b)"
+        ],
+        "reason": "Mismatch: pred=200.0 m^3, expected=1700.0 m^3",
+        "latency_s": 17.501,
+        "tokens": 1259
+      }
+    },
+    {
+      "id": "wrk_046",
+      "topic": "work_energy",
+      "question": "Một người kéo một vật nặng bằng một lực 150 N theo phương ngang đi được quãng đường 12 m. Tính công mà người đó đã thực hiện.",
+      "ground_truth": {
+        "value": 1800.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 1800.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 9.381,
+        "tokens": 372,
+        "raw_output": "To solve this problem, we need to understand the concept of work in physics. Work is defined as the product of the force applied and the distance moved in the direction of the force. The formula for w"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 1800.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "kin_uniform_motion_s",
+          "kin_vel_def",
+          "kin_eq1",
+          "kin_eq2",
+          "power_lifting_mght",
+          "power_avg_mght",
+          "power_force_height_time",
+          "power_force_dist_time",
+          "power_from_work_time",
+          "work_lifting_mgh",
+          "work_lifting_P_h",
+          "work_A_def",
+          "work_def",
+          "force_gravity_mg",
+          "weight_formula",
+          "power_def"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 14.475,
+        "tokens": 1354
+      }
+    },
+    {
+      "id": "wrk_047",
+      "topic": "work_energy",
+      "question": "Một cần trục nâng một thùng hàng có khối lượng 500 kg lên cao 6 m trong thời gian 15 s. Lấy g = 10 m/s^2. Tính công suất trung bình của cần trục.",
+      "ground_truth": {
+        "value": 2000.0,
+        "unit": "W"
+      },
+      "pure_llm": {
+        "predicted_value": 2000.0,
+        "predicted_unit": "Watts",
+        "is_correct": true,
+        "reason": "Value match (unit unverified)",
+        "latency_s": 9.028,
+        "tokens": 283,
+        "raw_output": "Step 1: Calculate the work done by the need to lift the object.\nThe work done (W) is given by the formula W = mgh, where m is the mass of the object, g is the acceleration due to gravity, and h is the"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 2000.0,
+        "predicted_unit": "W",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "power_avg_mght"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 11.506,
+        "tokens": 1428
+      }
+    },
+    {
+      "id": "wrk_048",
+      "topic": "work_energy",
+      "question": "Một con ngựa kéo một cỗ xe đi đều với vận tốc 9 km/h trên đường nằm ngang. Lực kéo của ngựa là 200 N. Tính công suất của con ngựa theo đơn vị Watt.",
+      "ground_truth": {
+        "value": 500.0,
+        "unit": "W"
+      },
+      "pure_llm": {
+        "predicted_value": 500.0,
+        "predicted_unit": "W",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 10.839,
+        "tokens": 446,
+        "raw_output": "To solve this problem, we need to calculate the power output of the horse. Power is defined as the rate at which work is done, and it can be calculated using the formula:\n\n\\[ \\text{Power} = \\frac{\\tex"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 500.0,
+        "predicted_unit": "W",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "power_force_vel"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 9.928,
+        "tokens": 1364
+      }
+    },
+    {
+      "id": "wrk_049",
+      "topic": "work_energy",
+      "question": "Một động cơ điện có công suất 1.5 kW hoạt động liên tục trong 20 phút. Tính công mà động cơ sinh ra trong thời gian đó theo đơn vị kJ.",
+      "ground_truth": {
+        "value": 1800.0,
+        "unit": "kJ"
+      },
+      "pure_llm": {
+        "predicted_value": 1800.0,
+        "predicted_unit": "kJ",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 8.95,
+        "tokens": 361,
+        "raw_output": "Step 1: Convert the given time from minutes to seconds.\n1 minute = 60 seconds\n20 minutes = 20 * 60 = 1200 seconds\n\nStep 2: Use the formula for power to find the total energy (work) in joules (J).\nPowe"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 1800.0,
+        "predicted_unit": "kJ",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "A = P * t"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 12.355,
+        "tokens": 1342
+      }
+    },
+    {
+      "id": "wrk_050",
+      "topic": "work_energy",
+      "question": "Một vật có khối lượng 2 kg được ném thẳng đứng lên cao từ mặt đất với vận tốc ban đầu 10 m/s. Bỏ qua sức cản không khí. Lấy g = 10 m/s^2. Tính động năng ban đầu của vật.",
+      "ground_truth": {
+        "value": 100.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 100.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 7.262,
+        "tokens": 303,
+        "raw_output": "Step 1: Identify the given values.\n- Mass (m) = 2 kg\n- Initial velocity (v) = 10 m/s\n- Acceleration due to gravity (g) = 10 m/s² (used for gravitational potential energy, not needed for kinetic energy"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "kin_uniform_motion_s",
+          "kin_vel_def",
+          "kin_eq1",
+          "kin_eq2"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 70.705,
+        "tokens": 5914
+      }
+    },
+    {
+      "id": "wrk_051",
+      "topic": "work_energy",
+      "question": "Một vật có khối lượng 4 kg đang ở độ cao 15 m so với mặt đất. Lấy mốc thế năng tại mặt đất và g = 10 m/s^2. Tính thế năng trọng trường của vật.",
+      "ground_truth": {
+        "value": 600.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 600.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 12.582,
+        "tokens": 424,
+        "raw_output": "To solve this problem, we need to use the formula for gravitational potential energy (also known as the potential energy due to the field, in this case, the gravitational field). The formula for gravi"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 600.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "U = m * g * h"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 16.366,
+        "tokens": 1185
+      }
+    },
+    {
+      "id": "wrk_052",
+      "topic": "work_energy",
+      "question": "Một máy bơm nước nâng được 45 m^3 nước lên độ cao 10 m trong thời gian 30 phút. Trọng lượng riêng của nước là 10000 N/m^3. Tính công suất có ích của máy bơm theo đơn vị kW.",
+      "ground_truth": {
+        "value": 2.5,
+        "unit": "kW"
+      },
+      "pure_llm": {
+        "predicted_value": 2.45,
+        "predicted_unit": "kW",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 12.989,
+        "tokens": 553,
+        "raw_output": "Step 1: Calculate the mass of water lifted.\nGiven the volume of water (V) is 45 m³ and the density of water (ρ) is 10000 N/m³, we can calculate the mass (m) of the water as follows:\nm = ρ * V\nm = 1000"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 24.5,
+        "predicted_unit": "kW",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "power_lifting_mght",
+          "density_mass_volume"
+        ],
+        "reason": "Mismatch: pred=24.5 kW, expected=2.5 kW",
+        "latency_s": 60.994,
+        "tokens": 8580
+      }
+    },
+    {
+      "id": "wrk_053",
+      "topic": "work_energy",
+      "question": "Một ô tô có khối lượng 1.5 tấn đang chạy với tốc độ 72 km/h. Tính động năng của ô tô theo đơn vị kJ.",
+      "ground_truth": {
+        "value": 300.0,
+        "unit": "kJ"
+      },
+      "pure_llm": {
+        "predicted_value": 1200.0,
+        "predicted_unit": "kJ",
+        "is_correct": false,
+        "reason": "Mismatch: pred=1200.0 kJ, expected=300.0 kJ",
+        "latency_s": 12.187,
+        "tokens": 462,
+        "raw_output": "To solve this problem, we need to follow these steps:\n\n1. Convert the given speed from km/h to m/s.\n2. Calculate the mass of the car in kilograms.\n3. Use the formula for kinetic energy (KE = 1/2 * m *"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 300.0,
+        "predicted_unit": "kJ",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "A = 0.5 * m * v^2"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 20.82,
+        "tokens": 1626
+      }
+    },
+    {
+      "id": "wrk_054",
+      "topic": "work_energy",
+      "question": "Kéo một vật có khối lượng 50 kg lên cao 4 m bằng một mặt phẳng nghiêng dài 10 m. Lực kéo tác dụng song song với mặt phẳng nghiêng là 250 N. Lấy g = 10 m/s^2. Tính hiệu suất của mặt phẳng nghiêng.",
+      "ground_truth": {
+        "value": 0.8,
+        "unit": ""
+      },
+      "pure_llm": {
+        "predicted_value": 225.0,
+        "predicted_unit": "%",
+        "is_correct": false,
+        "reason": "Mismatch: pred=225.0 %, expected=0.8 ",
+        "latency_s": 14.341,
+        "tokens": 513,
+        "raw_output": "Step 1: Calculate the work done by the force.\nThe work done (W) by the force is given by the formula: W = F * d * cos(θ), where F is the force, d is the distance, and θ is the angle between the force "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 200.0,
+        "predicted_unit": "%",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "η = (Work_done_by_plane) / (Work_done_by_force)",
+          "Work_done_by_plane = m * g * h",
+          "Work_done_by_force = F * h"
+        ],
+        "reason": "Mismatch: pred=200.0 %, expected=0.8 ",
+        "latency_s": 83.977,
+        "tokens": 7752
+      }
+    },
+    {
+      "id": "wrk_055",
+      "topic": "work_energy",
+      "question": "Một vận động viên cử tạ nâng một quả tạ nặng 120 kg lên cao 2 m trong thời gian 1.5 s. Lấy g = 10 m/s^2. Tính công của lực nâng do vận động viên thực hiện.",
+      "ground_truth": {
+        "value": 2400.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 2400.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 16.812,
+        "tokens": 622,
+        "raw_output": "To solve this problem, we need to calculate the work done (or the power in this context) by the force exerted by the athlete to lift the weight. Work is defined as the force applied multiplied by the "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 2400.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "work_lifting_mgh"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 15.633,
+        "tokens": 1458
+      }
+    },
+    {
+      "id": "wrk_056",
+      "topic": "work_energy",
+      "question": "Một máy tời nâng một vật nặng 200 kg lên cao 12 m hết 8 giây. Lấy g = 10 m/s^2. Hiệu suất của máy là 80%. Tính công suất toàn phần của động cơ máy tời.",
+      "ground_truth": {
+        "value": 3750.0,
+        "unit": "W"
+      },
+      "pure_llm": {
+        "predicted_value": 3750.0,
+        "predicted_unit": "W (or",
+        "is_correct": true,
+        "reason": "Value match (unit unverified)",
+        "latency_s": 13.018,
+        "tokens": 550,
+        "raw_output": "Step 1: Calculate the work done by the machine.\nThe work done (W) is equal to the force (F) applied times the distance (d) moved in the direction of the force. The force in this case is the weight of "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 3000.0,
+        "predicted_unit": "W",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "power_lifting_mght"
+        ],
+        "reason": "Mismatch: pred=3000.0 W, expected=3750.0 W",
+        "latency_s": 13.76,
+        "tokens": 1408
+      }
+    },
+    {
+      "id": "wrk_057",
+      "topic": "work_energy",
+      "question": "Một viên đạn có khối lượng 10 g bay ra khỏi nòng súng với vận tốc 600 m/s. Tính động năng của viên đạn khi rời khỏi nòng súng.",
+      "ground_truth": {
+        "value": 1800.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 1800.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 14.029,
+        "tokens": 576,
+        "raw_output": "To solve this problem, we will use the formula for the kinetic energy (which is the same as the \"动能\" in Chinese, referring to the \"kinetic energy\" in English):\n\n\\[ \\text{Kinetic Energy} = \\frac{1}{2} "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 1800.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "A = m * v^2 / 2"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 15.759,
+        "tokens": 1223
+      }
+    },
+    {
+      "id": "wrk_058",
+      "topic": "work_energy",
+      "question": "Một thác nước cao 20 m có lưu lượng nước đổ xuống là 50 m^3/s. Trọng lượng riêng của nước là 10000 N/m^3. Tính công suất của dòng nước đổ xuống thác theo đơn vị MW.",
+      "ground_truth": {
+        "value": 10.0,
+        "unit": "MW"
+      },
+      "pure_llm": {
+        "predicted_value": 10.0,
+        "predicted_unit": "MW",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 11.334,
+        "tokens": 386,
+        "raw_output": "Step 1: Calculate the potential energy per unit time (flow rate) of water.\nThe potential energy per unit time (flow rate) is given by the formula:\n\\[ \\text{Potential Energy} = \\text{Flow Rate} \\times "
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "power_lifting_mght",
+          "power_avg_mght",
+          "power_force_height_time",
+          "power_force_dist_time",
+          "power_from_work_time",
+          "work_lifting_mgh",
+          "work_lifting_P_h",
+          "work_A_def",
+          "work_def",
+          "force_gravity_mg",
+          "weight_formula",
+          "power_def",
+          "archimedes_buoyancy",
+          "weight_P",
+          "density_mass_volume",
+          "specific_weight_from_density"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 94.431,
+        "tokens": 9242
+      }
+    },
+    {
+      "id": "wrk_059",
+      "topic": "work_energy",
+      "question": "Một người dùng ròng rọc động để kéo một vật nặng 40 kg lên cao 5 m. Bỏ qua ma sát và khối lượng ròng rọc. Lấy g = 10 m/s^2. Tính lực kéo cần tác dụng vào đầu dây tự do của ròng rọc.",
+      "ground_truth": {
+        "value": 200.0,
+        "unit": "N"
+      },
+      "pure_llm": {
+        "predicted_value": 400.0,
+        "predicted_unit": "N",
+        "is_correct": false,
+        "reason": "Mismatch: pred=400.0 N, expected=200.0 N",
+        "latency_s": 13.131,
+        "tokens": 475,
+        "raw_output": "Step 1: Identify the forces involved.\nThe only force acting on the object is the force applied by the person pulling the rope, which we will call F. The gravitational force acting on the object is its"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 400.0,
+        "predicted_unit": "N",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "force_gravity_mg"
+        ],
+        "reason": "Mismatch: pred=400.0 N, expected=200.0 N",
+        "latency_s": 14.227,
+        "tokens": 1355
+      }
+    },
+    {
+      "id": "wrk_060",
+      "topic": "work_energy",
+      "question": "Để kéo một thùng hàng 80 kg lên sàn xe tải cao 1.2 m, người ta dùng một tấm ván dài 3 m. Lực ma sát giữa thùng hàng và tấm ván là 40 N. Lấy g = 10 m/s^2. Tính công toàn phần cần thực hiện để đưa thùng hàng lên sàn xe.",
+      "ground_truth": {
+        "value": 1080.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 1080.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 12.247,
+        "tokens": 538,
+        "raw_output": "Step 1: Identify the forces acting on the thùng hàng.\nThe forces acting on the thùng hàng are the gravitational force (weight), the normal force from the ván, and the frictional force. The weight of t"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 960.0,
+        "predicted_unit": "J",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "work_lifting_mgh"
+        ],
+        "reason": "Mismatch: pred=960.0 J, expected=1080.0 J",
+        "latency_s": 13.958,
+        "tokens": 1498
+      }
+    },
+    {
+      "id": "thm_061",
+      "topic": "thermodynamics",
+      "question": "Trộn 200g nước ở 80°C với 300g nước ở 20°C. Bỏ qua sự mất mát nhiệt ra môi trường. Nhiệt độ của nước khi cân bằng nhiệt là bao nhiêu?",
+      "ground_truth": {
+        "value": 44.0,
+        "unit": "°C"
+      },
+      "pure_llm": {
+        "predicted_value": 44.0,
+        "predicted_unit": "°C",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 12.737,
+        "tokens": 505,
+        "raw_output": "Step 1: Identify the given quantities.\n- Mass of hot water (m1) = 200g\n- Temperature of hot water (T1) = 80°C\n- Mass of cold water (m2) = 300g\n- Temperature of cold water (T2) = 20°C\n\nStep 2: Apply th"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 43.99999999850991,
+        "predicted_unit": "°C",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "tc = (m1 * t1 + m2 * t2) / (m1 + m2)"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 25.442,
+        "tokens": 1330
+      }
+    },
+    {
+      "id": "thm_062",
+      "topic": "thermodynamics",
+      "question": "Trộn 500g nước ở 90°C với 500g nước ở 30°C. Bỏ qua hao phí nhiệt. Tính nhiệt độ của hỗn hợp khi cân bằng nhiệt.",
+      "ground_truth": {
+        "value": 60.0,
+        "unit": "°C"
+      },
+      "pure_llm": {
+        "predicted_value": 60.0,
+        "predicted_unit": "°C",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 16.528,
+        "tokens": 591,
+        "raw_output": "Step 1: Identify the given data\n- Mass of hot water (m1) = 500g\n- Temperature of hot water (T1) = 90°C\n- Mass of cold water (m2) = 500g\n- Temperature of cold water (T2) = 30°C\n\nStep 2: Apply the princ"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 59.99999999850991,
+        "predicted_unit": "°C",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "t_cb = (m1 * t1 + m2 * t2) / (m1 + m2)"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 25.367,
+        "tokens": 1388
+      }
+    },
+    {
+      "id": "thm_063",
+      "topic": "thermodynamics",
+      "question": "Tính nhiệt lượng cần cung cấp để đun sôi 2.5 kg nước từ 20°C. Biết nhiệt dung riêng của nước là 4200 J/(kg.K).",
+      "ground_truth": {
+        "value": 840000.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 840000.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 13.823,
+        "tokens": 484,
+        "raw_output": "Step 1: Identify the given values and the formula needed.\n- Mass of water, \\( m = 2.5 \\) kg\n- Initial temperature, \\( T_i = 20^\\circ C \\)\n- Final temperature, \\( T_f = 100^\\circ C \\) (boiling point of"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 0.0,
+        "predicted_unit": "J",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer",
+          "fuel_combustion_heat"
+        ],
+        "reason": "Mismatch: pred=0.0 J, expected=840000.0 J",
+        "latency_s": 93.983,
+        "tokens": 8854
+      }
+    },
+    {
+      "id": "thm_064",
+      "topic": "thermodynamics",
+      "question": "Một ấm đun nước bằng nhôm có khối lượng 500 g chứa 2 lít nước ở 25°C. Nhiệt dung riêng của nhôm là 880 J/(kg.K), của nước là 4200 J/(kg.K). Tính nhiệt lượng cần thiết để đun sôi ấm nước trên.",
+      "ground_truth": {
+        "value": 663000.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 960.0,
+        "predicted_unit": "kJ",
+        "is_correct": false,
+        "reason": "Mismatch: pred=960.0 kJ, expected=663000.0 J",
+        "latency_s": 14.674,
+        "tokens": 523,
+        "raw_output": "Step 1: Determine the mass of water in the 2 liters.\n1 liter of water is equivalent to 1 kg, so 2 liters is 2 kg.\n\nStep 2: Calculate the temperature increase needed for the water to reach its boiling "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 0.0,
+        "predicted_unit": "J",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer",
+          "fuel_combustion_heat"
+        ],
+        "reason": "Mismatch: pred=0.0 J, expected=663000.0 J",
+        "latency_s": 86.157,
+        "tokens": 7307
+      }
+    },
+    {
+      "id": "thm_065",
+      "topic": "thermodynamics",
+      "question": "Thả một thỏi đồng có khối lượng 600 g được nung nóng đến 100°C vào 500 g nước ở 20°C. Biết nhiệt dung riêng của đồng là 380 J/(kg.K), của nước là 4200 J/(kg.K). Bỏ qua sự truyền nhiệt cho bình và môi trường. Tính nhiệt độ khi có cân bằng nhiệt.",
+      "ground_truth": {
+        "value": 27.834,
+        "unit": "°C"
+      },
+      "pure_llm": {
+        "predicted_value": 6.3,
+        "predicted_unit": "",
+        "is_correct": false,
+        "reason": "Mismatch: pred=6.3 , expected=27.834 °C",
+        "latency_s": 17.208,
+        "tokens": 651,
+        "raw_output": "Step 1: Define the given quantities\n- Mass of the copper (m_c) = 600 g = 0.6 kg\n- Initial temperature of copper (T_c_initial) = 100°C = 373 K\n- Mass of water (m_w) = 500 g = 0.5 kg\n- Initial temperatu"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer",
+          "fuel_combustion_heat"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 163.499,
+        "tokens": 10048
+      }
+    },
+    {
+      "id": "thm_066",
+      "topic": "thermodynamics",
+      "question": "Đốt cháy hoàn toàn 2 kg than đá có năng suất tỏa nhiệt là 27 * 10^6 J/kg. Tính nhiệt lượng tỏa ra theo đơn vị MJ.",
+      "ground_truth": {
+        "value": 54.0,
+        "unit": "MJ"
+      },
+      "pure_llm": {
+        "predicted_value": 54.0,
+        "predicted_unit": "MJ",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 16.602,
+        "tokens": 282,
+        "raw_output": "Step 1: Identify the given values.\n- Mass of coal (m) = 2 kg\n- Energy output per kg of coal (E) = 27 * 10^6 J/kg\n\nStep 2: Calculate the total energy output (Q) in Joules.\nQ = m * E\nQ = 2 kg * 27 * 10^"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer",
+          "fuel_combustion_heat"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 75.21,
+        "tokens": 6587
+      }
+    },
+    {
+      "id": "thm_067",
+      "topic": "thermodynamics",
+      "question": "Một bếp dầu đun sôi 1.5 lít nước từ 20°C hết 25 g dầu hỏa. Biết năng suất tỏa nhiệt của dầu hỏa là 44 * 10^6 J/kg, nhiệt dung riêng của nước là 4200 J/(kg.K). Tính hiệu suất của bếp dầu.",
+      "ground_truth": {
+        "value": 0.45818,
+        "unit": ""
+      },
+      "pure_llm": {
+        "predicted_value": 45.0,
+        "predicted_unit": "°C",
+        "is_correct": false,
+        "reason": "Mismatch: pred=45.0 °C, expected=0.45818 ",
+        "latency_s": 16.92,
+        "tokens": 639,
+        "raw_output": "Step 1: Calculate the heat required to raise the temperature of the water.\nThe heat required to raise the temperature of water can be calculated using the formula:\n\\[ Q = m \\cdot c \\cdot \\Delta T \\]\nW"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer",
+          "fuel_combustion_heat"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 81.781,
+        "tokens": 7644
+      }
+    },
+    {
+      "id": "thm_068",
+      "topic": "thermodynamics",
+      "question": "Một miếng sắt có khối lượng 2 kg tỏa ra nhiệt lượng 46000 J khi nguội đi từ 80°C xuống 30°C. Tính nhiệt dung riêng của miếng sắt.",
+      "ground_truth": {
+        "value": 460.0,
+        "unit": "J/(kg.K)"
+      },
+      "pure_llm": {
+        "predicted_value": 460.0,
+        "predicted_unit": "J/kg°C",
+        "is_correct": true,
+        "reason": "Value match (unit unverified)",
+        "latency_s": 13.99,
+        "tokens": 495,
+        "raw_output": "To solve this problem, we need to use the formula for heat transfer, which is given by:\n\n\\[ Q = mc\\Delta T \\]\n\nWhere:\n- \\( Q \\) is the heat transferred (in Joules, J),\n- \\( m \\) is the mass of the sub"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 4200.0,
+        "predicted_unit": "J/(kg·°C)",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "heat_absorption_delta_t"
+        ],
+        "reason": "Mismatch: pred=4200.0 J/(kg·°C), expected=460.0 J/(kg.K)",
+        "latency_s": 74.704,
+        "tokens": 7784
+      }
+    },
+    {
+      "id": "thm_069",
+      "topic": "thermodynamics",
+      "question": "Người ta đổ 1 kg nước ở 100°C vào 3 kg nước ở 20°C. Bỏ qua trao đổi nhiệt với bình chứa và môi trường. Tính nhiệt độ cân bằng của nước.",
+      "ground_truth": {
+        "value": 40.0,
+        "unit": "°C"
+      },
+      "pure_llm": {
+        "predicted_value": 40.0,
+        "predicted_unit": "°C",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 16.377,
+        "tokens": 570,
+        "raw_output": "Step 1: Identify the given values\n- Mass of hot water, \\( m_1 = 1 \\) kg\n- Initial temperature of hot water, \\( T_1 = 100^\\circ C \\)\n- Mass of cold water, \\( m_2 = 3 \\) kg\n- Initial temperature of cold"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 39.99999999850991,
+        "predicted_unit": "°C",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 2,
+        "equations_used": [
+          "m1 * c_water * (t_cb - t1) + m2 * c_water * (t_cb - t2) = 0"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 53.12,
+        "tokens": 4728
+      }
+    },
+    {
+      "id": "thm_070",
+      "topic": "thermodynamics",
+      "question": "Cần pha bao nhiêu lít nước ở 100°C với 6 lít nước ở 20°C để thu được nước tắm ở nhiệt độ 40°C? Bỏ qua mất mát nhiệt.",
+      "ground_truth": {
+        "value": 2.0,
+        "unit": "l"
+      },
+      "pure_llm": {
+        "predicted_value": 2.0,
+        "predicted_unit": "liters",
+        "is_correct": true,
+        "reason": "Match after unit conversion (liters -> l)",
+        "latency_s": 15.774,
+        "tokens": 574,
+        "raw_output": "Step 1: Define the problem and variables.\nWe need to find the volume of 100°C water to be mixed with 6 liters of 20°C water to achieve a final temperature of 40°C. We'll denote the volume of 100°C wat"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 29.99999999997271,
+        "predicted_unit": "liters",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 2,
+        "equations_used": [
+          "m1 * 100 + m2 * 20 = (m1 + m2) * 40"
+        ],
+        "reason": "Mismatch: pred=29.99999999997271 liters, expected=2.0 l",
+        "latency_s": 33.288,
+        "tokens": 3258
+      }
+    },
+    {
+      "id": "thm_071",
+      "topic": "thermodynamics",
+      "question": "Thả một khối chì có khối lượng 400 g được đun nóng đến 100°C vào 250 g nước ở 18°C. Nhiệt độ cân bằng của hệ là 20°C. Biết nhiệt dung riêng của nước là 4200 J/(kg.K). Bỏ qua mất mát nhiệt. Tính nhiệt dung riêng của chì.",
+      "ground_truth": {
+        "value": 131.25,
+        "unit": "J/(kg.K)"
+      },
+      "pure_llm": {
+        "predicted_value": -80.0,
+        "predicted_unit": "°C",
+        "is_correct": false,
+        "reason": "Mismatch: pred=-80.0 °C, expected=131.25 J/(kg.K)",
+        "latency_s": 16.968,
+        "tokens": 646,
+        "raw_output": "Step 1: Calculate the heat lost by the water.\nThe heat lost by the water can be calculated using the formula:\n\\[ Q_{water} = m_{water} \\cdot c_{water} \\cdot \\Delta T \\]\nWhere:\n- \\( m_{water} \\) is the"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer",
+          "fuel_combustion_heat"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 91.891,
+        "tokens": 7511
+      }
+    },
+    {
+      "id": "thm_072",
+      "topic": "thermodynamics",
+      "question": "Dùng một bếp điện có công suất 1000 W để đun sôi 2 kg nước từ 20°C. Hiệu suất của bếp là 80%. Nhiệt dung riêng của nước là 4200 J/(kg.K). Tính thời gian đun sôi nước theo đơn vị giây.",
+      "ground_truth": {
+        "value": 840.0,
+        "unit": "s"
+      },
+      "pure_llm": {
+        "predicted_value": 10.0,
+        "predicted_unit": "s",
+        "is_correct": false,
+        "reason": "Mismatch: pred=10.0 s, expected=840.0 s",
+        "latency_s": 16.916,
+        "tokens": 635,
+        "raw_output": "Step 1: Calculate the energy required to heat the water to its boiling point (100°C) and then to vaporize it.\nThe initial temperature of the water is 20°C and the final temperature is 100°C. The speci"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 840.0,
+        "predicted_unit": "s",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "Q = m * c * (t_f - t_i)",
+          "Q = P * t * η"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 96.354,
+        "tokens": 9404
+      }
+    },
+    {
+      "id": "thm_073",
+      "topic": "thermodynamics",
+      "question": "Một động cơ nhiệt đốt cháy hết 0.5 kg xăng có năng suất tỏa nhiệt 46 * 10^6 J/kg và sinh ra công cơ học là 6.9 * 10^6 J. Tính hiệu suất của động cơ nhiệt này.",
+      "ground_truth": {
+        "value": 0.3,
+        "unit": ""
+      },
+      "pure_llm": {
+        "predicted_value": 30.0,
+        "predicted_unit": "%",
+        "is_correct": false,
+        "reason": "Mismatch: pred=30.0 %, expected=0.3 ",
+        "latency_s": 10.209,
+        "tokens": 337,
+        "raw_output": "Step 1: Calculate the total energy released by the xylene.\nGiven that the xylene has a mass of 0.5 kg and the energy released per kg is 46 * 10^6 J/kg, we can calculate the total energy released as fo"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "power_lifting_mght",
+          "power_avg_mght",
+          "power_force_height_time",
+          "power_force_dist_time",
+          "power_from_work_time",
+          "work_lifting_mgh",
+          "work_lifting_P_h",
+          "work_A_def",
+          "work_def",
+          "force_gravity_mg",
+          "weight_formula",
+          "power_def",
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer",
+          "fuel_combustion_heat"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 102.5,
+        "tokens": 9263
+      }
+    },
+    {
+      "id": "thm_074",
+      "topic": "thermodynamics",
+      "question": "Trộn 100g nước ở 90°C + 400g nước ở 15°C. Hãy tính nhiệt độ cân bằng nhiệt của hỗn hợp nước.",
+      "ground_truth": {
+        "value": 30.0,
+        "unit": "°C"
+      },
+      "pure_llm": {
+        "predicted_value": 50.0,
+        "predicted_unit": "°C",
+        "is_correct": false,
+        "reason": "Mismatch: pred=50.0 °C, expected=30.0 °C",
+        "latency_s": 15.571,
+        "tokens": 548,
+        "raw_output": "Để giải bài toán này, chúng ta cần sử dụng công thức tính nhiệt độ cân bằng nhiệt (tổng nhiệt) của hai lượng nước khác nhau. Công thức là:\n\n\\[ m_1 \\cdot c \\cdot (T_1 - T_f) + m_2 \\cdot c \\cdot (T_f - "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 29.999999998509907,
+        "predicted_unit": "°C",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 2,
+        "equations_used": [
+          "m1 * c_water * (t_cb - t1) + m2 * c_water * (t_cb - t2) = 0"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 52.655,
+        "tokens": 4602
+      }
+    },
+    {
+      "id": "thm_075",
+      "topic": "thermodynamics",
+      "question": "Cần đun 5 lít nước từ 20°C lên 60°C. Biết nhiệt dung riêng của nước là 4200 J/(kg.K). Tính nhiệt lượng cần truyền cho nước.",
+      "ground_truth": {
+        "value": 840000.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 840000.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 14.064,
+        "tokens": 488,
+        "raw_output": "To solve this problem, we need to calculate the heat energy required to raise the temperature of water from 20°C to 60°C. The formula for calculating the heat energy required is:\n\n\\[ Q = m \\cdot c \\cd"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 0.0,
+        "predicted_unit": "Joules",
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer",
+          "fuel_combustion_heat"
+        ],
+        "reason": "Mismatch: pred=0.0 Joules, expected=840000.0 J",
+        "latency_s": 95.877,
+        "tokens": 7729
+      }
+    },
+    {
+      "id": "thm_076",
+      "topic": "thermodynamics",
+      "question": "Một thanh nhôm có khối lượng 500 g ở nhiệt độ 20°C. Cung cấp cho thanh nhôm nhiệt lượng 35200 J. Biết nhiệt dung riêng của nhôm là 880 J/(kg.K). Tính nhiệt độ cuối cùng của thanh nhôm.",
+      "ground_truth": {
+        "value": 100.0,
+        "unit": "°C"
+      },
+      "pure_llm": {
+        "predicted_value": 0.5,
+        "predicted_unit": "kg\n\nStep",
+        "is_correct": false,
+        "reason": "Mismatch: pred=0.5 kg\n\nStep, expected=100.0 °C",
+        "latency_s": 11.799,
+        "tokens": 413,
+        "raw_output": "Step 1: Convert the given mass to kilograms.\nThe mass of the aluminum is 500 g, which is equivalent to 0.5 kg.\n\nAnswer: 0.5 kg\n\nStep 2: Use the formula for heat transfer to find the change in temperat"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer",
+          "fuel_combustion_heat"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 71.633,
+        "tokens": 7589
+      }
+    },
+    {
+      "id": "thm_077",
+      "topic": "thermodynamics",
+      "question": "Đốt cháy hoàn toàn 1.5 kg củi khô có năng suất tỏa nhiệt q = 10^7 J/kg. Tính nhiệt lượng tỏa ra.",
+      "ground_truth": {
+        "value": 15000000.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 7.0,
+        "predicted_unit": "J",
+        "is_correct": false,
+        "reason": "Mismatch: pred=7.0 J, expected=15000000.0 J",
+        "latency_s": 11.124,
+        "tokens": 359,
+        "raw_output": "To solve this problem, we need to calculate the total heat energy (or thermal energy) released when 1.5 kg of dry wood is completely burned, given that the energy released per kilogram of wood is 10^7"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 15000000.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "Q = q * m"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 15.894,
+        "tokens": 1251
+      }
+    },
+    {
+      "id": "thm_078",
+      "topic": "thermodynamics",
+      "question": "Một bình nhiệt lượng kế chứa 200 g nước ở 15°C. Người ta rót vào bình 300 g nước ở 65°C. Bỏ qua sự truyền nhiệt cho bình và môi trường. Tính nhiệt độ cân bằng của nước trong bình.",
+      "ground_truth": {
+        "value": 45.0,
+        "unit": "°C"
+      },
+      "pure_llm": {
+        "predicted_value": 45.0,
+        "predicted_unit": "°C",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 13.929,
+        "tokens": 588,
+        "raw_output": "Step 1: Identify the given quantities\n- Mass of water in the calorimeter (m1) = 200 g\n- Initial temperature of water in the calorimeter (T1) = 15°C\n- Mass of water added (m2) = 300 g\n- Initial tempera"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 44.99999999850991,
+        "predicted_unit": "°C",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "tc = (m1 * t1 + m2 * t2) / (m1 + m2)"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 23.923,
+        "tokens": 1326
+      }
+    },
+    {
+      "id": "thm_079",
+      "topic": "thermodynamics",
+      "question": "Tính khối lượng cồn cần đốt cháy để tỏa ra một nhiệt lượng 54 * 10^6 J. Biết năng suất tỏa nhiệt của cồn là 27 * 10^6 J/kg.",
+      "ground_truth": {
+        "value": 2.0,
+        "unit": "kg"
+      },
+      "pure_llm": {
+        "predicted_value": 2.0,
+        "predicted_unit": "kg",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 11.736,
+        "tokens": 393,
+        "raw_output": "Step 1: Understand the problem\nWe need to find the mass of butane (cylinder) that needs to be burned to release 54 * 10^6 Joules of energy. The energy released per unit mass of butane is given as 27 *"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "fuel_combustion_heat",
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 94.28,
+        "tokens": 7572
+      }
+    },
+    {
+      "id": "thm_080",
+      "topic": "thermodynamics",
+      "question": "Trộn 300g nước ở 70°C với 300g nước ở 10°C. Tính nhiệt độ khi có cân bằng nhiệt.",
+      "ground_truth": {
+        "value": 40.0,
+        "unit": "°C"
+      },
+      "pure_llm": {
+        "predicted_value": 10.0,
+        "predicted_unit": "°C",
+        "is_correct": false,
+        "reason": "Mismatch: pred=10.0 °C, expected=40.0 °C",
+        "latency_s": 16.919,
+        "tokens": 599,
+        "raw_output": "Để giải quyết bài toán này, chúng ta cần sử dụng định luật cân bằng nhiệt. Định luật này cho biết tổng lượng nhiệt mất bằng tổng lượng nhiệt nhận của hai chất lỏng khi chúng trộn lẫn với nhau.\n\nĐầu ti"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 39.99999999850991,
+        "predicted_unit": "°C",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "thermal_equilibrium"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 17.63,
+        "tokens": 1325
+      }
+    },
+    {
+      "id": "ele_081",
+      "topic": "electricity",
+      "question": "Đặt một hiệu điện thế U = 12 V vào hai đầu dây dẫn có điện trở R = 24 ohm. Tính cường độ dòng điện chạy qua dây dẫn.",
+      "ground_truth": {
+        "value": 0.5,
+        "unit": "A"
+      },
+      "pure_llm": {
+        "predicted_value": 0.5,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 6.703,
+        "tokens": 259,
+        "raw_output": "To solve this problem, we will use Ohm's Law, which states that the current (I) through a conductor between two points is directly proportional to the voltage (V) across the two points, and inversely "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 0.5,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "ohm_law"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 8.056,
+        "tokens": 1209
+      }
+    },
+    {
+      "id": "ele_082",
+      "topic": "electricity",
+      "question": "Một bóng đèn có điện trở 440 ohm được mắc vào mạng điện có hiệu điện thế 220 V. Tính cường độ dòng điện chạy qua bóng đèn.",
+      "ground_truth": {
+        "value": 0.5,
+        "unit": "A"
+      },
+      "pure_llm": {
+        "predicted_value": 0.5,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 5.66,
+        "tokens": 211,
+        "raw_output": "Step 1: Identify the given values\n- Resistance (R) = 440 ohm\n- Voltage (V) = 220 V\n\nStep 2: Use Ohm's Law to find the current (I)\nOhm's Law states that V = I * R, so I = V / R.\n\nStep 3: Substitute the"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 0.5,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "ohm_law"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 7.647,
+        "tokens": 1223
+      }
+    },
+    {
+      "id": "ele_083",
+      "topic": "electricity",
+      "question": "Khi đặt vào hai đầu một dây dẫn hiệu điện thế 6 V thì cường độ dòng điện qua dây là 0.15 A. Nếu tăng hiệu điện thế lên thành 18 V thì cường độ dòng điện qua dây là bao nhiêu?",
+      "ground_truth": {
+        "value": 0.45,
+        "unit": "A"
+      },
+      "pure_llm": {
+        "predicted_value": 0.45,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 10.228,
+        "tokens": 414,
+        "raw_output": "Step 1: Understand the problem\nWe are given a circuit with a constant resistance and a variable voltage source. We need to find the new current when the voltage is increased from 6V to 18V.\n\nStep 2: A"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 0.0500000000001819,
+        "predicted_unit": "A",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 2,
+        "equations_used": [
+          "ohm_law"
+        ],
+        "reason": "Mismatch: pred=0.0500000000001819 A, expected=0.45 A",
+        "latency_s": 31.687,
+        "tokens": 3463
+      }
+    },
+    {
+      "id": "ele_084",
+      "topic": "electricity",
+      "question": "Hai điện trở R1 = 15 ohm và R2 = 30 ohm mắc nối tiếp với nhau vào nguồn điện có hiệu điện thế U = 90 V. Tính điện trở tương đương của đoạn mạch.",
+      "ground_truth": {
+        "value": 45.0,
+        "unit": "ohm"
+      },
+      "pure_llm": {
+        "predicted_value": 45.0,
+        "predicted_unit": "ohm",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 12.265,
+        "tokens": 414,
+        "raw_output": "Step 1: Identify the given values\n- R1 = 15 ohm\n- R2 = 30 ohm\n- U = 90 V\n\nStep 2: Calculate the total resistance of the series circuit\nFor resistors in series, the total resistance (R_total) is the su"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 45.0,
+        "predicted_unit": "ohm",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "R_eq = R1 + R2"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 14.838,
+        "tokens": 1299
+      }
+    },
+    {
+      "id": "ele_085",
+      "topic": "electricity",
+      "question": "Hai điện trở R1 = 10 ohm và R2 = 20 ohm mắc nối tiếp vào hiệu điện thế U = 12 V. Tính hiệu điện thế giữa hai đầu điện trở R1.",
+      "ground_truth": {
+        "value": 4.0,
+        "unit": "V"
+      },
+      "pure_llm": {
+        "predicted_value": 4.0,
+        "predicted_unit": "V",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 10.748,
+        "tokens": 345,
+        "raw_output": "Step 1: Identify the components and the circuit configuration.\n- We have two resistors, R1 = 10 ohm and R2 = 20 ohm, connected in series.\n- The total voltage (U) is 12 V.\n\nStep 2: Calculate the total "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 4.0,
+        "predicted_unit": "V",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "U = (R1 + R2) * U_between_R1 / R1"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 18.813,
+        "tokens": 1379
+      }
+    },
+    {
+      "id": "ele_086",
+      "topic": "electricity",
+      "question": "Hai điện trở R1 = 20 ohm và R2 = 30 ohm được mắc song song với nhau. Tính điện trở tương đương của đoạn mạch song song này.",
+      "ground_truth": {
+        "value": 12.0,
+        "unit": "ohm"
+      },
+      "pure_llm": {
+        "predicted_value": 12.0,
+        "predicted_unit": "ohm",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 10.675,
+        "tokens": 337,
+        "raw_output": "To solve this problem, we need to find the equivalent resistance (R_eq) of two resistors (R1 and R2) connected in parallel. The formula for the equivalent resistance of two resistors in parallel is gi"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 12.0,
+        "predicted_unit": "ohm",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "R_eq = (R1 * R2) / (R1 + R2)"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 18.284,
+        "tokens": 1300
+      }
+    },
+    {
+      "id": "ele_087",
+      "topic": "electricity",
+      "question": "Hai điện trở R1 = 6 ohm và R2 = 12 ohm mắc song song vào nguồn điện có hiệu điện thế U = 12 V. Tính cường độ dòng điện trong mạch chính.",
+      "ground_truth": {
+        "value": 3.0,
+        "unit": "A"
+      },
+      "pure_llm": {
+        "predicted_value": 3.0,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 11.13,
+        "tokens": 369,
+        "raw_output": "Step 1: Calculate the equivalent resistance (R_eq) of the parallel combination of R1 and R2.\nFor two resistors in parallel, the formula is:\n\\[ \\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\frac{1}{R_2} \\]\nSubst"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 4.0,
+        "predicted_unit": "A",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "1 / R_eq = 1 / R1 + 1 / R2"
+        ],
+        "reason": "Mismatch: pred=4.0 A, expected=3.0 A",
+        "latency_s": 17.963,
+        "tokens": 1347
+      }
+    },
+    {
+      "id": "ele_088",
+      "topic": "electricity",
+      "question": "Một bếp điện có ghi 220V - 1000W được sử dụng ở hiệu điện thế định mức 220V. Tính điện trở của bếp điện khi hoạt động.",
+      "ground_truth": {
+        "value": 48.4,
+        "unit": "ohm"
+      },
+      "pure_llm": {
+        "predicted_value": 48.4,
+        "predicted_unit": "",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 11.68,
+        "tokens": 385,
+        "raw_output": "To solve this problem, we need to use the relationship between power, voltage, and resistance in an electrical circuit. The power (P) in a circuit can be calculated using the formula:\n\n\\[ P = \\frac{V^"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 4.54545454547042,
+        "predicted_unit": "ohm",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "electric_power_ui"
+        ],
+        "reason": "Mismatch: pred=4.54545454547042 ohm, expected=48.4 ohm",
+        "latency_s": 10.754,
+        "tokens": 1255
+      }
+    },
+    {
+      "id": "ele_089",
+      "topic": "electricity",
+      "question": "Một bàn là điện có công suất 1100 W mắc vào mạng điện 220 V. Tính cường độ dòng điện chạy qua bàn là khi bàn là hoạt động bình thường.",
+      "ground_truth": {
+        "value": 5.0,
+        "unit": "A"
+      },
+      "pure_llm": {
+        "predicted_value": 5.0,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 8.091,
+        "tokens": 320,
+        "raw_output": "To solve this problem, we need to use the basic principles of electrical circuits, specifically Ohm's Law and the relationship between power, voltage, and current.\n\nStep 1: Identify the given values\n-"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 5.0,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "electric_power_ui"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 12.538,
+        "tokens": 1476
+      }
+    },
+    {
+      "id": "ele_090",
+      "topic": "electricity",
+      "question": "Một bóng đèn có công suất 100 W thắp sáng liên tục trong 4 giờ mỗi ngày. Tính điện năng mà bóng đèn tiêu thụ trong 30 ngày theo đơn vị kWh.",
+      "ground_truth": {
+        "value": 12.0,
+        "unit": "kWh"
+      },
+      "pure_llm": {
+        "predicted_value": 12.0,
+        "predicted_unit": "kWh",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 7.816,
+        "tokens": 313,
+        "raw_output": "Step 1: Calculate the daily energy consumption of the bulb.\nGiven that the bulb consumes 100 W (which is equivalent to 0.1 kW) and it is used for 4 hours each day, we can calculate the daily energy co"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 0.00039999999999999996,
+        "predicted_unit": "kWh",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "E = P * t / 1000"
+        ],
+        "reason": "Mismatch: pred=0.00039999999999999996 kWh, expected=12.0 kWh",
+        "latency_s": 13.324,
+        "tokens": 1484
+      }
+    },
+    {
+      "id": "ele_091",
+      "topic": "electricity",
+      "question": "Một ấm điện có điện trở R = 100 ohm mắc vào hiệu điện thế U = 220 V trong thời gian 10 phút. Tính nhiệt lượng do ấm điện tỏa ra theo đơn vị kJ.",
+      "ground_truth": {
+        "value": 290.4,
+        "unit": "kJ"
+      },
+      "pure_llm": {
+        "predicted_value": 289.6,
+        "predicted_unit": "kJ",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 10.396,
+        "tokens": 431,
+        "raw_output": "Step 1: Calculate the power dissipated by the resistor.\nThe power dissipated by a resistor can be calculated using the formula:\n\\[ P = \\frac{U^2}{R} \\]\nwhere \\( U \\) is the voltage and \\( R \\) is the "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 4.84,
+        "predicted_unit": "kJ",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "Q = (U^2 * t) / (R * 60)"
+        ],
+        "reason": "Mismatch: pred=4.84 kJ, expected=290.4 kJ",
+        "latency_s": 20.351,
+        "tokens": 1538
+      }
+    },
+    {
+      "id": "ele_092",
+      "topic": "electricity",
+      "question": "Dây dẫn bằng đồng dài 100 m có tiết diện 1 mm^2. Điện trở suất của đồng là 1.7 * 10^-8 ohm.m. Tính điện trở của dây dẫn đồng này.",
+      "ground_truth": {
+        "value": 1.7,
+        "unit": "ohm"
+      },
+      "pure_llm": {
+        "predicted_value": 1.7,
+        "predicted_unit": "ohm",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 12.091,
+        "tokens": 412,
+        "raw_output": "Step 1: Identify the given values\n- Length of the wire (L) = 100 m\n- Cross-sectional area of the wire (A) = 1 mm^2 = 1 * 10^-6 m^2 (since 1 mm^2 = (1 * 10^-3 m)^2 = 1 * 10^-6 m^2)\n- Resistivity of cop"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "parallel_resistors_two",
+          "ohm_law",
+          "series_resistors_two",
+          "electric_power_ui",
+          "electric_power_i2r",
+          "electric_power_u2_div_r",
+          "electric_energy_uit",
+          "joule_lenz_heat"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 94.335,
+        "tokens": 8631
+      }
+    },
+    {
+      "id": "ele_093",
+      "topic": "electricity",
+      "question": "Một biến trở con chạy có điện trở lớn nhất là 50 ohm làm bằng dây nicrom có điện trở suất 1.1 * 10^-6 ohm.m và tiết diện 0.55 mm^2. Tính chiều dài của dây dẫn làm biến trở.",
+      "ground_truth": {
+        "value": 25.0,
+        "unit": "m"
+      },
+      "pure_llm": {
+        "predicted_value": 25.0,
+        "predicted_unit": "m",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 10.45,
+        "tokens": 349,
+        "raw_output": "Step 1: Identify the given values\n- Maximum resistance (R) = 50 ohm\n- Resistivity (ρ) = 1.1 * 10^-6 ohm.m\n- Cross-sectional area (A) = 0.55 mm^2 = 0.55 * 10^-6 m^2 (since 1 mm^2 = 10^-6 m^2)\n- Length "
+      },
+      "neuro_symbolic": {
+        "predicted_value": 0.00055,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "R_max = rho * l / A",
+          "R_max = 50 ohm",
+          "rho = 1.1 * 10^-6 ohm.m",
+          "A = 0.55 mm^2",
+          "R_max = rho * l / A",
+          "l = R_max * A / rho"
+        ],
+        "reason": "Mismatch: pred=0.00055 None, expected=25.0 m",
+        "latency_s": 118.805,
+        "tokens": 8009
+      }
+    },
+    {
+      "id": "ele_094",
+      "topic": "electricity",
+      "question": "Một quạt điện có công suất 75 W hoạt động ở hiệu điện thế 220 V trong 8 giờ. Tính lượng điện năng quạt tiêu thụ theo đơn vị Joules.",
+      "ground_truth": {
+        "value": 2160000.0,
+        "unit": "J"
+      },
+      "pure_llm": {
+        "predicted_value": 2160000.0,
+        "predicted_unit": "Joules",
+        "is_correct": true,
+        "reason": "Value match (unit unverified)",
+        "latency_s": 10.607,
+        "tokens": 337,
+        "raw_output": "To solve this problem, we need to calculate the electrical energy consumed by the electric fan in Joules. The formula for electrical energy (in Joules) is:\n\n\\[ \\text{Energy (Joules)} = \\text{Power (Wa"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 2160000.0,
+        "predicted_unit": "J",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "A = P * t"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 16.656,
+        "tokens": 1450
+      }
+    },
+    {
+      "id": "ele_095",
+      "topic": "electricity",
+      "question": "Ba điện trở R1 = 10 ohm, R2 = 20 ohm, R3 = 30 ohm mắc nối tiếp nhau vào nguồn điện 12 V. Tính cường độ dòng điện chạy trong mạch.",
+      "ground_truth": {
+        "value": 0.2,
+        "unit": "A"
+      },
+      "pure_llm": {
+        "predicted_value": 0.2,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 8.137,
+        "tokens": 325,
+        "raw_output": "Step 1: Identify the resistances and the voltage source.\n- R1 = 10 ohm\n- R2 = 20 ohm\n- R3 = 30 ohm\n- Voltage (V) = 12 V\n\nStep 2: Calculate the total resistance of the circuit when resistors are connec"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 60.0,
+        "predicted_unit": "A",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "R_eq = R1 + R2 + R3"
+        ],
+        "reason": "Mismatch: pred=60.0 A, expected=0.2 A",
+        "latency_s": 16.486,
+        "tokens": 1370
+      }
+    },
+    {
+      "id": "ele_096",
+      "topic": "electricity",
+      "question": "Ba điện trở giống nhau mỗi chiếc có giá trị R = 30 ohm mắc song song với nhau. Tính điện trở tương đương của bộ ba điện trở này.",
+      "ground_truth": {
+        "value": 10.0,
+        "unit": "ohm"
+      },
+      "pure_llm": {
+        "predicted_value": 10.0,
+        "predicted_unit": "ohms",
+        "is_correct": true,
+        "reason": "Match after unit conversion (ohms -> ohm)",
+        "latency_s": 9.731,
+        "tokens": 377,
+        "raw_output": "Step 1: Understand the problem\nWe have three resistors, each with a resistance value of R = 30 ohms, and they are connected in parallel. We need to find the equivalent resistance (Req) of this paralle"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 15.0,
+        "predicted_unit": "ohm",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "R_eq = (R * R) / (R + R)"
+        ],
+        "reason": "Mismatch: pred=15.0 ohm, expected=10.0 ohm",
+        "latency_s": 13.15,
+        "tokens": 1241
+      }
+    },
+    {
+      "id": "ele_097",
+      "topic": "electricity",
+      "question": "Một bếp điện khi hoạt động bình thường có điện trở R = 80 ohm và cường độ dòng điện qua bếp là 2.5 A. Tính công suất tỏa nhiệt của bếp.",
+      "ground_truth": {
+        "value": 500.0,
+        "unit": "W"
+      },
+      "pure_llm": {
+        "predicted_value": 500.0,
+        "predicted_unit": "W",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 10.778,
+        "tokens": 345,
+        "raw_output": "To solve this problem, we need to use the formula for power in an electrical circuit, which is given by:\n\n\\[ P = I^2 \\cdot R \\]\n\nWhere:\n- \\( P \\) is the power in watts (W),\n- \\( I \\) is the current in"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 500.0,
+        "predicted_unit": "Watt",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "electric_power_i2r"
+        ],
+        "reason": "Match after unit conversion (Watt -> W)",
+        "latency_s": 13.571,
+        "tokens": 1654
+      }
+    },
+    {
+      "id": "ele_098",
+      "topic": "electricity",
+      "question": "Một bóng đèn loại 12V - 6W được mắc vào nguồn điện 12V. Tính cường độ dòng điện định mức của đèn.",
+      "ground_truth": {
+        "value": 0.5,
+        "unit": "A"
+      },
+      "pure_llm": {
+        "predicted_value": 0.5,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 5.089,
+        "tokens": 193,
+        "raw_output": "Step 1: Identify the given values\n- Voltage (V) = 12V\n- Power (P) = 6W\n\nStep 2: Recall the formula for calculating current (I)\nThe formula for calculating current is given by Ohm's Law: I = P / V\n\nSte"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 0.5,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "parallel_resistors_two",
+          "ohm_law",
+          "series_resistors_two",
+          "electric_power_ui",
+          "electric_power_i2r",
+          "electric_power_u2_div_r",
+          "electric_energy_uit",
+          "joule_lenz_heat"
+        ],
+        "reason": "Exact / Close match",
+        "latency_s": 8.636,
+        "tokens": 1214
+      }
+    },
+    {
+      "id": "ele_099",
+      "topic": "electricity",
+      "question": "Đoạn mạch gồm hai điện trở R1 = 8 ohm và R2 = 12 ohm mắc song song. Hiệu điện thế giữa hai đầu đoạn mạch là 24 V. Tính cường độ dòng điện qua điện trở R1.",
+      "ground_truth": {
+        "value": 3.0,
+        "unit": "A"
+      },
+      "pure_llm": {
+        "predicted_value": 3.0,
+        "predicted_unit": "A",
+        "is_correct": true,
+        "reason": "Exact / Close match",
+        "latency_s": 11.692,
+        "tokens": 484,
+        "raw_output": "Step 1: Calculate the equivalent resistance (Req) of the parallel circuit.\nFor two resistors R1 and R2 in parallel, the equivalent resistance Req is given by:\n\\[ \\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\fr"
+      },
+      "neuro_symbolic": {
+        "predicted_value": 4.7999999999883585,
+        "predicted_unit": "A",
+        "is_correct": false,
+        "is_verified": true,
+        "num_attempts": 1,
+        "equations_used": [
+          "1/R_eq = 1/R1 + 1/R2"
+        ],
+        "reason": "Mismatch: pred=4.7999999999883585 A, expected=3.0 A",
+        "latency_s": 14.118,
+        "tokens": 1200
+      }
+    },
+    {
+      "id": "ele_100",
+      "topic": "electricity",
+      "question": "Một ấm điện loại 220V - 1000W hoạt động ở hiệu điện thế 220V để đun sôi 2 lít nước từ 20°C. Bỏ qua mất mát nhiệt, nhiệt dung riêng của nước là 4200 J/(kg.K). Tính thời gian đun sôi nước theo phút.",
+      "ground_truth": {
+        "value": 11.2,
+        "unit": "min"
+      },
+      "pure_llm": {
+        "predicted_value": 60.0,
+        "predicted_unit": "s",
+        "is_correct": false,
+        "reason": "Mismatch: pred=60.0 s, expected=11.2 min",
+        "latency_s": 16.798,
+        "tokens": 644,
+        "raw_output": "Step 1: Calculate the heat required to raise the temperature of the water.\nThe heat required to raise the temperature of water can be calculated using the formula:\n\\[ Q = m \\cdot c \\cdot \\Delta T \\]\nW"
+      },
+      "neuro_symbolic": {
+        "predicted_value": null,
+        "predicted_unit": null,
+        "is_correct": false,
+        "is_verified": false,
+        "num_attempts": 3,
+        "equations_used": [
+          "electric_power_ui",
+          "kin_uniform_motion_s",
+          "kin_vel_def",
+          "kin_eq1",
+          "kin_eq2",
+          "parallel_resistors_two",
+          "ohm_law",
+          "series_resistors_two",
+          "electric_power_i2r",
+          "electric_power_u2_div_r",
+          "electric_energy_uit",
+          "joule_lenz_heat",
+          "thermal_equilibrium",
+          "thermal_equilibrium_general",
+          "heat_absorption_delta_t",
+          "heat_transfer",
+          "fuel_combustion_heat"
+        ],
+        "reason": "No numeric prediction",
+        "latency_s": 446.545,
+        "tokens": 10488
+      }
+    }
+  ]
+}

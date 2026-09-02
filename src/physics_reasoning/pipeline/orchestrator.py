@@ -510,11 +510,14 @@ class PipelineOrchestrator:
             from physics_reasoning.solver.expression_parser import extract_symbol_names
             from physics_reasoning.solver.symbolic_solver import _find_synonyms
             for eq_expr in eq_expressions:
-                for sym in extract_symbol_names(eq_expr):
-                    if sym not in var_units:
-                        kb_q = self.kb.get_quantity_by_symbol(sym)
-                        if kb_q and kb_q.si_unit:
-                            var_units[sym] = kb_q.si_unit
+                try:
+                    for sym in extract_symbol_names(eq_expr):
+                        if sym not in var_units:
+                            kb_q = self.kb.get_quantity_by_symbol(sym)
+                            if kb_q and kb_q.si_unit:
+                                var_units[sym] = kb_q.si_unit
+                except Exception:
+                    pass
 
             # Verification Check
             all_values_for_verification = dict(known_values_si)

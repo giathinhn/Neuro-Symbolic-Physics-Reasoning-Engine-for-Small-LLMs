@@ -165,7 +165,7 @@ def parse_equation_string(
     lhs_expr = parse_expression(lhs_str, local_symbols=local_symbols)
     rhs_expr = parse_expression(rhs_str, local_symbols=local_symbols)
 
-    return Eq(lhs_expr, rhs_expr)
+    return Eq(lhs_expr, rhs_expr, evaluate=False)
 
 
 def extract_symbols(expr: Expr | Eq | str) -> set[Symbol]:
@@ -181,10 +181,16 @@ def extract_symbols(expr: Expr | Eq | str) -> set[Symbol]:
 
 def extract_symbol_names(expr: Expr | Eq | str) -> list[str]:
     """Extract all free symbol names as sorted strings."""
-    if isinstance(expr, str):
-        if "=" in expr:
-            parsed = parse_equation_string(expr)
-        else:
-            parsed = parse_expression(expr)
-        return sorted([str(s) for s in parsed.free_symbols])
-    return sorted([str(s) for s in expr.free_symbols])
+    try:
+        if isinstance(expr, str):
+            if "=" in expr:
+                parsed = parse_equation_string(expr)
+            else:
+                parsed = parse_expression(expr)
+            return sorted([str(s) for s in parsed.free_symbols])
+        return sorted([str(s) for s in expr.free_symbols])
+    except Exception:
+        if isinstance(expr, str):
+            tokens = re.findall(r"[a-zA-Z_][a-zA-Z0-9_]*", expr)
+            return sorted(list(set(tokens) - set(ALLOWED_FUNCTIONS)))
+        return []

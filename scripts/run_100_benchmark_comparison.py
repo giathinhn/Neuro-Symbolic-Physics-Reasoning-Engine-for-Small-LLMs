@@ -128,6 +128,20 @@ def main():
 
     start_time = time.perf_counter()
 
+    out_path = Path("data/problems/benchmark_100_comparison_results.json")
+    
+    # Auto-resume if previous results exist
+    existing_details = {}
+    if out_path.exists():
+        try:
+            with open(out_path, encoding="utf-8") as f:
+                prev = json.load(f)
+                for item in prev.get("details", []):
+                    existing_details[item["id"]] = item
+            print(f"[*] Found {len(existing_details)} previously completed questions in {out_path}. Resuming...", flush=True)
+        except Exception:
+            pass
+
     for idx, p in enumerate(problems, 1):
         q_id = p["id"]
         topic = p["topic"]
@@ -139,7 +153,26 @@ def main():
             topic_stats[topic] = {"total": 0, "pure_correct": 0, "ns_correct": 0}
         topic_stats[topic]["total"] += 1
 
-        print(f"\n[{idx:03d}/{len(problems):03d}] [{topic.upper()}] {q_text}")
+        # Check if already processed in previous run
+        if q_id in existing_details:
+            prev_item = existing_details[q_id]
+            if prev_item["pure_llm"]["is_correct"]:
+                pure_correct += 1
+                topic_stats[topic]["pure_correct"] += 1
+            if prev_item["neuro_symbolic"]["is_correct"]:
+                ns_correct += 1
+                topic_stats[topic]["ns_correct"] += 1
+            pure_total_latency += prev_item["pure_llm"].get("latency_s", 0)
+            pure_total_tokens += prev_item["pure_llm"].get("tokens", 0)
+            ns_total_latency += prev_item["neuro_symbolic"].get("latency_s", 0)
+            ns_total_tokens += prev_item["neuro_symbolic"].get("tokens", 0)
+            detailed_results.append(prev_item)
+            p_st = "✅ PASS" if prev_item["pure_llm"]["is_correct"] else "❌ FAIL"
+            ns_st = "✅ PASS" if prev_item["neuro_symbolic"]["is_correct"] else "❌ FAIL"
+            print(f"[{idx:03d}/{len(problems):03d}] [CACHED] [{topic.upper()}] Pure: {p_st} | NS: {ns_st}", flush=True)
+            continue
+
+        print(f"\n[{idx:03d}/{len(problems):03d}] [{topic.upper()}] {q_text}", flush=True)
 
         # -------------------------------------------------------------
         # 1. EVALUATE MODE A: PURE LLM DIRECT
@@ -191,9 +224,9 @@ def main():
         # Print comparison line
         pure_status = "✅ PASS" if is_pure_ok else "❌ FAIL"
         ns_status = "✅ PASS" if (is_ns_ok and ns_sol.is_verified) else "❌ FAIL"
-        print(f"  Expected       : {gt_val} {gt_unit}")
-        print(f"  [Pure LLM]     : {pure_val} {pure_unit} -> {pure_status} ({t_pure:.2f}s, {pure_tokens} tok)")
-        print(f"  [Neuro-Sym]    : {ns_sol.answer_value} {ns_sol.answer_unit} -> {ns_status} ({t_ns:.2f}s, {ns_sol.total_tokens} tok, attempts={ns_sol.num_attempts})")
+        print(f"  Expected       : {gt_val} {gt_unit}", flush=True)
+        print(f"  [Pure LLM]     : {pure_val} {pure_unit} -> {pure_status} ({t_pure:.2f}s, {pure_tokens} tok)", flush=True)
+        print(f"  [Neuro-Sym]    : {ns_sol.answer_value} {ns_sol.answer_unit} -> {ns_status} ({t_ns:.2f}s, {ns_sol.total_tokens} tok, attempts={ns_sol.num_attempts})", flush=True)
 
         detailed_results.append({
             "id": q_id,
@@ -221,6 +254,19 @@ def main():
                 "tokens": ns_sol.total_tokens,
             },
         })
+
+        # Save intermediate results after every single question
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump({
+                "summary": {
+                    "total_problems": len(problems),
+                    "processed_so_far": len(detailed_results),
+                    "pure_llm_correct": pure_correct,
+                    "neuro_symbolic_correct": ns_correct,
+                    "topic_breakdown": topic_stats,
+                },
+                "details": detailed_results,
+            }, f, ensure_ascii=False, indent=2)
 
     total_bench_time = time.perf_counter() - start_time
 

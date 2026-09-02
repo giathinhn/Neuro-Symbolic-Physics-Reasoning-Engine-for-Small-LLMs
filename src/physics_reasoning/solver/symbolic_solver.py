@@ -104,7 +104,8 @@ class SymbolicSolver:
         for eq_str in equations:
             try:
                 eq = parse_equation_string(eq_str)
-                parsed_eqs.append(eq)
+                if hasattr(eq, "lhs") and hasattr(eq, "rhs"):
+                    parsed_eqs.append(eq)
             except Exception:
                 pass
 
@@ -131,7 +132,8 @@ class SymbolicSolver:
         # For all free symbols across equations, if not in known_values, check synonyms
         all_eq_symbols = set()
         for eq in parsed_eqs:
-            all_eq_symbols.update(eq.free_symbols)
+            if hasattr(eq, "free_symbols"):
+                all_eq_symbols.update(eq.free_symbols)
 
         for sym in all_eq_symbols:
             sym_name = str(sym)
@@ -145,9 +147,11 @@ class SymbolicSolver:
 
         subbed_eqs: list[Eq] = []
         for eq in parsed_eqs:
+            if not hasattr(eq, "lhs") or not hasattr(eq, "rhs"):
+                continue
             subbed_lhs = eq.lhs.subs(subs_dict)
             subbed_rhs = eq.rhs.subs(subs_dict)
-            subbed_eqs.append(Eq(subbed_lhs, subbed_rhs))
+            subbed_eqs.append(Eq(subbed_lhs, subbed_rhs, evaluate=False))
 
         # Check if target was already directly known
         for ts in target_syms:
@@ -287,6 +291,8 @@ class SymbolicSolver:
         """Verify if given variable values satisfy an equation by computing residual."""
         try:
             eq = parse_equation_string(equation_str)
+            if not hasattr(eq, "lhs") or not hasattr(eq, "rhs"):
+                return False, float("inf")
         except Exception:
             return False, float("inf")
 
