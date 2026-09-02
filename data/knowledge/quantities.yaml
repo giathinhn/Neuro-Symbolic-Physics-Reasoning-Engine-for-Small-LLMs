@@ -299,3 +299,34 @@ quantities:
     si_unit: "joule / kilogram"
     aliases: ["fuel heat value", "nang suat toa nhiet", "q_nhien_lieu"]
 
+  - name: "resistance_3"
+    symbol: "R_3"
+    dimension: "M L^2 T^-3 I^-2"
+    si_unit: "ohm"
+    aliases: ["resistance 3", "resistor 3", "R3"]
+
+  - name: "resistivity"
+    symbol: "rho"
+    dimension: "M L^3 T^-3 I^-2"
+    si_unit: "ohm * meter"
+    aliases: ["electric resistivity", "dien tro suat"]
+
+  - name: "specific_heat_1"
+    symbol: "c_1"
+    dimension: "L^2 T^-2 Theta^-1"
+    si_unit: "joule / (kilogram * kelvin)"
+    aliases: ["specific heat 1", "c1"]
+
+  - name: "specific_heat_2"
+    symbol: "c_2"
+    dimension: "L^2 T^-2 Theta^-1"
+    si_unit: "joule / (kilogram * kelvin)"
+    aliases: ["specific heat 2", "c2"]
+
+  - name: "efficiency"
+    symbol: "H"
+    dimension: "dimensionless"
+    si_unit: "dimensionless"
+    aliases: ["efficiency ratio", "hieu suat"]
+
+

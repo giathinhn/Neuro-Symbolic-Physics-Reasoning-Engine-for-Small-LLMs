@@ -68,17 +68,40 @@ equations:
     dimension_lhs: "M L^2 T^-2"
     dimension_rhs: "M L^2 T^-2"
 
-  - id: "fuel_combustion_heat"
-    name: "Heat from fuel combustion Q = q_fuel * m"
-    expression: "Q = q_fuel * m"
-    variables: ["Q", "q_fuel", "m"]
+  - id: "kettle_combined_heat"
+    name: "Total heat to heat both pot and water"
+    expression: "Q = (m_1 * c_1 + m_2 * c_2) * (t_2 - t_1)"
+    variables: ["Q", "m_1", "c_1", "m_2", "c_2", "t_2", "t_1"]
     variable_quantities:
       Q: "heat"
-      q_fuel: "fuel_heat_value"
-      m: "mass"
+      m_1: "mass_1"
+      c_1: "specific_heat_1"
+      m_2: "mass_2"
+      c_2: "specific_heat_2"
+      t_2: "temperature_2"
+      t_1: "temperature_1"
     domain: "thermodynamics"
     topic: "heat_balance"
-    description: "Heat produced by burning mass m of fuel with specific heat value q_fuel"
-    conditions: ["complete combustion"]
+    description: "Heat required to heat both the container and water together"
+    conditions: ["no heat loss to environment"]
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
+  - id: "electric_heater_water_time"
+    name: "Heating water with electric power: P * t * H = m * c * (t_2 - t_1)"
+    expression: "P * t * H = m * c * (t_2 - t_1)"
+    variables: ["P", "t", "H", "m", "c", "t_2", "t_1"]
+    variable_quantities:
+      P: "power"
+      t: "time"
+      H: "efficiency"
+      m: "mass"
+      c: "specific_heat"
+      t_2: "temperature_2"
+      t_1: "temperature_1"
+    domain: "thermodynamics"
+    topic: "heat_balance"
+    description: "Time to heat water using electric heater with efficiency H"
+    conditions: []
     dimension_lhs: "M L^2 T^-2"
     dimension_rhs: "M L^2 T^-2"

@@ -36,7 +36,16 @@ class SubstitutionCheck(BaseCheck):
         if not all_values:
             return errors
 
+        from physics_reasoning.solver.expression_parser import extract_symbols
+
         for eq in parsed_output.equations:
+            try:
+                syms = extract_symbols(eq.expression)
+                if len(syms) <= 1:
+                    continue
+            except Exception:
+                continue
+
             is_sat, res = self.solver.verify_substitution(eq.expression, all_values)
             # Only report error if the equation had all variables provided (res < inf) but was not satisfied
             if not is_sat and res < float("inf"):

@@ -81,3 +81,67 @@ class ProblemPreprocessor:
         cleaned = cleaned.strip()
 
         return cleaned, conditions
+
+    @classmethod
+    def extract_implicit_physical_constants(cls, text: str) -> dict[str, tuple[float, str]]:
+        """Extract implied physical quantities and boundary constants from problem phrasing.
+
+        Examples:
+        - "đun sôi nước từ 20°C" -> t_final = 100°C (t2 = 100°C)
+        - "thả rơi tự do" / "từ trạng thái nghỉ" -> v0 = 0 m/s
+        - "dừng hẳn" -> v_final = 0 m/s
+        - "đá đang tan" -> t1 = 0°C
+        - "lấy g = 10" or gravity problems -> g = 10 m/s^2
+
+        Returns:
+            dict mapping variable name -> (value, unit)
+        """
+        constants: dict[str, tuple[float, str]] = {}
+        t_lower = text.lower()
+
+        # 1. Boiling water (Nhiệt độ sôi của nước = 100°C)
+        if any(w in t_lower for w in ["đun sôi", "nước sôi", "sôi", "boiling", "boil"]):
+            constants["t_boil"] = (100.0, "°C")
+            constants["t2"] = (100.0, "°C")
+            constants["t_final"] = (100.0, "°C")
+            constants["T_final"] = (100.0, "°C")
+            constants["T2"] = (100.0, "°C")
+
+        # 2. Melting ice (Nước đá đang tan = 0°C)
+        if any(w in t_lower for w in ["đá đang tan", "nước đá", "melting ice"]):
+            constants["t_ice"] = (0.0, "°C")
+            constants["t1"] = (0.0, "°C")
+            constants["t_initial"] = (0.0, "°C")
+
+        # 3. Starting from rest / Free fall (Vận tốc ban đầu = 0 m/s)
+        if any(w in t_lower for w in ["rơi tự do", "thả rơi", "không vận tốc đầu", "từ trạng thái nghỉ", "đang đứng yên", "from rest"]):
+            constants["v0"] = (0.0, "m/s")
+            constants["v_0"] = (0.0, "m/s")
+            constants["v_i"] = (0.0, "m/s")
+            constants["v_initial"] = (0.0, "m/s")
+
+        # 4. Braking until full stop (Vận tốc cuối = 0 m/s)
+        if any(w in t_lower for w in ["dừng hẳn", "dừng lại", "hãm phanh đến khi dừng", "comes to rest", "comes to stop"]):
+            constants["v"] = (0.0, "m/s")
+            constants["v_f"] = (0.0, "m/s")
+            constants["v_final"] = (0.0, "m/s")
+
+        # 5. Gravity acceleration g
+        g_match = re.search(r"\bg\s*=\s*(\d+(?:\.\d+)?)\s*(?:m/s\^2|m/s\*\*2|m/s2)?", t_lower)
+        if g_match:
+            constants["g"] = (float(g_match.group(1)), "m/s^2")
+        elif any(w in t_lower for w in ["trọng lượng", "rơi tự do", "thế năng", "nâng", "cần trục", "máy tời", "áp suất chất lỏng", "lực đẩy ác-si-mét", "lực đẩy archimedes", "lực kế"]):
+            constants["g"] = (10.0, "m/s^2")
+
+        # 6. Specific heat / density of water when mentioned generically
+        if "nước" in t_lower or "water" in t_lower:
+            if "c_water" not in constants and any(w in t_lower for w in ["nhiệt", "đun", "nóng", "nguội", "pha"]):
+                constants["c_water"] = (4200.0, "J/(kg.K)")
+                constants["c"] = (4200.0, "J/(kg.K)")
+            if any(w in t_lower for w in ["áp suất", "chìm", "nổi", "lực đẩy", "thể tích"]):
+                if "d_water" not in constants:
+                    constants["d_water"] = (10000.0, "N/m^3")
+                if "rho_water" not in constants:
+                    constants["rho_water"] = (1000.0, "kg/m^3")
+
+        return constants

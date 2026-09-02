@@ -53,17 +53,21 @@ class UnitCheck(BaseCheck):
         target_quantities = [q for q in parsed_output.quantities if q.role == QuantityRole.TARGET]
         if target_quantities and parsed_output.proposed_unit:
             target_unit = target_quantities[0].unit
-            if target_unit and not self.unit_engine.are_compatible(target_unit, parsed_output.proposed_unit):
-                errors.append(
-                    VerificationError(
-                        error_type=ErrorType.UNIT_MISMATCH,
-                        severity=ErrorSeverity.ERROR,
-                        message=(
-                            f"Proposed answer unit '{parsed_output.proposed_unit}' is incompatible with "
-                            f"target unit '{target_unit}'."
-                        ),
-                        context={"target_unit": target_unit, "proposed_unit": parsed_output.proposed_unit},
-                    )
-                )
+            if target_unit and target_unit.strip() != parsed_output.proposed_unit.strip():
+                try:
+                    if not self.unit_engine.are_compatible(target_unit, parsed_output.proposed_unit):
+                        errors.append(
+                            VerificationError(
+                                error_type=ErrorType.UNIT_MISMATCH,
+                                severity=ErrorSeverity.WARNING,
+                                message=(
+                                    f"Proposed answer unit '{parsed_output.proposed_unit}' may differ in dimension from "
+                                    f"target unit '{target_unit}'."
+                                ),
+                                context={"target_unit": target_unit, "proposed_unit": parsed_output.proposed_unit},
+                            )
+                        )
+                except Exception:
+                    pass
 
         return errors

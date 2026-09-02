@@ -427,6 +427,18 @@ class PipelineOrchestrator:
                         else:
                             known_values_si[q.symbol] = float(q.value)
 
+            # Inject implicit physical constants from ProblemPreprocessor
+            implicit_consts = ProblemPreprocessor.extract_implicit_physical_constants(problem_text)
+            for c_sym, (c_val, c_unit) in implicit_consts.items():
+                if c_sym not in known_values_si:
+                    try:
+                        si_c_val, _ = self.unit_engine.to_si(c_val, c_unit)
+                        known_values_si[c_sym] = si_c_val
+                    except Exception:
+                        known_values_si[c_sym] = c_val
+                    if c_sym not in var_units:
+                        var_units[c_sym] = c_unit
+
             # Expand synonyms in known_values_si and var_units
             from physics_reasoning.solver.symbolic_solver import _find_synonyms
             for sym_k, sym_v in list(known_values_si.items()):
@@ -435,6 +447,93 @@ class PipelineOrchestrator:
                         known_values_si[syn] = sym_v
                     if sym_k in var_units and syn not in var_units:
                         var_units[syn] = var_units[sym_k]
+
+            # Auto-link missing target equations if target variable is not in any equation
+            target_syns = _find_synonyms(target_var)
+            target_in_eqs = False
+            for eq_expr in eq_expressions:
+                for ts in target_syns:
+                    if ts in eq_expr:
+                        target_in_eqs = True
+                        break
+
+            if not target_in_eqs:
+                t_lower = problem_text.lower()
+                # 1. Electric Current I
+                if any(ts in ["I", "current", "i", "I_1"] for ts in target_syns):
+                    if "R1" in known_values_si and "R2" in known_values_si and "R3" in known_values_si and "nối tiếp" in t_lower:
+                        eq_expressions.extend(["R_eq = R1 + R2 + R3", "I = U / R_eq"])
+                    elif "R_eq" in known_values_si or any("R_eq" in eq for eq in eq_expressions):
+                        eq_expressions.append("I = U / R_eq")
+                    elif "R_td" in known_values_si or any("R_td" in eq for eq in eq_expressions):
+                        eq_expressions.append("I = U / R_td")
+                    elif "U" in known_values_si and "R" in known_values_si:
+                        eq_expressions.append("I = U / R")
+                    elif "U" in known_values_si and "R1" in known_values_si and ("song song" in t_lower or "R1" in target_var):
+                        eq_expressions.append("I_1 = U / R1")
+
+                # 2. Electric Resistance R
+                elif any(ts in ["R", "resistance", "r", "R_eq", "R_td"] for ts in target_syns):
+                    if "R1" in known_values_si and "R2" in known_values_si and "R3" in known_values_si:
+                        if "song song" in t_lower:
+                            eq_expressions.append("1 / R_eq = 1 / R1 + 1 / R2 + 1 / R3")
+                        elif "nối tiếp" in t_lower:
+                            eq_expressions.append("R_eq = R1 + R2 + R3")
+                    elif "U" in known_values_si and "P" in known_values_si:
+                        eq_expressions.append("R = (U^2) / P")
+                    elif "rho" in known_values_si and "l" in known_values_si and "S" in known_values_si:
+                        eq_expressions.append("R = (rho * l) / S")
+
+                # 3. Work A or Heat Q from Power P
+                elif any(ts in ["A", "work", "cong"] for ts in target_syns):
+                    if "P" in known_values_si and "t" in known_values_si:
+                        eq_expressions.append("A = P * t")
+                    elif "F" in known_values_si and "s" in known_values_si:
+                        eq_expressions.append("A = F * s")
+                    elif "m" in known_values_si and "g" in known_values_si and "h" in known_values_si:
+                        eq_expressions.append("A = m * g * h")
+
+                # 4. Heat Q in Thermodynamics
+                elif any(ts in ["Q", "heat", "nhiet_luong"] for ts in target_syns):
+                    if "q" in known_values_si and "m" in known_values_si:
+                        eq_expressions.append("Q = q * m")
+                    elif "q_fuel" in known_values_si and "m" in known_values_si:
+                        eq_expressions.append("Q = q_fuel * m")
+                    elif "U" in known_values_si and "R" in known_values_si and "t" in known_values_si:
+                        eq_expressions.append("Q = (U^2 / R) * t")
+                    elif "m" in known_values_si and ("t1" in known_values_si or "t_1" in known_values_si) and ("t2" in known_values_si or "t_2" in known_values_si or "t_boil" in known_values_si):
+                        c_val = known_values_si.get("c", known_values_si.get("c_water", 4200.0))
+                        eq_expressions.append("Q = m * c_water * (t2 - t1)")
+
+                # 5. Power P
+                elif any(ts in ["P", "power", "cong_suat"] for ts in target_syns):
+                    if "F" in known_values_si and "v" in known_values_si:
+                        eq_expressions.append("P = F * v")
+                    elif "A" in known_values_si and "t" in known_values_si:
+                        eq_expressions.append("P = A / t")
+                    elif "m" in known_values_si and "g" in known_values_si and "h" in known_values_si and "t" in known_values_si:
+                        eq_expressions.append("P = (m * g * h) / t")
+
+                # 6. Pressure p
+                elif any(ts in ["p", "pressure", "ap_suat"] for ts in target_syns):
+                    if "d" in known_values_si and "h" in known_values_si:
+                        eq_expressions.append("p = d * h")
+                    elif "d_water" in known_values_si and "h" in known_values_si:
+                        eq_expressions.append("p = d_water * h")
+                    elif "F" in known_values_si and "S" in known_values_si:
+                        eq_expressions.append("p = F / S")
+
+                # 7. Archimedes Buoyancy F_A
+                elif any(ts in ["F_A", "F_archimedes", "buoyant_force"] for ts in target_syns):
+                    if "d" in known_values_si and "V" in known_values_si:
+                        eq_expressions.append("F_A = d * V")
+                    elif "d_water" in known_values_si and "V" in known_values_si:
+                        eq_expressions.append("F_A = d_water * V")
+
+                # 8. Hydraulic Machine F2
+                elif any(ts in ["F_2", "F2"] for ts in target_syns):
+                    if "F1" in known_values_si or "F_1" in known_values_si:
+                        eq_expressions.append("F_2 = F1 * (S2 / S1)")
 
             # Symbolic Solving
             solve_res = self.solver.solve_system(

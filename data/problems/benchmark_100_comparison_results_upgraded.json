@@ -1,8 +1,7 @@
 {
   "summary": {
     "total_problems": 100,
-    "pure_llm_accuracy": 70.0,
-    "neuro_symbolic_accuracy": 43.0,
+    "processed_so_far": 100,
     "pure_llm_correct": 70,
     "neuro_symbolic_correct": 43,
     "topic_breakdown": {
@@ -36,10 +35,7 @@
         "pure_correct": 19,
         "ns_correct": 10
       }
-    },
-    "pure_avg_latency_s": 12.32488,
-    "ns_avg_latency_s": 46.20080027,
-    "total_runtime_s": 4620.7859097
+    }
   },
   "details": [
     {

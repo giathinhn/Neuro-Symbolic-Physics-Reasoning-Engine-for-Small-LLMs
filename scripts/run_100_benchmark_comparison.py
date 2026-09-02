@@ -128,9 +128,20 @@ def main():
 
     start_time = time.perf_counter()
 
-    out_path = Path("data/problems/benchmark_100_comparison_results.json")
+    out_path = Path("data/problems/benchmark_100_comparison_results_upgraded.json")
+    base_results_path = Path("data/problems/benchmark_100_comparison_results.json")
     
-    # Auto-resume if previous results exist
+    cached_pure_llm = {}
+    if base_results_path.exists():
+        try:
+            with open(base_results_path, encoding="utf-8") as f:
+                b_data = json.load(f)
+                for item in b_data.get("details", []):
+                    cached_pure_llm[item["id"]] = item["pure_llm"]
+        except Exception:
+            pass
+
+    # Auto-resume upgraded results if partially run
     existing_details = {}
     if out_path.exists():
         try:
@@ -153,7 +164,6 @@ def main():
             topic_stats[topic] = {"total": 0, "pure_correct": 0, "ns_correct": 0}
         topic_stats[topic]["total"] += 1
 
-        # Check if already processed in previous run
         if q_id in existing_details:
             prev_item = existing_details[q_id]
             if prev_item["pure_llm"]["is_correct"]:
@@ -175,34 +185,44 @@ def main():
         print(f"\n[{idx:03d}/{len(problems):03d}] [{topic.upper()}] {q_text}", flush=True)
 
         # -------------------------------------------------------------
-        # 1. EVALUATE MODE A: PURE LLM DIRECT
+        # 1. EVALUATE MODE A: PURE LLM DIRECT (using cache if available)
         # -------------------------------------------------------------
-        t0 = time.perf_counter()
-        pure_resp_text = ""
-        pure_tokens = 0
-        try:
-            resp = pure_llm.complete(
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "You are a physics problem solver. Solve the physics problem step-by-step and write the final answer in the exact format: 'Answer: <number> <unit>' at the end.",
-                    },
-                    {"role": "user", "content": q_text},
-                ],
-                temperature=0.0,
-                max_tokens=512,
-            )
-            pure_resp_text = resp.content
-            pure_tokens = resp.usage.get("total_tokens", 0)
-        except Exception as e:
-            pure_resp_text = f"Error: {e}"
+        if q_id in cached_pure_llm:
+            pure_info = cached_pure_llm[q_id]
+            pure_val = pure_info.get("predicted_value")
+            pure_unit = pure_info.get("predicted_unit")
+            is_pure_ok = pure_info.get("is_correct", False)
+            pure_reason = pure_info.get("reason", "")
+            t_pure = pure_info.get("latency_s", 0.0)
+            pure_tokens = pure_info.get("tokens", 0)
+            pure_resp_text = pure_info.get("raw_output", "")
+        else:
+            t0 = time.perf_counter()
+            pure_resp_text = ""
+            pure_tokens = 0
+            try:
+                resp = pure_llm.complete(
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": "You are a physics problem solver. Solve the physics problem step-by-step and write the final answer in the exact format: 'Answer: <number> <unit>' at the end.",
+                        },
+                        {"role": "user", "content": q_text},
+                    ],
+                    temperature=0.0,
+                    max_tokens=512,
+                )
+                pure_resp_text = resp.content
+                pure_tokens = resp.usage.get("total_tokens", 0)
+            except Exception as e:
+                pure_resp_text = f"Error: {e}"
 
-        t_pure = time.perf_counter() - t0
+            t_pure = time.perf_counter() - t0
+            pure_val, pure_unit = extract_pure_llm_answer(pure_resp_text)
+            is_pure_ok, pure_reason = check_is_correct(pure_val, pure_unit, gt_val, gt_unit, unit_engine)
+
         pure_total_latency += t_pure
         pure_total_tokens += pure_tokens
-
-        pure_val, pure_unit = extract_pure_llm_answer(pure_resp_text)
-        is_pure_ok, pure_reason = check_is_correct(pure_val, pure_unit, gt_val, gt_unit, unit_engine)
         if is_pure_ok:
             pure_correct += 1
             topic_stats[topic]["pure_correct"] += 1

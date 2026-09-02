@@ -163,18 +163,81 @@ equations:
     dimension_lhs: "M L^2 T^-2"
     dimension_rhs: "M L^2 T^-2"
 
-  - id: "joule_lenz_heat"
-    name: "Joule-Lenz heat law Q = I^2 * R * t"
-    expression: "Q = I^2 * R * t"
-    variables: ["Q", "I", "R", "t"]
+  - id: "wire_resistance_formula"
+    name: "Wire Resistance Formula R = rho * l / S"
+    expression: "R = (rho * l) / S"
+    variables: ["R", "rho", "l", "S"]
+    variable_quantities:
+      R: "resistance"
+      rho: "resistivity"
+      l: "length"
+      S: "area"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Resistance of a uniform wire of length l and cross-sectional area S"
+    conditions: []
+    dimension_lhs: "M L^2 T^-3 I^-2"
+    dimension_rhs: "M L^2 T^-3 I^-2"
+
+  - id: "series_resistors_three"
+    name: "Equivalent Resistance for Three Series Resistors"
+    expression: "R_eq = R_1 + R_2 + R_3"
+    variables: ["R_eq", "R_1", "R_2", "R_3"]
+    variable_quantities:
+      R_eq: "equivalent_resistance"
+      R_1: "resistance_1"
+      R_2: "resistance_2"
+      R_3: "resistance_3"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Equivalent resistance for three resistors connected in series"
+    conditions: ["three resistors in series"]
+    dimension_lhs: "M L^2 T^-3 I^-2"
+    dimension_rhs: "M L^2 T^-3 I^-2"
+
+  - id: "parallel_resistors_three"
+    name: "Equivalent Resistance for Three Parallel Resistors"
+    expression: "1 / R_eq = 1 / R_1 + 1 / R_2 + 1 / R_3"
+    variables: ["R_eq", "R_1", "R_2", "R_3"]
+    variable_quantities:
+      R_eq: "equivalent_resistance"
+      R_1: "resistance_1"
+      R_2: "resistance_2"
+      R_3: "resistance_3"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Equivalent resistance for three resistors connected in parallel"
+    conditions: ["three resistors in parallel"]
+    dimension_lhs: "M^-1 L^-2 T^3 I^2"
+    dimension_rhs: "M^-1 L^-2 T^3 I^2"
+
+  - id: "electric_energy_power_time"
+    name: "Electrical energy A = P * t"
+    expression: "A = P * t"
+    variables: ["A", "P", "t"]
+    variable_quantities:
+      A: "work"
+      P: "power"
+      t: "time"
+    domain: "electricity"
+    topic: "circuits"
+    description: "Electrical energy consumed equals power times time"
+    conditions: []
+    dimension_lhs: "M L^2 T^-2"
+    dimension_rhs: "M L^2 T^-2"
+
+  - id: "joule_heat_voltage_resistor"
+    name: "Joule heat Q = (U^2 / R) * t"
+    expression: "Q = (U^2 / R) * t"
+    variables: ["Q", "U", "R", "t"]
     variable_quantities:
       Q: "heat"
-      I: "current"
+      U: "voltage"
       R: "resistance"
       t: "time"
     domain: "electricity"
     topic: "circuits"
-    description: "Heat dissipated by electric current through resistor"
+    description: "Heat generated in resistor given voltage U and resistance R"
     conditions: []
     dimension_lhs: "M L^2 T^-2"
     dimension_rhs: "M L^2 T^-2"
